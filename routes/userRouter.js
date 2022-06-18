@@ -23,4 +23,7 @@ router.post('/v1/edit', controller.editUser)
 //Delete User router 
 router.delete('/v1/delete', controller.deleteUser)
 
+//Update Password router 
+router.post('/v1/updatePassword', controller.updatePassword)
+
 module.exports = router;
