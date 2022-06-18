@@ -17,6 +17,14 @@ app.use('/users', usersRouter)
 app.use('/group', gorupRouter)
 app.use('/expense', expenseRouter)
 
+app.all('*', (req, res) => {
+    logger.error(`[Invalid Route] ${req.originalUrl}`)
+    res.status(404).json({
+        status: 'fail',
+        message: 'Invalid path'
+      })
+})
+
 const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log(`Server started in PORT | ${port}`)
