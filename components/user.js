@@ -116,3 +116,30 @@ exports.viewUser = async(req, res) => {
         })
     }
 }
+
+
+/*
+Delete User function 
+This function is used to delete an existing user in the database 
+Accepts: user email id 
+*/
+exports.deleteUser = async(req, res) => {
+    try{
+        const userCheck = await validator.userValidation(req.body.emailId)
+        if(!userCheck){
+            var err = new Error("User does not exist!")
+            err.status = 400
+            throw err
+        }
+        const delete_response = await model.User.deleteOne({emailId: req.body.emailId})
+        res.status(200).json({
+            status: "Success",
+            response: delete_response
+        })
+    }catch(err){
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
