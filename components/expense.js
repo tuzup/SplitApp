@@ -1,5 +1,6 @@
 const model = require('../model/schema')
-const validator = require('../helper/validation')
+const validator = require('../helper/validation');
+const logger = require('../helper/logger');
 
 /*
 Add Expense function
@@ -52,6 +53,7 @@ exports.addExpense = async (req, res) => {
             })
         }
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -119,6 +121,7 @@ exports.editExpense = async (req, res) => {
             })
         }
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -150,6 +153,7 @@ exports.deleteExpense = async (req, res) => {
             response: deleteExp
         })
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -179,6 +183,7 @@ exports.viewExpense = async (req, res) => {
             expense: expense
         })
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -211,6 +216,7 @@ exports.viewGroupExpense = async (req, res) => {
             total: totalAmount
         })
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -245,6 +251,7 @@ exports.viewUserExpense = async (req, res) => {
         })
 
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })

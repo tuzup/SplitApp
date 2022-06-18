@@ -1,5 +1,6 @@
 const model = require('../model/schema')
 const validator = require('../helper/validation')
+const logger = require('../helper/logger')
 
 /*
 Create Group Function This function basically create new groups
@@ -43,6 +44,7 @@ exports.createGroup = async (req, res) => {
             })
         }
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -69,6 +71,7 @@ exports.viewGroup = async(req,res) => {
             group: group,
         })
     }catch{
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -99,6 +102,7 @@ exports.findUserGroup = async (req, res) => {
             groups: groups
         })
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -158,6 +162,7 @@ exports.editGroup = async (req, res) => {
             })
         }
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -188,8 +193,8 @@ exports.deleteGroup = async (req, res) => {
             status: "Success",
             response: delete_group
         })
-
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })

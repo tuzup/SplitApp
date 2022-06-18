@@ -43,6 +43,7 @@ exports.userReg = async (req, res) => {
             }
         }
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -80,6 +81,7 @@ exports.userLogin = async (req, res) => {
             })
         }
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
