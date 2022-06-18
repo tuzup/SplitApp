@@ -1,0 +1,26 @@
+{
+  "name": "splitapp",
+  "version": "1.0.0",
+  "description": "This is a group money spliting app made with MERN stack ",
+  "main": "app.js",
+  "scripts": {
+    "test": "npx nodemon app.js",
+    "start" : "node app"
+  },
+  "keywords": [
+    "SplitWise"
+  ],
+  "author": "Sunny George",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "mongoose": "^6.3.8",
+    "morgan": "~1.9.1"
+  }
+}
