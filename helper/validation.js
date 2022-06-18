@@ -4,7 +4,9 @@ exports.notNull = (value) => {
     if (value)
         return true
     else {
-        var err = new Error("Please input the required field").err.status = 400
+        var err = new Error("Please input the required field")
+        err.status = 400
+        throw err
     }
 }
 

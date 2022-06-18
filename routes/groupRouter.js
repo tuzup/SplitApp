@@ -12,12 +12,12 @@ router.get('/', function (req, res, next) {
 router.post('/v1/add', controller.createGroup)
 
 //View User groups router
-router.post('/v1/getGroups', controller.findUserGroup)
+router.post('/v1/get', controller.findUserGroup)
 
 //Edit group router
-router.post('/v1/editGroup', controller.editGroup)
+router.post('/v1/edit', controller.editGroup)
 
 //Delte group router
-router.delete('/v1/deleteGroup', controller.deleteGroup)
+router.delete('/v1/delete', controller.deleteGroup)
 
 module.exports = router;

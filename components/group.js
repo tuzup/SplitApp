@@ -27,6 +27,14 @@ exports.createGroup = async (req, res) => {
                     throw err
                 }
             }
+            //Validating the group Owner exist in the DB 
+            var ownerCheck = await validator.userValidation(newGroup.groupOwner)
+            if (!ownerCheck) {
+                var err = new Error('Invalid owner id')
+                err.status = 400
+                throw err
+            }
+
             var id = await model.Group.create(newGroup)
             res.status(200).json({
                 status: "Success",
@@ -40,6 +48,7 @@ exports.createGroup = async (req, res) => {
         })
     }
 }
+
 /*
 Find all user group function
 This function is basically to display the list of group that a user belongs
@@ -79,9 +88,9 @@ Accepts: Group Id
 exports.editGroup = async (req, res) => {
     try {
         var group = await model.Group.findOne({
-            id: req.body.id
+            _id: req.body.id
         })
-        if (!group) {
+        if (!group || req.body.id==null) {
             var err = new Error("Invalid Group Id")
             err.status = 400
             throw err
@@ -100,15 +109,13 @@ exports.editGroup = async (req, res) => {
                     throw err
                 }
             }
-            var ownerCheck = await model.User.findOne({
-                emailid: editGroup.groupOwner
-            })
+            var ownerCheck = await validator.userValidation(editGroup.groupOwner)
             if (!ownerCheck) {
                 var err = new Error('Invalid owner id')
                 err.status = 400
                 throw err
             }
-            await model.Group.updateOne({
+            var update_response = await model.Group.updateOne({
                 _id: req.body.id
             }, {
                 $set: {
@@ -120,7 +127,8 @@ exports.editGroup = async (req, res) => {
             })
             res.status(200).json({
                 status: "Success",
-                message: "Group updated successfully!"
+                message: "Group updated successfully!",
+                response: update_response
             })
         }
     } catch (err) {
@@ -146,12 +154,13 @@ exports.deleteGroup = async (req, res) => {
             err.status = 400
             throw err
         }
-        await model.Group.deleteOne({
-            id: req.body.id
+        var delete_group = await model.Group.deleteOne({
+            _id: req.body.id
         })
         res.status(200).json({
             message: "Group deleted successfully!",
             status: "Success",
+            response: delete_group
         })
 
     } catch (err) {

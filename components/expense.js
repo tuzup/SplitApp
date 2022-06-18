@@ -73,7 +73,7 @@ exports.editExpense = async (req, res) => {
         var expenseIdCheck = await model.Expense.findOne({
             _id: req.body.id
         })
-        if (!expenseIdCheck) {
+        if (!expenseIdCheck || req.body.id == null ) {
             var err = new Error("Invalid Expense Id")
             err.status = 400
             throw err
@@ -98,7 +98,7 @@ exports.editExpense = async (req, res) => {
                 }
             }
             var expenseUpdate = await model.Expense.updateOne({
-                id: req.body.id
+                _id: req.body.id
 
             }, {
                 $set: {
@@ -107,8 +107,7 @@ exports.editExpense = async (req, res) => {
                     expenseDescription: expense.expenseDescription,
                     expenseAmount: expense.expenseAmount,
                     expenseOwner: expense.expenseOwner,
-                    expenseMembers: expense,
-                    expenseMembers,
+                    expenseMembers: expense.expenseMembers,
                     expensePerMember: expense.expenseAmount / expense.expenseMembers.length
 
                 }
@@ -135,7 +134,7 @@ Accepts: Group ID not null group ID exist in the DB
 exports.deleteExpense = async (req, res) => {
     try {
         var expense = await model.Expense.findOne({
-            _id: req.body.expenseId
+            _id: req.body.id
         })
         if (!expense) {
             var err = new Error("Invalid Expense Id")
@@ -143,7 +142,7 @@ exports.deleteExpense = async (req, res) => {
             throw err
         }
         var deleteExp = await model.Expense.deleteOne({
-            id: req.body.expenseId
+            _id: req.body.id
         })
         res.status(200).json({
             status: "Success",
@@ -168,7 +167,7 @@ Returns: Json with the expense details
 exports.viewExpense = async (req, res) => {
     try {
         var expense = await model.Expense.find({
-            id: req.body.id
+            _id: req.body.id
         })
         if (expense.length == 0) {
             var err = new Error("No expense present for the Id")
