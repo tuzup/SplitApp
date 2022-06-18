@@ -1,5 +1,6 @@
 const model = require('../model/schema')
 const validator = require('../helper/validation')
+const logger = require('../helper/logger')
 
 /*
 Create Group Function This function basically create new groups
@@ -43,6 +44,34 @@ exports.createGroup = async (req, res) => {
             })
         }
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+/*
+View Group function 
+This function is used to display the group details 
+Accepts: Group Id 
+Returns: Group Info 
+*/
+exports.viewGroup = async(req,res) => {
+    try{
+        const group = await model.Group.findOne({_id: req.body.id})
+        if(!group || req.body.id == null){
+            var err = new Error('Invalid Group Id')
+            err.status = 400
+            throw err
+        }
+        res.status(200).json({
+            status: "Success",
+            group: group,
+        })
+    }catch{
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -73,6 +102,7 @@ exports.findUserGroup = async (req, res) => {
             groups: groups
         })
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -132,6 +162,7 @@ exports.editGroup = async (req, res) => {
             })
         }
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -162,8 +193,8 @@ exports.deleteGroup = async (req, res) => {
             status: "Success",
             response: delete_group
         })
-
     } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
         })

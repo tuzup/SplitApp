@@ -21,17 +21,18 @@ exports.emailValidation = (email) => {
 }
 
 exports.passwordValidation = (pass) => {
+    if(pass)
     if (pass.search(/[a-z]/) >= 0 && pass.search(/[A-Z]/) >= 0 &&
         pass.search(/[0-9]/) >= 0 &&
         pass.search(/[!@#$%^&*()]/) >= 0 &&
         pass.length >= 8) {
         return true
-    } else {
+    } 
         var err = new Error("Password validation fail!!")
         err.status = 400
         throw err
     }
-}
+
 
 exports.currencyValidation = (currency) => {
     if (currency &&

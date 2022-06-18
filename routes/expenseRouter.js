@@ -26,4 +26,8 @@ router.post('/v1/group', controller.viewGroupExpense)
 //View user expense router 
 router.post('/v1/user', controller.viewUserExpense)
 
+//View user recent expense router
+router.post('/v1/user/recent', controller.recentUserExpenses)
+
+
 module.exports = router;

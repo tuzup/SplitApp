@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "npx nodemon app.js",
-    "start" : "node app"
+    "start": "node app"
   },
   "keywords": [
     "SplitWise"
@@ -21,6 +21,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "mongoose": "^6.3.8",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "winston": "^3.7.2"
   }
 }
