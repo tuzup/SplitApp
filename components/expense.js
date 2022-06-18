@@ -75,7 +75,7 @@ exports.editExpense = async (req, res) => {
         var expenseIdCheck = await model.Expense.findOne({
             _id: req.body.id
         })
-        if (!expenseIdCheck || req.body.id == null ) {
+        if (!expenseIdCheck || req.body.id == null) {
             var err = new Error("Invalid Expense Id")
             err.status = 400
             throw err
@@ -250,6 +250,36 @@ exports.viewUserExpense = async (req, res) => {
             total: totalAmount
         })
 
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+/*
+Recent User Expenses function
+This function is used to return the latest 5 expenses a user is involved in 
+Accepts : user email id - check in db if user is present 
+Returns : top 5 most resent expense user is a expenseMember in all the groups  
+*/
+exports.recentUserExpenses = async (req, res) => {
+    try {
+        var recentExpense = await model.Expense.find({
+            expenseMembers: req.body.user
+        }).sort({
+            $natural: -1 //to get the newest first 
+        }).limit(5); //to get the top 5 
+        if (recentExpense.length == 0) {
+            var err = new Error("No expense present for the user")
+            err.status = 400
+            throw err
+        }
+        res.status(200).json({
+            status: "Success",
+            expense: recentExpense
+        })
     } catch (err) {
         logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
