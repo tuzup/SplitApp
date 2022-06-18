@@ -143,3 +143,41 @@ exports.deleteUser = async(req, res) => {
         })
     }
 }
+
+/*
+Edit User function 
+This function is used to edit the user present in the database 
+Accepts: User data (user email id can not be changed)
+This function can not be used to change the password of the user 
+*/
+exports.editUser = async(req, res) => {
+    try{
+        const userCheck = await validator.userValidation(req.body.emailId)
+        if(!userCheck){
+            var err = new Error("User does not exist!")
+            err.status = 400
+            throw err
+        }
+        //Accepts the inputs and create user model form req.body
+        var editUser = req.body
+        //Performing validations
+        if (validator.notNull(editUser.firstName) &&
+            validator.notNull(editUser.lastName)) {
+            //storing user details in DB
+            var update_response = await model.User.updateOne({emailId: editUser.emailId}, {$set: {
+                firstName: editUser.firstName, 
+                lastName: editUser.lastName,
+            }})
+            res.status(200).json({
+                status: "Success",
+                message: "User update Success",
+                userId: update_response
+            })
+        }
+    }catch(err){
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
