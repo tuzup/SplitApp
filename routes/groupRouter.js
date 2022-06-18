@@ -11,8 +11,11 @@ router.get('/', function (req, res, next) {
 //Add Group router
 router.post('/v1/add', controller.createGroup)
 
+//View Group router 
+router.post('/v1/view', controller.viewGroup)
+
 //View User groups router
-router.post('/v1/get', controller.findUserGroup)
+router.post('/v1/user', controller.findUserGroup)
 
 //Edit group router
 router.post('/v1/edit', controller.editGroup)

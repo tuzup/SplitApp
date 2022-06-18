@@ -49,6 +49,32 @@ exports.createGroup = async (req, res) => {
     }
 }
 
+
+/*
+View Group function 
+This function is used to display the group details 
+Accepts: Group Id 
+Returns: Group Info 
+*/
+exports.viewGroup = async(req,res) => {
+    try{
+        const group = await model.Group.findOne({_id: req.body.id})
+        if(!group || req.body.id == null){
+            var err = new Error('Invalid Group Id')
+            err.status = 400
+            throw err
+        }
+        res.status(200).json({
+            status: "Success",
+            group: group,
+        })
+    }catch{
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
 /*
 Find all user group function
 This function is basically to display the list of group that a user belongs
