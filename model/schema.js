@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/splitApp').then(() => {
+
+mongoose.connect(process.env.MONGODB_URL).then(() => {
     console.log("DB Connected")
 })
 

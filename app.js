@@ -17,6 +17,7 @@ app.use('/users', usersRouter)
 app.use('/group', gorupRouter)
 app.use('/expense', expenseRouter)
 
+//To detect and log invalid api hits 
 app.all('*', (req, res) => {
     logger.error(`[Invalid Route] ${req.originalUrl}`)
     res.status(404).json({
