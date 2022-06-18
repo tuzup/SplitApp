@@ -14,4 +14,7 @@ router.post('/v1/register', controller.userReg)
 //User Login router 
 router.post('/v1/login', controller.userLogin)
 
+//View User router 
+router.post('/v1/view', controller.viewUser)
+
 module.exports = router;

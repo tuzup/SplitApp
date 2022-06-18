@@ -1,6 +1,7 @@
 const model = require('../model/schema')
 const bcrypt = require('bcryptjs')
 const validator = require('../helper/validation')
+const logger = require('../helper/logger')
 
 /*
 User Registeration function
@@ -88,3 +89,30 @@ exports.userLogin = async (req, res) => {
     }
 }
 
+/*
+View User function 
+This function is to view the user details 
+Accepts: user email Id 
+Returns: user details (ensure password is removed)
+*/
+exports.viewUser = async(req, res) => {
+    try{
+        const user = await model.User.findOne({
+            emailId: req.body.emailId
+        },{password: 0})
+        if (!user) {
+            var err = new Error("User does not exist!")
+            err.status = 400
+            throw err
+        }
+        res.status(200).json({
+            status: "Success",
+            user: user
+        })
+    }catch(err){
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
