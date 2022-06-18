@@ -24,7 +24,7 @@ const User = new mongoose.Schema({
     }
 })
 
-const Group = new mongoose.Schema()({
+const Group = new mongoose.Schema({
     groupName: {
         type: String,
         required: true

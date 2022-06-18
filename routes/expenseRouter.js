@@ -12,18 +12,18 @@ router.get('/', function (req, res, next) {
 router.post('/v1/add', controller.addExpense)
 
 //Edit group router 
-router.post('/v1/editExpense', controller.editExpense)
+router.post('/v1/edit', controller.editExpense)
 
 //Delte group router
-router.delete('/v1/deleteExpense', controller.deleteExpense)
+router.delete('/v1/delete', controller.deleteExpense)
 
 //View Individual expense router
-router.post('/v1/viewExpense', controller.viewExpense)
+router.post('/v1/view', controller.viewExpense)
 
 //View group expense router
-router.post('/v1/groupExpense', controller.viewGroupExpense)
+router.post('/v1/group', controller.viewGroupExpense)
 
 //View user expense router 
-router.post('/v1/userExpense', controller.viewUserExpense)
+router.post('/v1/user', controller.viewUserExpense)
 
 module.exports = router;

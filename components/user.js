@@ -1,5 +1,5 @@
 const model = require('../model/schema')
-const bcrypt = require('bcrypt js')
+const bcrypt = require('bcryptjs')
 const validator = require('../helper/validation')
 
 /*
@@ -14,7 +14,7 @@ exports.userReg = async (req, res) => {
     try {
         //Checking email Id exist in DB
         const user = await model.User.findOne({
-            emailid: req.body.emailId
+            emailId: req.body.emailId
         })
         //If email ID present in database thows error and retuen message
         if (user) {
@@ -29,7 +29,6 @@ exports.userReg = async (req, res) => {
                 validator.passwordValidation(newUser.password) &&
                 validator.notNull(newUser.firstName) &&
                 validator.notNull(newUser.lastName)) {
-
                 //Bcrypt password encription
                 const salt = await bcrypt.genSalt(10);
                 newUser.password = await bcrypt.hash(newUser.password, salt)
@@ -59,7 +58,7 @@ exports.userLogin = async (req, res) => {
     try {
         //Checking email Id exist in DB 
         const user = await model.User.findOne({
-            emailid: req.body.emailId
+            emailId: req.body.emailId
         })
         if (!user) {
             var err = new Error("Invalid email Id or Password !")
@@ -70,7 +69,7 @@ exports.userLogin = async (req, res) => {
         //validating password using bcrypt
         const validCred = await bcrypt.compare(req.body.password, user.password)
         if (!validCred) {
-            var err = new Error("Invalid email Id or Password !")
+            var err = new Error("Invalid email Id or Password* !")
             err.status = 400
             throw err
         } else {
@@ -86,3 +85,4 @@ exports.userLogin = async (req, res) => {
         })
     }
 }
+
