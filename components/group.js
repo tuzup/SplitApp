@@ -88,7 +88,7 @@ exports.viewGroup = async (req, res) => {
             status: "Success",
             group: group,
         })
-    } catch {
+    } catch(err) {
         logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
