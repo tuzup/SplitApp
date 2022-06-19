@@ -44,7 +44,7 @@ const Group = new mongoose.Schema({
         type: Array,
         required: true
     },
-    expense: {
+    split: {
         type: Array
     }
 })

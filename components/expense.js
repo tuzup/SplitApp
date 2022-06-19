@@ -1,6 +1,7 @@
 const model = require('../model/schema')
 const validator = require('../helper/validation');
 const logger = require('../helper/logger');
+const gorupDAO = require('./group')
 
 /*
 Add Expense function
@@ -35,7 +36,6 @@ exports.addExpense = async (req, res) => {
                 throw err
             }
             for (var user of expense.expenseMembers) {
-
                 var memberValidation = await validator.groupUserValidation(user, expense.groupId)
                 if (!memberValidation) {
                     var err = new Error("Please ensure the members exixt in the group")
@@ -46,10 +46,15 @@ exports.addExpense = async (req, res) => {
             expense.expensePerMember = expense.expenseAmount / expense.expenseMembers.length
             var newExp = new model.Expense(expense)
             var newExpense = await model.Expense.create(newExp)
+
+            //New expense is created now we need to update the split values present in the group 
+            var update_response = await gorupDAO.addSplit(expense.groupId, expense.expenseAmount, expense.expenseOwner, expense.expenseMembers)
+
             res.status(200).json({
                 status: "Success",
                 message: "New expenses added",
-                Id: newExpense._id
+                Id: newExpense._id,
+                splitUpdateResponse : update_response
             })
         }
     } catch (err) {
@@ -72,15 +77,18 @@ Accepts: Group ID not null group ID exist in the DB
 */
 exports.editExpense = async (req, res) => {
     try {
-        var expenseIdCheck = await model.Expense.findOne({
-            _id: req.body.id
+        var expense = req.body
+        var oldExpense = await model.Expense.findOne({
+            _id: expense.id
         })
-        if (!expenseIdCheck || req.body.id == null) {
+        if (!oldExpense || expense.id == null ||
+            oldExpense.groupId != expense.groupId
+            ) {
             var err = new Error("Invalid Expense Id")
             err.status = 400
             throw err
         }
-        var expense = req.body
+        
         if (validator.notNull(expense.expenseName) &&
             validator.notNull(expense.expenseAmount) &&
             validator.notNull(expense.expenseOwner) &&
@@ -99,6 +107,7 @@ exports.editExpense = async (req, res) => {
                     throw err
                 }
             }
+            
             var expenseUpdate = await model.Expense.updateOne({
                 _id: req.body.id
 
@@ -111,9 +120,13 @@ exports.editExpense = async (req, res) => {
                     expenseOwner: expense.expenseOwner,
                     expenseMembers: expense.expenseMembers,
                     expensePerMember: expense.expenseAmount / expense.expenseMembers.length
-
                 }
             })
+
+            //Updating the group split values
+            await gorupDAO.clearSplit(oldExpense.groupId, oldExpense.expenseAmount, oldExpense.expenseOwner, oldExpense.expenseMembers)
+            await gorupDAO.addSplit(expense.groupId, expense.expenseAmount, expense.expenseOwner, expense.expenseMembers)
+
             res.status(200).json({
                 status: "Success",
                 message: "Expense Edited",
@@ -147,6 +160,10 @@ exports.deleteExpense = async (req, res) => {
         var deleteExp = await model.Expense.deleteOne({
             _id: req.body.id
         })
+
+        //Clearing split value for the deleted expense from group table
+        await gorupDAO.clearSplit(expense.groupId, expense.expenseAmount, expense.expenseOwner, expense.expenseMembers)
+
         res.status(200).json({
             status: "Success",
             message: "Expense is deleted",

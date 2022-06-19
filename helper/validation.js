@@ -1,4 +1,5 @@
 const model = require('../model/schema')
+const logger = require('./logger')
 
 exports.notNull = (value) => {
     if (value)
@@ -60,7 +61,7 @@ exports.userValidation = async (email) => {
 
 exports.groupUserValidation = async (email, groupId) => {
     var groupMembers = await model.Group.findOne({
-        id: groupId
+        _id: groupId
     }, {
         groupMembers: 1,
         _id: 0
@@ -68,6 +69,8 @@ exports.groupUserValidation = async (email, groupId) => {
     groupMembers = groupMembers['groupMembers']
     if (groupMembers.includes(email))
         return true
-    else
+    else{
+        logger.warn([`Group User Valdation fail : Group ID : [${groupId}] | user : [${email}]`])
         return false
+    }
 }
