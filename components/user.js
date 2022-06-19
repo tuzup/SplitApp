@@ -2,6 +2,7 @@ const model = require('../model/schema')
 const bcrypt = require('bcryptjs')
 const validator = require('../helper/validation')
 const logger = require('../helper/logger')
+const apiAuth = require('../helper/apiAuthentication')
 
 /*
 User Registeration function
@@ -75,14 +76,16 @@ exports.userLogin = async (req, res) => {
             err.status = 400
             throw err
         } else {
+            const accessToken = apiAuth.generateAccessToken(req.body.emailId)
             res.status(200).json({
                 status: "Success",
                 message: "User Login Success",
-                userId: user.id
+                userId: user.id,
+                accessToken
             })
         }
     } catch (err) {
-        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message} ${err.stack}`)
         res.status(err.status || 500).json({
             message: err.message
         })
@@ -97,12 +100,14 @@ Returns: user details (ensure password is removed)
 */
 exports.viewUser = async (req, res) => {
     try {
+        //check if the login user is same as the requested user 
+        apiAuth.validateUser(req.user, req.body.emailId) 
         const user = await model.User.findOne({
             emailId: req.body.emailId
         }, {
             password: 0
         })
-        if (!user) {
+        if(!user) {
             var err = new Error("User does not exist!")
             err.status = 400
             throw err
@@ -111,7 +116,7 @@ exports.viewUser = async (req, res) => {
             status: "Success",
             user: user
         })
-    } catch (err) {
+    } catch(err) {
         logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
@@ -127,10 +132,12 @@ Accepts: user email id
 */
 exports.deleteUser = async (req, res) => {
     try {
+        //check if the login user is same as the requested user 
+        apiAuth.validateUser(req.user, req.body.emailId)
         const userCheck = await validator.userValidation(req.body.emailId)
         if (!userCheck) {
             var err = new Error("User does not exist!")
-            err.status = 400
+            err.status = 400 
             throw err
         }
         const delete_response = await model.User.deleteOne({
@@ -156,6 +163,8 @@ This function can not be used to change the password of the user
 */
 exports.editUser = async (req, res) => {
     try {
+        //check if the login user is same as the requested user 
+        apiAuth.validateUser(req.user, req.body.emailId)
         const userCheck = await validator.userValidation(req.body.emailId)
         if (!userCheck) {
             var err = new Error("User does not exist!")
@@ -201,6 +210,8 @@ validation : old password is correct
 */
 exports.updatePassword = async (req, res) => {
     try {
+        //check if the login user is same as the requested user 
+        apiAuth.validateUser(req.user, req.body.emailId)
         const user = await model.User.findOne({
             emailId: req.body.emailId
         })
