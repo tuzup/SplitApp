@@ -7,7 +7,6 @@ exports.generateAccessToken = (user) => {
 
 
 exports.validateToken = (req, res, next) => {
-
     //Bypass Authentication when DISABLE_API_AUTH is set in the env file for dev purpose only 
     if (process.env.DISABLE_API_AUTH == "true") {
         next()
