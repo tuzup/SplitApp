@@ -1,6 +1,15 @@
 var mongoose = require('mongoose')
+var logger = require('../helper/logger')
 
-mongoose.connect(process.env.MONGODB_URL).then(() => {
+mongoose.connect(process.env.MONGODB_URI, {
+    maxPoolSize: 50,
+    wtimeoutMS: 2500,
+    useNewUrlParser: true
+}).catch(err => {
+    logger.error(`DB Connection Fail | ${err.stack}`)
+    console.log(err)
+}).then(() => {
+    logger.info(`DB Connection Established`)
     console.log("DB Connected")
 })
 
