@@ -1,5 +1,6 @@
 var express = require('express');
 var controller = require('../components/user')
+var apiAuth = require('../helper/apiAuthentication')
 
 var router = express.Router();
 
@@ -15,15 +16,15 @@ router.post('/v1/register', controller.userReg)
 router.post('/v1/login', controller.userLogin)
 
 //View User router 
-router.post('/v1/view', controller.viewUser)
+router.post('/v1/view', apiAuth.validateToken,controller.viewUser)
 
 //Edit User router
-router.post('/v1/edit', controller.editUser)
+router.post('/v1/edit', apiAuth.validateToken, controller.editUser)
 
 //Delete User router 
-router.delete('/v1/delete', controller.deleteUser)
+router.delete('/v1/delete', apiAuth.validateToken,controller.deleteUser)
 
-//Update Password router 
-router.post('/v1/updatePassword', controller.updatePassword)
+//Update Password router
+router.post('/v1/updatePassword',apiAuth.validateToken, controller.updatePassword)
 
 module.exports = router;
