@@ -23,11 +23,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/register",
+							"raw": "localhost:3001/users/v1/register",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -52,11 +52,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/login",
+							"raw": "localhost:3001/users/v1/login",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -70,7 +70,13 @@
 					"name": "View User",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsQGdtYWlsLmNvbQ.eXfSG1iM6BBKK0XgSUdqqeccig-DjDtG1WoP2zEh70k",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"emailId\": \"test-mail@gmail.com\"\n}",
@@ -81,11 +87,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/view",
+							"raw": "localhost:3001/users/v1/view",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -110,11 +116,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/edit",
+							"raw": "localhost:3001/users/v1/edit",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -139,11 +145,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/updatePassword",
+							"raw": "localhost:3001/users/v1/updatePassword",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -168,11 +174,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/delete",
+							"raw": "localhost:3001/users/v1/delete",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -191,10 +197,16 @@
 					"name": "Create Group",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"groupName\": \"Trip to Goa\",\n    \"groupDescription\" : \"Sample group description\",\n    \"currencyType\": \"INR\",\n    \"groupOwner\": \"test-mail@gmail.com\",\n    \"groupMembers\": [\"test-mail@gmail.com\", \"test-mail1@gmail.com\"]\n}",
+							"raw": "{\n    \"groupName\": \"To check split\",\n    \"groupDescription\" : \"Sample group description\",\n    \"currencyType\": \"INR\",\n    \"groupOwner\": \"test-mail@gmail.com\",\n    \"groupMembers\": [\"test-mail@gmail.com\", \"test-mail1@gmail.com\", \"test-mail3@gmail.com\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -202,11 +214,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/group/v1/add",
+							"raw": "localhost:3001/group/v1/add",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"group",
 								"v1",
@@ -231,11 +243,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/group/v1/view",
+							"raw": "localhost:3001/group/v1/view",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"group",
 								"v1",
@@ -260,11 +272,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/group/v1/user",
+							"raw": "localhost:3001/group/v1/user",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"group",
 								"v1",
@@ -289,11 +301,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/group/v1/edit",
+							"raw": "localhost:3001/group/v1/edit",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"group",
 								"v1",
@@ -323,11 +335,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/add",
+							"raw": "localhost:3001/expense/v1/add",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -352,11 +364,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/edit",
+							"raw": "localhost:3001/expense/v1/edit",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -381,11 +393,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/view",
+							"raw": "localhost:3001/expense/v1/view",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -410,11 +422,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/group",
+							"raw": "localhost:3001/expense/v1/group",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -439,11 +451,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/user",
+							"raw": "localhost:3001/expense/v1/user",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -468,11 +480,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/user",
+							"raw": "localhost:3001/expense/v1/user",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -483,7 +495,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Group Expense",
+					"name": "Delete Expense",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -497,11 +509,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/delete",
+							"raw": "localhost:3001/expense/v1/delete",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
