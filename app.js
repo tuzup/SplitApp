@@ -3,6 +3,7 @@ var express = require('express')
 var logger = require('./helper/logger')
 var requestLogger = require('./helper/requestLogger')
 var apiAuth = require('./helper/apiAuthentication')
+var cors = require('cors')
 
 dotenv.config()
 
@@ -11,6 +12,7 @@ var gorupRouter = require('./routes/groupRouter')
 var expenseRouter = require('./routes/expenseRouter')
 
 var app = express()
+app.use(cors())
 app.use(express.json())
 app.use(requestLogger)
 

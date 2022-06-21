@@ -65,7 +65,7 @@ exports.userLogin = async (req, res) => {
         })
         if (!user) {
             var err = new Error("Invalid email Id or Password !")
-            err.status = 400
+            err.status = 401
             throw err
         }
 
@@ -73,7 +73,7 @@ exports.userLogin = async (req, res) => {
         const validCred = await bcrypt.compare(req.body.password, user.password)
         if (!validCred) {
             var err = new Error("Invalid email Id or Password* !")
-            err.status = 400
+            err.status = 401
             throw err
         } else {
             const accessToken = apiAuth.generateAccessToken(req.body.emailId)
