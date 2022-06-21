@@ -9,7 +9,8 @@ export const login = async (formData, setShowAlert, setAlertMessage) => {
     }catch(err){
         setShowAlert(true)
         console.log(err)
-        err.response.status === 400 ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+        err.response.status === 400 || err.response.status === 401 
+        ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
         return false
     }
 }
@@ -22,7 +23,8 @@ export const register = async (formData, setShowAlert, setAlertMessage) => {
         return data
     }catch(err){
         setShowAlert(true)
-        err.response.status === 400 ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+        err.response.status === 400 || err.response.status === 401
+        ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
         console.log(err.response.status)
         return false
     }
