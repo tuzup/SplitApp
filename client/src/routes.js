@@ -16,15 +16,23 @@ import DashboardLayout from './layouts/dashboard';
 export default function Router() {
   return useRoutes([
     {
-      path: configData.DASHBOARD_URL,
-      element: <DashboardLayout />
+      path: configData.DASHBOARD_HOME_URL,
+      element: <DashboardLayout />,
+      children: [
+        {path:configData.DASHBOARD_URL},
+        {path: configData.CREATE_GROUP_URL},
+        {path:configData.ADD_EXPENSE_URL},
+        {path:configData.USER_GROUPS_URL},
+        {path:configData.ABOUT_URL},
+        {path:configData.USER_PROFILE_URL}
+      ]
     },
     {
-        path: '/',
+        path: configData.LOGIN_URL,
         element: <LogoOnlyLayout />,
         children: [
             {path: '', element: <Login/>},
-            {path: '/register', element: <Register/> },
+            {path: configData.REGISTER_URL, element: <Register/> },
         ]
     },
     {path: '*', element: <Page404/>}

@@ -14,6 +14,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import navConfig from './NavConfig';
+import Copyright from '../../components/Copyright';
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +32,7 @@ const AccountStyle = styled('div')(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(2, 2.5),
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: theme.palette.grey[500_12],
+  backgroundColor: theme.palette.primary['lighter'],
 }));
 
 // ----------------------------------------------------------------------
@@ -56,6 +57,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   }, [pathname]);
 
   const renderContent = (
+    <>
     <Scrollbar
       sx={{
         height: 1,
@@ -66,7 +68,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Logo />
       </Box>
 
-      <Box sx={{ mb: 5, mx: 2.5 }}>
+      <Box sx={{ mb: 5, mx: 2.5, mt: 5 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
             <Avatar src={gravatarUrl(user.emailId, {size: 200})} alt="photoURL" />
@@ -84,10 +86,14 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
       <NavSection navConfig={navConfig} />
 
-      <Box sx={{ flexGrow: 1 }} />
-
-   
-    </Scrollbar>
+      <Box sx={{ flexGrow: 1 }} /> 
+    </Scrollbar> 
+     <Box sx={{display:'flex', flexDirection: 'column'}} > 
+        <Box sx={{marginTop:'auto', pb:2}}>
+          <Copyright/>
+        </Box>
+      </Box> 
+      </>
   );
 
   return (

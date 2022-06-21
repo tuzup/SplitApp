@@ -1,10 +1,12 @@
 {
     "SERVER_URL": "https://example.com/api/",
-    "DASHBOARD_URL" : "/dashboard",
+    "DASHBOARD_URL" : "/dashboard/app",
+    "DASHBOARD_HOME_URL" : "/dashboard",
     "LOGIN_URL" : "/",
     "REGISTER_URL": "/register",
-    "THEME_COLORS": {
-      "PRIMARY": "#007bff",
-      "SECONDARY": "#fc3"
-    }
+    "USER_GROUPS_URL" : "/dashboard/groups",
+    "ADD_EXPENSE_URL" : "/dashboard/addExpense",
+    "CREATE_GROUP_URL" : "/dashboard/crateGroup",
+    "ABOUT_URL" : "/dashboard/about",
+    "USER_PROFILE_URL" : "/dashboard/user"
   }

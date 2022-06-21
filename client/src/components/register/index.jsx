@@ -88,7 +88,7 @@ export default function Login() {
                 Get started absolutely free.
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Open Source, Group expense splitting app!</Typography>
 
             <RegisterForm />
             {/* <AuthSocial />*/}

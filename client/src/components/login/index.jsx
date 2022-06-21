@@ -2,7 +2,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography, Stack } from '@mui/material';
+import { Card, Link, Container, Typography, Stack, Box } from '@mui/material';
 
 
 
@@ -69,6 +69,7 @@ export default function Login() {
       user.accessToken && (window.location.href=configData.DASHBOARD_URL)  
     }
     return ( 
+      <>
         <RootStyle>
         <HeaderStyle>
         <Logo />
@@ -113,8 +114,9 @@ export default function Login() {
             <Copyright/>
             </Stack> 
           </ContentStyle>
-         
         </Container>
         </RootStyle>
+        
+        </>
     )
 }

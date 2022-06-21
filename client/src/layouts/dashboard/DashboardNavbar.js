@@ -7,6 +7,10 @@ import Iconify from '../../components/Iconify';
 //
 import AccountPopover from './AccountPopover';
 
+import NotificationsPopover from './NotificationsPopover'
+
+import Searchbar from './Searchbar';
+
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -44,10 +48,12 @@ export default function DashboardNavbar({ onOpenSidebar }) {
         <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
+
+        <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          {/* <NotificationsPopover /> */}
+          <NotificationsPopover />
           <AccountPopover />
         </Stack>
       </ToolbarStyle>

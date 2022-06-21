@@ -15,33 +15,23 @@ const navConfig = [
   },
   {
     title: 'groups',
-    path: '/dashboard/user',
+    path: configData.USER_GROUPS_URL,
     icon: getIcon('clarity:group-solid'),
   },
   {
     title: 'add expense',
-    path: '/dashboard/products',
+    path: configData.ADD_EXPENSE_URL,
     icon: getIcon('fluent:form-new-28-filled'),
   },
   {
     title: 'Create Group',
-    path: '/dashboard/blog',
+    path: configData.CREATE_GROUP_URL,
     icon: getIcon('fa6-solid:users-gear'),
   },
   {
-    title: 'login',
-    path: configData.LOGIN_URL,
-    icon: getIcon('eva:lock-fill'),
-  },
-  {
-    title: 'register',
-    path: '/register',
-    icon: getIcon('eva:person-add-fill'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: getIcon('eva:alert-triangle-fill'),
+    title: 'About',
+    path: configData.ABOUT_URL,
+    icon: getIcon('fluent:info-12-filled'),
   },
 ];
 
