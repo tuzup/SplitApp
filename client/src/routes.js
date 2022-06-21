@@ -4,7 +4,7 @@ import {useRoutes} from 'react-router-dom';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 
 //Pages 
-import Login from './components/Login';
+import Login from './components/login';
 
 
 export default function Router() {
@@ -13,7 +13,8 @@ export default function Router() {
         path: '/',
         element: <LogoOnlyLayout />,
         children: [
-            {path: 'login', element: <Login/>}
+            {path: '', element: <Login/>},
+            {path: '/register', element: <Login/> }
         ]
     }
   ])

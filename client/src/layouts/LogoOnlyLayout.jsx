@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/system';
 import Logo from '../components/Logo';
 
 
@@ -19,20 +18,6 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   },
 }));
 
-// ----------------------------------------------------------------------
-
-const StyleBox = styled(Box)(({theme})=> ({
-    background: theme.palette.mode === 'dark' ? '#1A2027' : '#f9fafb',
-    borderRadius: 5,
-    width: "35%",
-    height: "100%",
-    padding: 10,
-    display: {
-        xs: "none",
-        sm: "block" 
-    }
-
-}))
 
 export default function LogoOnlyLayout() {
   return (

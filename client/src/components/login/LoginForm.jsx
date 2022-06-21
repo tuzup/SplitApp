@@ -17,7 +17,7 @@ export default function LoginForm() {
   const user = JSON.parse(localStorage.getItem('profile'))
   //If user logged in the page is auto directed to dashboard
   if(user){
-    user.accessToken && (window.location.href="/login")  
+    user.accessToken && (window.location.href="/dashbord")  
   }
 
   const smUp = useResponsive('up', 'sm');
