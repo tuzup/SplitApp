@@ -5,6 +5,7 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 
 //Pages 
 import Login from './components/login';
+import Register from './components/register'
 
 
 export default function Router() {
@@ -14,7 +15,7 @@ export default function Router() {
         element: <LogoOnlyLayout />,
         children: [
             {path: '', element: <Login/>},
-            {path: '/register', element: <Login/> }
+            {path: '/register', element: <Register/> }
         ]
     }
   ])

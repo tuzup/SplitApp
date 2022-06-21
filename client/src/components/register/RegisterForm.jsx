@@ -6,13 +6,13 @@ import {  Stack,  TextField, IconButton, InputAdornment,  Snackbar, Alert } from
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../Iconify';
-import { login } from '../../services/auth';
+import { register } from '../../services/auth';
 
 import useResponsive from '../../theme/hooks/useResponsive';
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const smUp = useResponsive('up', 'sm');
 
   const [showAlert, setShowAlert] = useState(false);
@@ -20,22 +20,26 @@ export default function LoginForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const LoginSchema = Yup.object().shape({
+  const RegisterSchema = Yup.object().shape({
     emailId: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    password: Yup.string().required('Password is required')
+    .min(8, 'Password should be 8 characters minimum'),
+    firstName: Yup.string().required('First Name is required')
   });
 
   const formik = useFormik({
     initialValues: {
+      firstName: '',
+      lastName: '',
       emailId: '',
       password: '',
       remember: true,
     },
-    validationSchema: LoginSchema,
+    validationSchema: RegisterSchema,
     onSubmit: async () => {
-      //User Login Service call - Upon success user is redirected to dashboard 
-      //Login fail snackbar displays error
-      await login(values, setShowAlert, setAlertMessage)
+      //User Register Service call - Upon success user is redirected to dashboard 
+      //Register fail snackbar displays error
+      await register(values, setShowAlert, setAlertMessage)
     },
   });
 
@@ -46,7 +50,9 @@ export default function LoginForm() {
   };
 
   return (
-    <><Snackbar
+    <>
+    {!smUp &&
+    <Snackbar
       open={showAlert}
       autoHideDuration={6000}
        >
@@ -54,6 +60,7 @@ export default function LoginForm() {
          {alertMessage}
         </Alert>
       </Snackbar>
+    }
         <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Stack spacing={3}>
@@ -62,6 +69,28 @@ export default function LoginForm() {
               {alertMessage}
              </Alert>
             )}
+            <Stack spacing={3} direction="row"
+            alignItems="center" justifyContent="space-between"
+            >
+            <TextField
+              name="firstName"
+              fullWidth
+              type="text"
+              label="First Name"
+              {...getFieldProps('firstName')}
+              error={Boolean(touched.firstName && errors.firstName)}
+              helperText={touched.firstName && errors.firstName} />
+
+              <TextField
+              name="lastName"
+              fullWidth
+              type="text"
+              label="Last Name"
+              {...getFieldProps('lastName')}
+              error={Boolean(touched.lastName && errors.lastName)}
+              helperText={touched.lastName && errors.lastName} />
+            </Stack>
+
             <TextField
               name="emailId"
               fullWidth
@@ -92,7 +121,7 @@ export default function LoginForm() {
               helperText={touched.password && errors.password} />
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-            Login
+            Register
           </LoadingButton>
           </Stack>
 

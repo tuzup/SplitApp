@@ -2,7 +2,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography } from '@mui/material';
+import { Card, Link, Container, Typography, Stack } from '@mui/material';
 
 
 
@@ -10,6 +10,7 @@ import { Card, Link, Container, Typography } from '@mui/material';
 import useResponsive from '../../theme/hooks/useResponsive';
 import Logo from '../Logo';
 import LoginForm from './LoginForm';
+import Copyright from '../Copyright';
 
 const RootStyle = styled('div')(({
     theme
@@ -59,6 +60,12 @@ const SectionStyle = styled(Card)(({ theme }) => ({
 export default function Login() {
     const smUp = useResponsive('up', 'sm');
     const mdUp = useResponsive('up', 'md');
+    //Function to check if the user is already logged in - check localStorage 
+    const user = JSON.parse(localStorage.getItem('profile'))
+    //If user logged in the page is auto directed to dashboard
+    if(user){
+      user.accessToken && (window.location.href="/dashbord")  
+    }
     return ( 
         <RootStyle>
         <HeaderStyle>
@@ -100,7 +107,11 @@ export default function Login() {
                 </Link>
               </Typography>
             )}
+             <Stack spacing={3} sx={{mt: 5}}>
+            <Copyright/>
+            </Stack> 
           </ContentStyle>
+         
         </Container>
         </RootStyle>
     )
