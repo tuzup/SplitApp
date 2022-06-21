@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box, Stack } from '@mui/material';
 import Copyright from './Copyright';
 
+import configData from '../config.json'
+
 const ContentStyle = styled('div')(({ theme }) => ({
     maxWidth: 480,
     margin: 'auto',
@@ -34,7 +36,7 @@ export default function Page404() {
             sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
           />
 
-          <Button to="/dashboard" size="large" variant="contained" component={RouterLink}>
+          <Button to={configData.LOGIN_URL} size="large" variant="contained" component={RouterLink}>
             Go to Home
           </Button>
 

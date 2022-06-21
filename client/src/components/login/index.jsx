@@ -12,6 +12,8 @@ import Logo from '../Logo';
 import LoginForm from './LoginForm';
 import Copyright from '../Copyright';
 
+import configData from '../../config.json'
+
 const RootStyle = styled('div')(({
     theme
 }) => ({
@@ -64,7 +66,7 @@ export default function Login() {
     const user = JSON.parse(localStorage.getItem('profile'))
     //If user logged in the page is auto directed to dashboard
     if(user){
-      user.accessToken && (window.location.href="/dashbord")  
+      user.accessToken && (window.location.href=configData.DASHBOARD_URL)  
     }
     return ( 
         <RootStyle>

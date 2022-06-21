@@ -1,14 +1,14 @@
 import * as api from '../api/index'
+import configData from '../config.json'
 
 export const login = async (formData, setShowAlert, setAlertMessage) => {
     try{
         const  {data}  = await api.loginIn(formData)
         localStorage.setItem("profile", JSON.stringify(data))
-        window.location.href="/dashboard"
+        window.location.href=configData.DASHBOARD_URL
         return data
     }catch(err){
         setShowAlert(true)
-        console.log(err)
         err.response.status === 400 || err.response.status === 401 
         ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
         return false
@@ -25,7 +25,11 @@ export const register = async (formData, setShowAlert, setAlertMessage) => {
         setShowAlert(true)
         err.response.status === 400 || err.response.status === 401
         ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
-        console.log(err.response.status)
         return false
     }
+}
+
+export const logout = () =>{
+    localStorage.removeItem("profile");
+    window.location.href=configData.LOGIN_URL
 }

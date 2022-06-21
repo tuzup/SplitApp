@@ -81,6 +81,9 @@ exports.userLogin = async (req, res) => {
                 status: "Success",
                 message: "User Login Success",
                 userId: user.id,
+                emailId: user.emailId,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 accessToken
             })
         }

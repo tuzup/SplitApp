@@ -1,0 +1,10 @@
+{
+    "SERVER_URL": "https://example.com/api/",
+    "DASHBOARD_URL" : "/dashboard",
+    "LOGIN_URL" : "/",
+    "REGISTER_URL": "/register",
+    "THEME_COLORS": {
+      "PRIMARY": "#007bff",
+      "SECONDARY": "#fc3"
+    }
+  }
