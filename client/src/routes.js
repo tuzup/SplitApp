@@ -12,7 +12,7 @@ import Register from './components/register'
 import Page404 from './components/Page404';
 import DashboardLayout from './layouts/dashboard';
 import Profile from './components/profile';
-import PageUserDeleted from './components/PageUserDeleted';
+import PageUserDeleted from './components/profile/PageUserDeleted';
 
 
 export default function Router() {

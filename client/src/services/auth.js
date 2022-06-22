@@ -36,7 +36,6 @@ export const logout = () =>{
 
 export const deleteUser = async(data, setShowAlert, setAlertMessage) => {
     try{
-
         const response = await api.deleteUser(data)
         localStorage.removeItem("profile")
         window.location.href=configData.USER_DELETED_URL
@@ -45,6 +44,21 @@ export const deleteUser = async(data, setShowAlert, setAlertMessage) => {
         console.log(err)
          err.response.status === 400 || err.response.status === 401
          ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+        return false
+    }
+}
+
+export const updatePassword = async (formData, setShowAlert, setAlertMessage, showHomeAlert, homeAlertMessage) => {
+    try{
+        //registering user to the DB
+        const {data} = await api.updatePassword(formData)
+        showHomeAlert(true)
+        homeAlertMessage("Password Updated Sucessfully!")
+        return data
+    }catch(err){
+        setShowAlert(true)
+        err.response.status === 400 || err.response.status === 401
+        ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
         return false
     }
 }

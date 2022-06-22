@@ -2,9 +2,9 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box, Stack } from '@mui/material';
-import Copyright from './Copyright';
+import Copyright from '../Copyright';
 
-import configData from '../config.json'
+import configData from '../../config.json'
 
 const ContentStyle = styled('div')(({ theme }) => ({
     margin: 'auto',

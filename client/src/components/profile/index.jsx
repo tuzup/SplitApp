@@ -5,6 +5,7 @@ import useResponsive from '../../theme/hooks/useResponsive'
 import UserDetails from './userDetails'
 import { useState } from 'react'
 import { deleteUser} from '../../services/auth'
+import ChangePassword from './changePassword'
 
 const user = JSON.parse(localStorage.getItem('profile'))
 
@@ -27,12 +28,30 @@ export default function Profile() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(" ");
 
+  const [changePass, setChangePass] = useState(false)
+  const [editUser, setEditUser] = useState(false)
+
+  const handleAlertClose = () =>{
+      setShowAlert(false)
+  }
 
   const deleteConfirmOpen = () =>{
     setDeleteConfirm(true)
   }
   const deleteConfirmClose = () =>{
     setDeleteConfirm(false)
+  }
+  const showPassUpdate = () => {
+    setChangePass(true)
+  }
+  const hidePassUpdate = () => {
+    setChangePass(false)
+  }
+  const showEditUser = () => {
+    setEditUser(true)
+  }
+  const hideEditUser = () => {
+    setEditUser(false)
   }
 
   const apiDeleteCall = async() => {
@@ -56,8 +75,33 @@ return (
         </Link>
       </Typography>
     </Grid>
-    <Grid item xs={12} md={6} sx={{mt: 4}} >
-      <UserDetails/>
+    <Grid item xs={12} md={6} sx={{mt: 4}}>
+    {changePass && (
+      <ChangePassword hidePassUpdate={hidePassUpdate} emailId = {user.emailId}
+        showHomeAlert={setShowAlert} homeAlertMessage={setAlertMessage} 
+        />
+        
+    )}
+    {(!editUser && !changePass)  && 
+    (<>
+    {!mdUp &&
+          <Snackbar
+            open={showAlert}
+            autoHideDuration={6000}
+            onClose={handleAlertClose}
+          >
+         <Alert severity="success" sx={{ width: '100%' }}>
+         {alertMessage}
+        </Alert>
+      </Snackbar>}
+      {(mdUp && showAlert) && 
+      <Box mb={3}>
+      <Alert severity="success" sx={{ width: '100%' }} >
+      {alertMessage}
+     </Alert>
+     </Box>
+      }
+    <UserDetails/>
       <Grid container spacing={3} mt={1} px={mdUp ? 0 : 5}>
         <Grid item xs={12} md={3}
          order={{xs:3, md:1}}
@@ -67,14 +111,6 @@ return (
           >
             Delete
           </Button>
-          <Snackbar
-            open={showAlert}
-            autoHideDuration={6000}
-          >
-         <Alert severity="error" sx={{ width: '100%' }}>
-         {alertMessage}
-        </Alert>
-      </Snackbar>
           <Modal
           open={deleteConfirm}
           onClose={deleteConfirmClose}
@@ -106,18 +142,24 @@ return (
         <Grid item xs={12} md={5}
          order={{xs:2, md:2}}
         >
-          <Button startIcon={<Iconify icon='mdi:form-textbox-password'/>} variant="outlined" color="warning" sx={{width:"100%"}} >
+          <Button startIcon={<Iconify icon='mdi:form-textbox-password'/>} variant="outlined" color="warning" sx={{width:"100%"}} 
+          onClick = {showPassUpdate}
+          >
             Change Password
           </Button>
         </Grid>
         <Grid item xs={12} md={4} 
         order={{xs:1, md:3}}
         >
-          <Button startIcon={<Iconify icon='clarity:edit-solid'/>} variant="outlined" sx={{width:"100%"}} >
+          <Button startIcon={<Iconify icon='clarity:edit-solid'/>} variant="outlined" sx={{width:"100%"}} 
+          onClick={showEditUser}
+          >
             Edit Details
           </Button>
         </Grid>
       </Grid>
+      </>
+      )}
     </Grid>
   </Grid>
 
