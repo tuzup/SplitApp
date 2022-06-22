@@ -33,3 +33,18 @@ export const logout = () =>{
     localStorage.removeItem("profile");
     window.location.href=configData.LOGIN_URL
 }
+
+export const deleteUser = async(data, setShowAlert, setAlertMessage) => {
+    try{
+
+        const response = await api.deleteUser(data)
+        localStorage.removeItem("profile")
+        window.location.href=configData.USER_DELETED_URL
+    }catch(err){
+        setShowAlert(true)
+        console.log(err)
+         err.response.status === 400 || err.response.status === 401
+         ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+        return false
+    }
+}

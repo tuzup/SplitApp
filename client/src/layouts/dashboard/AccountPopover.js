@@ -74,7 +74,8 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={gravatarUrl(user.emailId, {size: 200})} alt="photoURL" />
+        {user&&
+        <Avatar src={gravatarUrl(user?.emailId, {size: 200})} alt="photoURL" />}
       </IconButton>
 
       <MenuPopover
@@ -93,10 +94,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user.firstName} {user.lastName}
+            {user?.firstName} {user?.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user.emailId}
+            {user?.emailId}
           </Typography>
         </Box>
 

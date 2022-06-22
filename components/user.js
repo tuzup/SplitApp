@@ -148,6 +148,7 @@ exports.deleteUser = async (req, res) => {
         })
         res.status(200).json({
             status: "Success",
+            message: "User Account deleted!",
             response: delete_response
         })
     } catch (err) {

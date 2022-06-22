@@ -8,5 +8,6 @@
     "ADD_EXPENSE_URL" : "/dashboard/addExpense",
     "CREATE_GROUP_URL" : "/dashboard/crateGroup",
     "ABOUT_URL" : "/dashboard/about",
-    "USER_PROFILE_URL" : "/dashboard/user"
+    "USER_PROFILE_URL" : "/dashboard/userProfile",
+    "USER_DELETED_URL" : "/userProfile/confirmDelete"
   }

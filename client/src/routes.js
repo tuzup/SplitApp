@@ -11,6 +11,8 @@ import Login from './components/login';
 import Register from './components/register'
 import Page404 from './components/Page404';
 import DashboardLayout from './layouts/dashboard';
+import Profile from './components/profile';
+import PageUserDeleted from './components/PageUserDeleted';
 
 
 export default function Router() {
@@ -24,7 +26,9 @@ export default function Router() {
         {path:configData.ADD_EXPENSE_URL},
         {path:configData.USER_GROUPS_URL},
         {path:configData.ABOUT_URL},
-        {path:configData.USER_PROFILE_URL}
+        {path:configData.USER_PROFILE_URL,
+          element: <Profile/>
+        }
       ]
     },
     {
@@ -33,6 +37,7 @@ export default function Router() {
         children: [
             {path: '', element: <Login/>},
             {path: configData.REGISTER_URL, element: <Register/> },
+            {path: configData.USER_DELETED_URL, element: <PageUserDeleted/>}
         ]
     },
     {path: '*', element: <Page404/>}
