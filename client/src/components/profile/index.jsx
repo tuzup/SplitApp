@@ -4,10 +4,12 @@ import Iconify from '../Iconify'
 import useResponsive from '../../theme/hooks/useResponsive' 
 import UserDetails from './userDetails'
 import { useState } from 'react'
-import { deleteUser} from '../../services/auth'
+import { deleteUser, getUser} from '../../services/auth'
 import ChangePassword from './changePassword'
+import { useEffect } from 'react'
+import Loading from '../loading'
 
-const user = JSON.parse(localStorage.getItem('profile'))
+const profile = JSON.parse(localStorage.getItem('profile'))
 
 const modelStyle = {
   position: 'absolute',
@@ -30,6 +32,7 @@ export default function Profile() {
 
   const [changePass, setChangePass] = useState(false)
   const [editUser, setEditUser] = useState(false)
+
 
   const handleAlertClose = () =>{
       setShowAlert(false)
@@ -57,17 +60,31 @@ export default function Profile() {
   const apiDeleteCall = async() => {
     await deleteUser(user, setShowAlert, setAlertMessage) 
   }
-
+  
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState([]);
+  
+  useEffect(() =>{
+    const getUserDetails = async () => {
+      setLoading(true)
+      const response = await getUser(profile, setShowAlert, setAlertMessage)
+      setUser(response.data.user)
+      setLoading(false)
+    }
+    getUserDetails()
+  },[]);
 return (
 <Container>
+  {loading ?  <Loading/>: 
+  <> 
   <Typography variant="h5" component="h1">
     User Profile
   </Typography>
 
   <Grid container spacing={3} p={4}>
     <Grid item xs={12} md={4} align="center">
-      {user&&
-      <Avatar src={gravatarUrl(user?.emailId, {size: 200})} alt="photoURL" sx={{ width: 240, height: 240 }} />}
+      {profile&&
+      <Avatar src={gravatarUrl(profile?.emailId, {size: 200})} alt="photoURL" sx={{ width: 240, height: 240 }} />}
       <Typography variant="body2" align="center" sx={{ mt: 3, color: 'text.secondary' }}>
         *The profile picture is taken from Gravitar{' '} <br />
         <Link variant="subtitle3" component={'a'} href="https://en.gravatar.com/support/faq/" target="_blank">
@@ -82,6 +99,15 @@ return (
         />
         
     )}
+
+    {editUser && 
+      <Button startIcon={<Iconify icon='clarity:edit-solid'/>} variant="outlined" sx={{width:"100%"}} 
+      onClick={hideEditUser}
+      >
+        Edit Details
+      </Button>
+    }
+
     {(!editUser && !changePass)  && 
     (<>
     {!mdUp &&
@@ -101,7 +127,8 @@ return (
      </Alert>
      </Box>
       }
-    <UserDetails/>
+
+    <UserDetails firstName={user.firstName} lastName={user.lastName} emailId={user.emailId}/>
       <Grid container spacing={3} mt={1} px={mdUp ? 0 : 5}>
         <Grid item xs={12} md={3}
          order={{xs:3, md:1}}
@@ -162,6 +189,8 @@ return (
       )}
     </Grid>
   </Grid>
+  </>
+}
 
 </Container>
 )

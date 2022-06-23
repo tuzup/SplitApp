@@ -1,14 +1,21 @@
 import { Stack, TextField } from '@mui/material'
-import React from 'react'
+import PropTypes from 'prop-types';
 
-export default function UserDetails() {
+UserDetails.propTypes = {
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    emailId: PropTypes.string,
+  };
+
+export default function UserDetails({firstName, lastName, emailId}) {
+
 return (
 <Stack spacing={3}>
     <Stack spacing={3} direction="row" alignItems="center" justifyContent="space-between">
-        <TextField disabled id="outlined-disabled" label="First Name" defaultValue="Sunny" sx={{width:"100%"}} />
-        <TextField disabled id="outlined-disabled" label="Last Name" defaultValue="George" sx={{width:"100%"}} />
+        <TextField disabled id="outlined-disabled" label="First Name" defaultValue={firstName} sx={{width:"100%"}} />
+        <TextField disabled id="outlined-disabled" label="Last Name" defaultValue={lastName} sx={{width:"100%"}} />
     </Stack>
-    <TextField disabled id="outlined-disabled" label="Email address" defaultValue="s4sunnygeorge@gmail.com"
+    <TextField disabled id="outlined-disabled" label="Email address" defaultValue={emailId}
         sx={{width:"100%"}} />
 </Stack>
 )

@@ -16,6 +16,8 @@ import NavSection from '../../components/NavSection';
 import navConfig from './NavConfig';
 import Copyright from '../../components/Copyright';
 
+import dataConfig from '../../config.json';
+
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -69,7 +71,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5, mt: 5 }}>
-        <Link underline="none" component={RouterLink} to="#">
+        <Link underline="none" component={RouterLink} to={dataConfig.USER_PROFILE_URL}>
           <AccountStyle>
           {user&&
         <Avatar src={gravatarUrl(user?.emailId, {size: 200})} alt="photoURL" />}

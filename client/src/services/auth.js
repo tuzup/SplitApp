@@ -34,6 +34,20 @@ export const logout = () =>{
     window.location.href=configData.LOGIN_URL
 }
 
+
+export const getUser = async (formData, setShowAlert, setAlertMessage) => {
+    try{
+        //registering user to the DB
+        const data = await api.getUser(formData)
+        return data
+    }catch(err){
+        setShowAlert(true)
+        err.response.status === 400 || err.response.status === 401
+        ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+        return false
+    }
+}
+
 export const deleteUser = async(data, setShowAlert, setAlertMessage) => {
     try{
         const response = await api.deleteUser(data)
