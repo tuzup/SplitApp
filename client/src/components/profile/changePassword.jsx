@@ -27,7 +27,7 @@ const smUp = useResponsive('up', 'sm');
 
 
 const [showAlert, setShowAlert] = useState(false);
-const [alertMessage, setAlertMessage] = useState(" ");
+const [alertMessage, setAlertMessage] = useState("howdy");
 
 const [showPasswordOld, setShowPasswordOld] = useState(false);
 const [showPasswordNew, setShowPasswordNew] = useState(false);
@@ -51,8 +51,8 @@ validationSchema: RegisterSchema,
 onSubmit: async () => {
 //User Register Service call - Upon success user is redirected to dashboard
 //Register fail snackbar displays error
-await updatePassword(values, setShowAlert, setAlertMessage, showHomeAlert, homeAlertMessage)
-{showHomeAlert && 
+const update_response = await updatePassword(values, setShowAlert, setAlertMessage, showHomeAlert, homeAlertMessage)
+{update_response &&
   hidePassUpdate()
 }
 },
