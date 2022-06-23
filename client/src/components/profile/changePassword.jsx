@@ -27,7 +27,7 @@ const smUp = useResponsive('up', 'sm');
 
 
 const [showAlert, setShowAlert] = useState(false);
-const [alertMessage, setAlertMessage] = useState("howdy");
+const [alertMessage, setAlertMessage] = useState(" ");
 
 const [showPasswordOld, setShowPasswordOld] = useState(false);
 const [showPasswordNew, setShowPasswordNew] = useState(false);
