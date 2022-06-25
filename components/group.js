@@ -114,6 +114,8 @@ exports.findUserGroup = async (req, res) => {
         }
         const groups = await model.Group.find({
             groupMembers: req.body.emailId
+        }).sort({
+            $natural: -1 //to get the newest first 
         })
         res.status(200).json({
             status: "Success",

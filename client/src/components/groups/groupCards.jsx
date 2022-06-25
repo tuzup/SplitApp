@@ -34,11 +34,12 @@ GroupCards.propTypes = {
   groupMembers: PropTypes.array,
   share: PropTypes.number,
   currencyType: PropTypes.string,
+  groupCategory: PropTypes.string,
   isGroupActive: PropTypes.bool,
   sx: PropTypes.object,
 };
 
-export default function GroupCards({ title, description, groupMembers, share, currencyType, isGroupActive, icon, color = 'primary', sx, ...other }) {
+export default function GroupCards({ title, description, groupMembers, share, currencyType, groupCategory, isGroupActive, icon, color = 'primary', sx, ...other }) {
 
   const currencyFind = (currencyType) => {
     switch (currencyType) {
@@ -50,6 +51,23 @@ export default function GroupCards({ title, description, groupMembers, share, cu
         return "€"
       default:
         return '₹'
+    }
+  }
+
+  const categoryIcon = (groupCategory) => {
+    switch(groupCategory){
+      case "Home":
+        return 'ant-design:home-filled'
+      case "Trip":
+        return 'ic:outline-flight'
+      case "Office":
+        return 'mdi:office-building-marker'
+      case "Sport":
+        return 'material-symbols:sports-cricket'
+      case "Others":
+        return 'foundation:page-edit'
+      default:
+        return 'ic:baseline-insert-page-break'
     }
   }
 
@@ -87,7 +105,7 @@ export default function GroupCards({ title, description, groupMembers, share, cu
           px: '9px'
         }}
       >
-        <Iconify icon="ic:sharp-flight-takeoff" color={(theme) => theme.palette[color].darker}
+        <Iconify icon={categoryIcon(groupCategory)} color={(theme) => theme.palette[color].darker}
         />
       </CategoryStyle>
 
@@ -142,7 +160,7 @@ export default function GroupCards({ title, description, groupMembers, share, cu
                 borderRadius: 1,
                 color: (theme) => theme.palette['warning'].darker,
               }}>
-                Trip
+                {groupCategory}
               </Box>
             </Stack>
           </Grid>

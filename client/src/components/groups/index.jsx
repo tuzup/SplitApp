@@ -65,6 +65,7 @@ export default function Group() {
                   groupMembers={myGroup?.groupMembers}
                   share={myGroup?.split[0][emailId]}
                   currencyType={myGroup?.currencyType}
+                  groupCategory={myGroup?.groupCategory}
                   isGroupActive={checkActive(myGroup?.split[0])}
                   color={color[Math.floor(Math.random() * 5)]}
                 />

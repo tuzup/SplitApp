@@ -55,8 +55,9 @@ const Group = new mongoose.Schema({
         type: Array,
         required: true
     },
-    category: {
+    groupCategory: {
         type: String,
+        default: "Others"
     },
     split: {
         type: Array

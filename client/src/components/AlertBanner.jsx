@@ -14,7 +14,6 @@ AlertBanner.propTypes = {
 
 export default function AlertBanner({showAlert, alertMessage, severity='error', autoHideDuration, onCloseHandle }) {
     const mdUp = useResponsive('up', 'md');
-    console.log(showAlert)
   return (
     <>
     {!mdUp &&
