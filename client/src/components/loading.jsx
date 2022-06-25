@@ -1,3 +1,4 @@
+import { calculateSize } from "@iconify/react";
 import { CircularProgress, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
@@ -5,16 +6,19 @@ import { Box } from "@mui/system";
 export default function Loading() {
 
   return (
-    <Box 
-    style={{ margin: 0,
-        position: 'absolute',
-        top: '45%',
-        left: '50%' }}
+    <Grid
+    direction={'column '}
+    style={{ 
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      minHeight: 'calc(100vh - 200px )' }}
   >
-    <CircularProgress size={60} sx={{marginLeft: '25%'}}/>
-    <Typography variant="h3" color={'text.secondary'}>
+    <CircularProgress size={60} />
+    <Typography variant="h3" textAlign={'center'}>
         Loading...
     </Typography>
-    </Box>
+    </Grid>
   )
 }

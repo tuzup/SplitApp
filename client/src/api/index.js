@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 
-const API = axios.create({ baseURL: 'http://localhost:3001'})
+//const API = axios.create({ baseURL: 'http://localhost:3001'})
+const API = axios.create({ baseURL: 'http://192.168.1.104:3001'})
 
 const profile = JSON.parse(localStorage.getItem('profile'))
 
@@ -23,3 +24,4 @@ export const getUser = (formData) => API.post('/users/v1/view', formData, access
 
 export const editUser = (formData) => API.post('/users/v1/edit', formData, accessHeader)
 
+export const getUserGroups = (formData) => API.post('/group/v1/user', formData, accessHeader)

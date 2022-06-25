@@ -182,7 +182,7 @@ exports.editGroup = async (req, res) => {
             }, {
                 $set: {
                     groupName: editGroup.groupName,
-                    groupDesciption: editGroup.groupDesciption,
+                    groupDescription: editGroup.groupDescription,
                     currencyType: editGroup.currencyType,
                     groupMembers: editGroup.groupMembers,
                     split: editGroup.split

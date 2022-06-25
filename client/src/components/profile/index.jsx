@@ -86,7 +86,7 @@ return (
   <Grid container spacing={3} p={4}>
     <Grid item xs={12} md={4} align="center">
       {user.emailId && 
-      <Avatar src={gravatarUrl(user.emailId, {size: 200})} alt="photoURL" sx={{ width: 240, height: 240 }} />}
+      <Avatar src={gravatarUrl(user.emailId, {size: 350})} alt="photoURL" sx={{ width: 240, height: 240 }} />}
       <Typography variant="body2" align="center" sx={{ mt: 3, color: 'text.secondary' }}>
         *The profile picture is taken from Gravitar{' '} <br />
         <Link variant="subtitle3" component={'a'} href="https://en.gravatar.com/support/faq/" target="_blank">
@@ -129,8 +129,8 @@ showHomeAlert={setShowAlert} homeAlertMessage={setAlertMessage}
       }
 
     <UserDetails firstName={user.firstName} lastName={user.lastName} emailId={user.emailId}/>
-      <Grid container spacing={3} mt={1} px={mdUp ? 0 : 5}>
-        <Grid item xs={12} md={3}
+      <Grid container spacing={3} mt={1} justifyContent={'center'}>
+        <Grid item xs={11} md={3}
          order={{xs:3, md:1}}
         >
           <Button startIcon={<Iconify icon='fluent:delete-dismiss-24-filled'/>} variant="outlined" color="error" sx={{width:"100%"}} 
@@ -166,7 +166,7 @@ showHomeAlert={setShowAlert} homeAlertMessage={setAlertMessage}
         </Box>
           </Modal>
         </Grid>
-        <Grid item xs={12} md={5}
+        <Grid item xs={11} md={5}
          order={{xs:2, md:2}}
         >
           <Button startIcon={<Iconify icon='mdi:form-textbox-password'/>} variant="outlined" color="warning" sx={{width:"100%"}} 
@@ -175,7 +175,7 @@ showHomeAlert={setShowAlert} homeAlertMessage={setAlertMessage}
             Change Password
           </Button>
         </Grid>
-        <Grid item xs={12} md={4} 
+        <Grid item xs={11} md={4} 
         order={{xs:1, md:3}}
         >
           <Button startIcon={<Iconify icon='clarity:edit-solid'/>} variant="outlined" sx={{width:"100%"}} 
