@@ -14,6 +14,7 @@ import DashboardLayout from './layouts/dashboard';
 import Profile from './components/profile';
 import PageUserDeleted from './components/profile/PageUserDeleted';
 import Group from './components/groups';
+import CreateGroup from './components/groups/createGroup';
 
 
 export default function Router() {
@@ -23,7 +24,8 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         {path:configData.DASHBOARD_URL},
-        {path: configData.CREATE_GROUP_URL},
+        {path: configData.CREATE_GROUP_URL,
+        element: <CreateGroup/>},
         {path:configData.ADD_EXPENSE_URL},
         {path:configData.USER_GROUPS_URL,
           element: <Group/>

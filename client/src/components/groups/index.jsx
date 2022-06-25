@@ -1,4 +1,4 @@
-import { Grid, CardActionArea, CardContent, CardMedia, Typography, Container, Card, Box, Link, alpha } from "@mui/material";
+import { Grid, CardActionArea, CardContent, CardMedia, Typography, Container, Card, Box, Link, alpha, Fab } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getUserGroupsService } from "../../services/groupServices";
 import Iconify from "../Iconify";
@@ -38,13 +38,27 @@ export default function Group() {
     <Container>
       {loading ? <Loading /> :
         <>
+          <Fab component={RouterLink}
+            to={dataConfig.CREATE_GROUP_URL} color="primary" aria-label="add" sx={{
+              margin: 0,
+              top: 'auto',
+              right: 20,
+              bottom: 20,
+              left: 'auto',
+              position: 'fixed'
+            }}>
+            <Iconify icon="fluent:people-team-add-20-filled" sx={{
+              width: '100%',
+              height: 20
+            }} />
+          </Fab>
           <Typography variant="h3" pb={2}>
             Your Groups,
           </Typography>
           <Grid container spacing={4}>
 
             {group?.map(myGroup => (
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={6} lg={4}>
                 <GroupCards
                   title={myGroup?.groupName}
                   description={myGroup?.groupDescription}
@@ -56,7 +70,7 @@ export default function Group() {
                 />
               </Grid>
             ))}
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6} lg={4}>
               <Link component={RouterLink}
                 to={dataConfig.CREATE_GROUP_URL}
                 sx={{ textDecoration: 'none' }}
@@ -67,16 +81,16 @@ export default function Group() {
                     boxShadow: 10,
                     borderRadius: 2,
                     backgroundImage: (theme) =>
-                      `linear-gradient(169deg, ${alpha(theme.palette.grey[900], 0.6)} 0%, ${alpha(
-                        theme.palette.grey[900],
-                        0.45
+                      `linear-gradient(169deg, ${alpha(theme.palette['primary'].light, 0.6)} 0%, ${alpha(
+                        theme.palette['primary'].darker,
+                        0.55
                       )} 70%)`,
                     minHeight: 310
                   }}
                 >
                   <Grid
                     container
-                    direction="row"
+                    direction={"row"}
                     justifyContent="center"
                     alignItems="center"
                     minHeight={310}

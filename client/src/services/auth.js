@@ -48,6 +48,15 @@ export const getUser = async (formData, setShowAlert, setAlertMessage) => {
     }
 }
 
+export const getEmailList = async () => {
+    try{
+        const data = await api.getEmailList()
+        return data 
+    }catch(err){
+        return null 
+    }
+}
+
 export const deleteUser = async(data, setShowAlert, setAlertMessage) => {
     try{
         const response = await api.deleteUser(data)

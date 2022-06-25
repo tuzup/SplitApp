@@ -9,6 +9,7 @@ import ChangePassword from './changePassword'
 import { useEffect } from 'react'
 import Loading from '../loading'
 import EditForm from './editUser'
+import AlertBanner from '../AlertBanner'
 
 
 const profile = JSON.parse(localStorage.getItem('profile'))
@@ -110,23 +111,8 @@ showHomeAlert={setShowAlert} homeAlertMessage={setAlertMessage}
 
     {(!editUser && !changePass)  && 
     (<>
-    {!mdUp &&
-          <Snackbar
-            open={showAlert}
-            autoHideDuration={6000}
-            onClose={handleAlertClose}
-          >
-         <Alert severity="success" sx={{ width: '100%' }}>
-         {alertMessage}
-        </Alert>
-      </Snackbar>}
-      {(mdUp && showAlert) && 
-      <Box mb={3}>
-      <Alert severity="success" sx={{ width: '100%' }} >
-      {alertMessage}
-     </Alert>
-     </Box>
-      }
+    <AlertBanner showAlert={showAlert} alertMessage={alertMessage} severity='success' autoHideDuration={5000}
+            onCloseHandle={handleAlertClose}/>
 
     <UserDetails firstName={user.firstName} lastName={user.lastName} emailId={user.emailId}/>
       <Grid container spacing={3} mt={1} justifyContent={'center'}>

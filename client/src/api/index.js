@@ -25,3 +25,7 @@ export const getUser = (formData) => API.post('/users/v1/view', formData, access
 export const editUser = (formData) => API.post('/users/v1/edit', formData, accessHeader)
 
 export const getUserGroups = (formData) => API.post('/group/v1/user', formData, accessHeader)
+
+export const getEmailList = () => API.get('/users/v1/emailList', accessHeader)
+
+export const createGroup = (formData) => API.post('/group/v1/add', formData,  accessHeader)

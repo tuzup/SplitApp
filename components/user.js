@@ -129,6 +129,42 @@ exports.viewUser = async (req, res) => {
 
 
 /*
+View All User EmailIs function 
+This function is to get all the user email Id 
+Accepts: none
+Returns: all user Email ID
+*/
+exports.emailList = async (req, res) => {
+    try {
+        //check if the login user is same as the requested user 
+        const userEmails = await model.User.find({
+        }, {
+            emailId: 1,
+            _id: 0
+        })
+        if(!userEmails) {
+            var err = new Error("User does not exist!")
+            err.status = 400
+            throw err
+        }
+        var emailList = [] 
+        for(var email of userEmails){
+            emailList.push(email.emailId)
+        }
+        res.status(200).json({
+            status: "Success",
+            user: emailList
+        })
+    } catch(err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+/*
 Delete User function 
 This function is used to delete an existing user in the database 
 Accepts: user email id 

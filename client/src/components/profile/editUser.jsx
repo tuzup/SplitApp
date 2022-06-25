@@ -10,6 +10,7 @@ import { editUser} from '../../services/auth';
 
 import useResponsive from '../../theme/hooks/useResponsive';
 import PropTypes from 'prop-types';
+import AlertBanner from '../AlertBanner';
 
 // ----------------------------------------------------------------------
 
@@ -53,27 +54,13 @@ export default function EditForm({hideEditUser, emailId, firstName, lastName, sh
 
   return (
     <>
-    {!smUp &&
-    <Snackbar
-      open={showAlert}
-       >
-         <Alert severity="error" sx={{ width: '100%' }}>
-         {alertMessage}
-        </Alert>
-      </Snackbar>
-    }
         <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Stack spacing={3}>
-            {smUp && showAlert && (
-              <Alert severity="error" sx={{ width: '100%' }}>
-              {alertMessage}
-             </Alert>
-            )}
+            <AlertBanner showAlert={showAlert} alertMessage = {alertMessage} severity='error'/>
             <Stack spacing={3} direction="row"
             alignItems="center" justifyContent="space-between"
             >
-            
             <TextField
               name="firstName"
               fullWidth

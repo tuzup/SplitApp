@@ -38,7 +38,7 @@ GroupCards.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function GroupCards({ title, description, groupMembers, share, currencyType,isGroupActive, icon, color = 'primary', sx, ...other }) {
+export default function GroupCards({ title, description, groupMembers, share, currencyType, isGroupActive, icon, color = 'primary', sx, ...other }) {
 
   const currencyFind = (currencyType) => {
     switch (currencyType) {
@@ -80,27 +80,28 @@ export default function GroupCards({ title, description, groupMembers, share, cu
           color: 'background.paper'
         }}
       />
-      <CategoryStyle 
-        sx={{bgcolor: (theme) => theme.palette[color].lighter,
+      <CategoryStyle
+        sx={{
+          bgcolor: (theme) => theme.palette[color].lighter,
           py: '6px',
           px: '9px'
         }}
       >
-         <Iconify icon="ic:sharp-flight-takeoff" color={(theme) => theme.palette[color].darker}
-         />
+        <Iconify icon="ic:sharp-flight-takeoff" color={(theme) => theme.palette[color].darker}
+        />
       </CategoryStyle>
 
-      <Box pt={6} pl={2} pb={3}
+      <Box pt={6} px={2} pb={3}
         sx={{
           bgcolor: (theme) => theme.palette[color].lighter,
           color: (theme) => theme.palette[color].darker
         }}
       >
-        <Typography variant="h3" fontSize={30} sx={{ opacity: 0.72 }}>
-          {title?.length <= 15 ? title : title?.slice(0, 15) + '...'}
+        <Typography noWrap variant="h3" fontSize={30} sx={{ opacity: 0.72 }}>
+          {title}
         </Typography>
-        <Typography variant="subtitle3" fontSize={14} color={'text.secondary'}>
-          {description?.length <= 35 ? description : description?.slice(0, 35) + '...'} &nbsp;</Typography>
+        <Typography noWrap variant="subtitle2" fontSize={14} color={'text.secondary'}>
+          {description} &nbsp;</Typography>
       </Box>
       <CardContent
         sx={{
@@ -111,12 +112,12 @@ export default function GroupCards({ title, description, groupMembers, share, cu
       >
         <Stack direction="row" spacing={2} p={1} mt={1}>
           <Typography sx={{
-            bgcolor: isGroupActive ?  (theme) => theme.palette['error'].lighter : (theme) => theme.palette['success'].lighter    ,
+            bgcolor: isGroupActive ? (theme) => theme.palette['error'].lighter : (theme) => theme.palette['success'].lighter,
             p: 1,
             borderRadius: 1,
             color: isGroupActive ? (theme) => theme.palette['error'].darker : (theme) => theme.palette['success'].darker
           }}>
-            {isGroupActive ? (<b>Not Settled</b>)  : (<b>Settled</b>) }
+            {isGroupActive ? (<b>Not Settled</b>) : (<b>Settled</b>)}
           </Typography>
 
           <Typography sx={{
@@ -129,9 +130,9 @@ export default function GroupCards({ title, description, groupMembers, share, cu
               {currencyFind(currencyType)} {Math.abs(Math.floor(share))}</b>
           </Typography>
         </Stack>
-        <Grid container direction="row" spacing={1} p={1}>
+        <Grid container direction={'row'} spacing={1} p={1}>
           <Grid item md={6} xs={12}>
-            <Stack direction="row" width={'100%'}>
+            <Stack direction={"row"} width={'100%'}>
               <Typography justifyContent={'center'} py={1} mr={1}>
                 Category {" "}
               </Typography>

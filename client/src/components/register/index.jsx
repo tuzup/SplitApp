@@ -2,7 +2,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography, Stack } from '@mui/material';
+import { Card, Link, Container, Typography, Stack, Box } from '@mui/material';
 
 
 
@@ -64,7 +64,7 @@ export default function Login() {
     return ( 
         <RootStyle>
         <HeaderStyle>
-        <Logo />
+        <Box/>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               Already have an account?  {''}
