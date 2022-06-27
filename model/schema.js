@@ -80,6 +80,10 @@ const Expense = new mongoose.Schema({
         type: Number,
         required: true
     },
+    expenseDate:{
+        type: Date,
+        default: Date.now
+    },
     expenseOwner: {
         type: String,
         required: true

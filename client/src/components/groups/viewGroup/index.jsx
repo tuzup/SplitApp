@@ -7,6 +7,7 @@ import Iconify from '../../Iconify';
 import Loading from '../../loading';
 import useResponsive from '../../../theme/hooks/useResponsive';
 import { convertToCurrency, currencyFind, categoryIcon } from '../../../utils/helper';
+import ExpenseCard from './expenseCard';
 
 const profile = JSON.parse(localStorage.getItem('profile'))
 const emailId = profile?.emailId
@@ -177,7 +178,7 @@ export default function ViewGroup() {
                                 ...(mdUp && { px: 6 })
                             }}
                         >
-                            
+
                             <Grid item xs={12} md={4}>
                                 <Stack spacing={2} direction='row'
                                     sx={{
@@ -251,7 +252,31 @@ export default function ViewGroup() {
 
                         </Grid>
 
-                        
+
+                        <Grid container mt={2} spacing={2}
+                            sx={{
+                                ...(mdUp && { px: 6 })
+                            }}
+                        >
+                            <Grid item xs={12}>
+                                <Typography variant="h5" mt={4}>
+                                    Group Expenses
+                                </Typography>
+                            </Grid>
+                            {groupExpense?.expense?.map(myExpense => (
+                            <Grid item xs={12} md={6}>                               
+                                         <ExpenseCard 
+                                         expenseName={myExpense?.expenseName}
+                                         expenseAmount ={myExpense?.expenseAmount}
+                                         expenseOwner={myExpense?.expenseOwner}
+                                         expenseDate={myExpense?.expenseDate}
+                                         currencyType={group?.currencyType}
+                                         />
+                            </Grid>) )}
+                        </Grid>
+
+
+
 
                     </Box>
 

@@ -3,6 +3,7 @@
 
 
 export function convertToCurrency(number) {
+  number = Math.floor(Math.abs(number))
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -36,3 +37,15 @@ export function categoryIcon(groupCategory){
           return 'ic:baseline-insert-page-break'
   }
 }
+
+const monthNamesMMM = ["JAN", "FRB", "MAR", "APR", "MAY", "JUN",
+  "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+];
+export function getMonthMMM(expDate) {
+  const date = new Date(expDate)
+  return monthNamesMMM[date.getMonth()];
+}
+
+Number.prototype.zeroPad = function() {
+  return ('0'+this).slice(-2);
+};
