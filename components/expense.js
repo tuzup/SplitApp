@@ -216,7 +216,7 @@ Returns: Json with all the expense record and the total expense amount for the g
 exports.viewGroupExpense = async (req, res) => {
     try {
         var groupExpense = await model.Expense.find({
-            groupId: req.body.groupId
+            groupId: req.body.id
         })
         if (groupExpense.length == 0) {
             var err = new Error("No expense present for the group")

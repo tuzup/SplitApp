@@ -15,6 +15,7 @@ import Profile from './components/profile';
 import PageUserDeleted from './components/profile/PageUserDeleted';
 import Group from './components/groups';
 import CreateGroup from './components/groups/createGroup';
+import ViewGroup from './components/groups/viewGroup';
 
 
 export default function Router() {
@@ -30,6 +31,8 @@ export default function Router() {
         {path:configData.USER_GROUPS_URL,
           element: <Group/>
         },
+        {path:configData.VIEW_GROUP_ROUTER_URL,
+          element: <ViewGroup/>},
         {path:configData.ABOUT_URL},
         {path:configData.USER_PROFILE_URL,
           element: <Profile/>

@@ -14,6 +14,7 @@
   "author": "Sunny George",
   "license": "ISC",
   "dependencies": {
+    "@mui/x-data-grid": "^5.12.3",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

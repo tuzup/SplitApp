@@ -6,8 +6,8 @@ import { Box } from "@mui/system";
 export default function Loading() {
 
   return (
-    <Grid
-    direction={'column '}
+    <Grid container
+    direction="column"
     style={{ 
       display: 'flex',
       justifyContent: 'center',

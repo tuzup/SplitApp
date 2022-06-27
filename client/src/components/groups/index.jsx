@@ -55,10 +55,14 @@ export default function Group() {
           <Typography variant="h3" pb={2}>
             Your Groups,
           </Typography>
-          <Grid container spacing={4}>
+          <Grid container spacing={4} >
 
             {group?.map(myGroup => (
-              <Grid item xs={12} md={6} lg={4}>
+              <Grid item xs={12} md={6} lg={6}>
+                <Link component={RouterLink}
+                to={dataConfig.VIEW_GROUP_URL+myGroup?._id}
+                sx={{ textDecoration: 'none' }}
+              >
                 <GroupCards
                   title={myGroup?.groupName}
                   description={myGroup?.groupDescription}
@@ -69,9 +73,10 @@ export default function Group() {
                   isGroupActive={checkActive(myGroup?.split[0])}
                   color={color[Math.floor(Math.random() * 5)]}
                 />
+                </Link>
               </Grid>
             ))}
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item xs={12} md={6} lg={6}>
               <Link component={RouterLink}
                 to={dataConfig.CREATE_GROUP_URL}
                 sx={{ textDecoration: 'none' }}
@@ -91,7 +96,7 @@ export default function Group() {
                 >
                   <Grid
                     container
-                    direction={"row"}
+                    direction="row"
                     justifyContent="center"
                     alignItems="center"
                     minHeight={310}

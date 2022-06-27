@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { Card, CardContent, Typography, Box, AvatarGroup, Avatar, Stack, Grid } from '@mui/material';
+import { convertToCurrency, currencyFind, categoryIcon } from '../../utils/helper';
 // utils
 // components
 import Iconify from '../Iconify';
@@ -40,37 +41,6 @@ GroupCards.propTypes = {
 };
 
 export default function GroupCards({ title, description, groupMembers, share, currencyType, groupCategory, isGroupActive, icon, color = 'primary', sx, ...other }) {
-
-  const currencyFind = (currencyType) => {
-    switch (currencyType) {
-      case "INR":
-        return '₹'
-      case "USD":
-        return '$'
-      case "EUR":
-        return "€"
-      default:
-        return '₹'
-    }
-  }
-
-  const categoryIcon = (groupCategory) => {
-    switch(groupCategory){
-      case "Home":
-        return 'ant-design:home-filled'
-      case "Trip":
-        return 'ic:outline-flight'
-      case "Office":
-        return 'mdi:office-building-marker'
-      case "Sport":
-        return 'material-symbols:sports-cricket'
-      case "Others":
-        return 'foundation:page-edit'
-      default:
-        return 'ic:baseline-insert-page-break'
-    }
-  }
-
   return (
     <Card
       sx={{
@@ -144,13 +114,13 @@ export default function GroupCards({ title, description, groupMembers, share, cu
             borderRadius: 1,
             color: share < 0 ? (theme) => theme.palette['error'].darker : (theme) => theme.palette['success'].darker
           }}>
-            <b> Your Share : &nbsp;
-              {currencyFind(currencyType)} {Math.abs(Math.floor(share))}</b>
+            <b> {share < 0? <>You owe</> : <>You are owed</>} : &nbsp;
+              {currencyFind(currencyType)} {convertToCurrency(Math.abs(Math.floor(share)))}</b>
           </Typography>
         </Stack>
-        <Grid container direction={'row'} spacing={1} p={1}>
+        <Grid container direction="row" spacing={1} p={1}>
           <Grid item md={6} xs={12}>
-            <Stack direction={"row"} width={'100%'}>
+            <Stack direction="row" width={'100%'}>
               <Typography justifyContent={'center'} py={1} mr={1}>
                 Category {" "}
               </Typography>
