@@ -80,6 +80,10 @@ const Expense = new mongoose.Schema({
         type: Number,
         required: true
     },
+    expenseCategory:{
+        type: String,
+        default: "Others"
+    },
     expenseDate:{
         type: Date,
         default: Date.now

@@ -187,7 +187,7 @@ Returns: Json with the expense details
 
 exports.viewExpense = async (req, res) => {
     try {
-        var expense = await model.Expense.find({
+        var expense = await model.Expense.findOne({
             _id: req.body.id
         })
         if (expense.length == 0) {
@@ -217,6 +217,8 @@ exports.viewGroupExpense = async (req, res) => {
     try {
         var groupExpense = await model.Expense.find({
             groupId: req.body.id
+        }).sort({
+            $natural: -1 //to get the newest first 
         })
         if (groupExpense.length == 0) {
             var err = new Error("No expense present for the group")
@@ -251,6 +253,8 @@ exports.viewUserExpense = async (req, res) => {
     try {
         var userExpense = await model.Expense.find({
             expenseMembers: req.body.user
+        }).sort({
+            $natural: -1 //to get the newest first 
         })
         if (userExpense.length == 0) {
             var err = new Error("No expense present for the user")

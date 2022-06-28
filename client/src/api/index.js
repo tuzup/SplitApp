@@ -33,3 +33,5 @@ export const createGroup = (formData) => API.post('/group/v1/add', formData,  ac
 export const getGroupDetails = (formData) => API.post('/group/v1/view', formData, accessHeader)
 
 export const getGroupExpense = (formData) => API.post('/expense/v1/group', formData, accessHeader)
+
+export const addExpense = (formDate) => API.post('/expense/v1/add', formDate, accessHeader)

@@ -8,10 +8,11 @@ import Loading from '../../loading';
 import useResponsive from '../../../theme/hooks/useResponsive';
 import { convertToCurrency, currencyFind, categoryIcon } from '../../../utils/helper';
 import ExpenseCard from './expenseCard';
+import AddExpense from './addExpense';
 
 const profile = JSON.parse(localStorage.getItem('profile'))
 const emailId = profile?.emailId
-
+var showCount = 10
 export default function ViewGroup() {
     const params = useParams();
     const [loading, setLoading] = useState(false);
@@ -19,7 +20,27 @@ export default function ViewGroup() {
     const [groupExpense, setGroupExpense] = useState([]);
     const [alert, setAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
+    const [showAllExp, setShowAllExp] = useState(false);
+    const [expFocus, setExpFocus] = useState(false);
+    const [expenses, setExpenses] = useState()
+    const [addExpToggle, setAddExpToggle] = useState(false)
 
+
+    const toggleAllExp = () => {
+        setExpenses(groupExpense?.expense?.slice(0, showCount)) 
+        if(showCount >= groupExpense?.expense?.length)
+        setShowAllExp(true)
+        setExpFocus(true)
+        showCount += 5
+    }
+
+    const handleAddExpOpen = () =>{
+        setAddExpToggle(true)
+    }
+
+    const handleAddExpClose = () =>{
+        setAddExpToggle(false)
+    }
 
     const mdUp = useResponsive('up', 'md');
     const checkActive = (split) => {
@@ -53,6 +74,10 @@ export default function ViewGroup() {
 
             response_group && setGroup(response_group?.data?.group)
             response_expense && setGroupExpense(response_expense?.data)
+            response_expense?.data?.expense && setExpenses(response_expense?.data?.expense?.slice(0,5)) 
+            if(response_expense?.data?.expense?.length <=5 || !response_expense) 
+                setShowAllExp(true)
+            console.log()
             setLoading(false)
         }
         getGroupDetails()
@@ -75,13 +100,13 @@ export default function ViewGroup() {
 
 
     }))
-
     return (
+        
         <Container>
             {loading ? <Loading /> :
                 <>
                     <Box sx={{
-                        bgcolor: (theme) => theme.palette['primary'].lighter,
+                        bgcolor: (theme) => theme.palette['info'].lighter,
                         borderRadius: 2,
                         p: 2,
                         color: (theme) => theme.palette['primary'].darker,
@@ -114,7 +139,18 @@ export default function ViewGroup() {
                                 {group?.groupCategory}
                             </Typography>
 
-                            <Fab color="primary" aria-label="add"
+
+                            <AddExpense addExptoggle={addExpToggle} 
+                                handleAddExpClose={handleAddExpClose} 
+                                groupId={group?._id} 
+                                groupMembers={group?.groupMembers} 
+                                groupCurrency={group?.groupCurrency}
+                                setAlert={setAlert}
+                                setAlertMessage={setAlertMessage}
+                            />
+
+                            <Fab onClick={handleAddExpOpen} 
+                            color="primary" aria-label="add"
                                 variant={mdUp && "extended"}
                                 sx={{
                                     ...(!mdUp && {
@@ -263,16 +299,39 @@ export default function ViewGroup() {
                                     Group Expenses
                                 </Typography>
                             </Grid>
-                            {groupExpense?.expense?.map(myExpense => (
-                            <Grid item xs={12} md={6}>                               
+                            <Grid item xs={12} md={expFocus? 12: 6}>
+                            <Grid container spacing={2}>
+                             
+                            {expenses?.map(myExpense => (
+                            <Grid item xs={12} md={expFocus? 6: 12}>                               
                                          <ExpenseCard 
                                          expenseName={myExpense?.expenseName}
                                          expenseAmount ={myExpense?.expenseAmount}
+                                         expensePerMember = {myExpense?.expensePerMember}
                                          expenseOwner={myExpense?.expenseOwner}
                                          expenseDate={myExpense?.expenseDate}
                                          currencyType={group?.currencyType}
                                          />
                             </Grid>) )}
+                           
+                           {!showAllExp && <Grid item xs={12}>
+                            <Button onClick={toggleAllExp}>View More</Button>
+                            </Grid>}
+                        </Grid>
+                        </Grid>
+                        <Grid item xs={12} md={6} >
+                        <Box sx={{
+                        bgcolor: (theme) => theme.palette['info'].lighter,
+                        borderRadius: 2,
+                        p: 5,
+                        color: (theme) => theme.palette['primary'].darker,
+                        pb: 3,
+                        height : 570
+                    }}>
+                        | Group Expense summary graph to come here |
+                        </Box>
+                        </Grid>
+                        
                         </Grid>
 
 

@@ -16,12 +16,13 @@ const DateBoxStyle = styled('div')(({ theme }) => ({
 ExpenseCard.propTypes = {
     expenseName : PropTypes.string,
     expenseAmount: PropTypes.number,
+    expensePerMember: PropTypes.number,
     expenseOwner: PropTypes.string,
     expenseDate: PropTypes.instanceOf(Date),
     currencyType: PropTypes.string
 }
 
-export default function ExpenseCard({expenseName, expenseAmount, expenseOwner, expenseDate, currencyType}) {
+export default function ExpenseCard({expenseName, expenseAmount , expensePerMember, expenseOwner, expenseDate, currencyType}) {
     const mdUp = useResponsive('up', 'md');
   return (
     <Grid container
@@ -33,7 +34,7 @@ export default function ExpenseCard({expenseName, expenseAmount, expenseOwner, e
         py:1
     }}
     >
-        <Grid item xs={4} md={2}>
+        <Grid item>
             <DateBoxStyle>
                 <Typography variant="body2" sx={{
                     fontSize:28,
@@ -53,33 +54,42 @@ export default function ExpenseCard({expenseName, expenseAmount, expenseOwner, e
                 </Typography>
             </DateBoxStyle>
         </Grid>
-        <Grid item xs={7}
-        sx={{
-            ...(mdUp && {marginLeft: 2})
-        }}
-        
-        >
-            <Typography variant='h6'
+        <Grid item xs={5} md={6} ml={1}>
+            <Typography noWrap variant='h6' 
             color={(theme)=>theme.palette['primary'].dark}
             >
                 {expenseName}
             </Typography>
             <Typography variant='body2'
-            color={(theme)=>theme.palette['error'].dark}
+            color={(theme)=>theme.palette['primary'].dark}
             sx={{
-                fontSize:17
+                fontSize:12
             }}
             >
-               {currencyFind(currencyType)} {convertToCurrency(expenseAmount)}
+               Total : {currencyFind(currencyType)} {convertToCurrency(expenseAmount)}
             </Typography>
-            <Typography variant='body2'
+            <Typography noWrap variant='body2'
             sx={{
                 fontSize:9
             }}
             >
-               Paid by, {expenseOwner}
+               Paid by, <br/>{expenseOwner}
             </Typography>
 
+        </Grid>
+        <Grid item >
+            <Typography 
+            color={(theme)=>theme.palette['error'].dark}
+            sx={{
+                fontSize:13
+            }}>
+                Per preson 
+            </Typography>
+            <Typography
+            color={(theme)=>theme.palette['error'].dark}
+            >
+               <b>{currencyFind(currencyType)} {convertToCurrency(expensePerMember)}</b>
+            </Typography>
         </Grid>
     </Grid>
   )
