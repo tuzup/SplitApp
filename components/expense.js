@@ -54,7 +54,7 @@ exports.addExpense = async (req, res) => {
                 status: "Success",
                 message: "New expenses added",
                 Id: newExpense._id,
-                splitUpdateResponse : update_response
+                splitUpdateResponse: update_response
             })
         }
     } catch (err) {
@@ -83,12 +83,12 @@ exports.editExpense = async (req, res) => {
         })
         if (!oldExpense || expense.id == null ||
             oldExpense.groupId != expense.groupId
-            ) {
+        ) {
             var err = new Error("Invalid Expense Id")
             err.status = 400
             throw err
         }
-        
+
         if (validator.notNull(expense.expenseName) &&
             validator.notNull(expense.expenseAmount) &&
             validator.notNull(expense.expenseOwner) &&
@@ -107,7 +107,7 @@ exports.editExpense = async (req, res) => {
                     throw err
                 }
             }
-            
+
             var expenseUpdate = await model.Expense.updateOne({
                 _id: req.body.id
 
@@ -300,6 +300,161 @@ exports.recentUserExpenses = async (req, res) => {
         res.status(200).json({
             status: "Success",
             expense: recentExpense
+        })
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+/*
+Category wise group expense calculator function 
+This function is used to retuen the expense spend on each category in a group 
+Accepts : groupID 
+Returns : Each category total exp (group as whole)
+*/
+exports.groupCategoryExpense = async (req, res) => {
+    try {
+        var categoryExpense = await model.Expense.aggregate([{
+                $match: {
+                    groupId: req.body.id
+                }
+            },
+            {
+                $group: {
+                    _id: "$expenseCategory",
+                    amount: {
+                        $sum: "$expenseAmount"
+                    }
+                }
+            }
+        ])
+
+        res.status(200).json({
+            status: "success",
+            data: categoryExpense
+        })
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+/*
+Group Monthly Expense Function 
+This function is used to get the monthly amount spend in a group 
+Accepts : group Id 
+Returns : Expense per month (current year)
+*/
+exports.groupMonthlyExpense = async (req, res) => {
+    try {
+        var monthlyExpense = await model.Expense.aggregate([{
+                $match: {
+                    groupId: req.body.id
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        month: {
+                            $month: "$expenseDate"
+                        },
+                        year: {
+                            $year: "$expenseDate"
+                        }
+                    },
+                    amount: {
+                        $sum: "$expenseAmount"
+                    }
+                }
+            }
+        ])
+        res.status(200).json({
+            status: "success",
+            data: monthlyExpense
+        })
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+/*
+Category wise user expense calculator function 
+This function is used to retuen the expense spend on each category for a user
+Accepts : emailID
+Returns : Each category total exp (individaul Expense)
+*/
+exports.userCategoryExpense = async (req, res) => {
+    try {
+        var categoryExpense = await model.Expense.aggregate([{
+                $match: {
+                    expenseMembers: req.body.user
+                }
+            },
+            {
+                $group: {
+                    _id: "$expenseCategory",
+                    amount: {
+                        $sum: "$expensePerMember"
+                    }
+                }
+            }
+        ])
+
+        res.status(200).json({
+            status: "success",
+            data: categoryExpense
+        })
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+/*
+User Monthly Expense Function 
+This function is used to get the monthly amount spend by a user
+Accepts : Email Id 
+Returns : Expense per month
+*/
+exports.userMonthlyExpense = async (req, res) => {
+    try {
+        var monthlyExpense = await model.Expense.aggregate([{
+                $match: {
+                    expenseMembers: req.body.user
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        month: {
+                            $month: "$expenseDate"
+                        },
+                        year: {
+                            $year: "$expenseDate"
+                        }
+                    },
+                    amount: {
+                        $sum: "$expensePerMember"
+                    }
+                }
+            }
+        ])
+        res.status(200).json({
+            status: "success",
+            data: monthlyExpense
         })
     } catch (err) {
         logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
