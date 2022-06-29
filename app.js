@@ -5,6 +5,7 @@ var requestLogger = require('./helper/requestLogger')
 var apiAuth = require('./helper/apiAuthentication')
 var cors = require('cors')
 
+const path = require('path');
 dotenv.config()
 
 var usersRouter = require('./routes/userRouter')
