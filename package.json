@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "npx nodemon app.js",
-    "start": "node app",
+    "start": "node app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     "dev": "concurrently \"npm test\" \"cd client && npm start\" "
   },
   "keywords": [

@@ -16,9 +16,16 @@ app.use(cors())
 app.use(express.json())
 app.use(requestLogger)
 
-app.use('/users', usersRouter)
-app.use('/group', apiAuth.validateToken,gorupRouter)
-app.use('/expense', apiAuth.validateToken,expenseRouter)
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+    });
+   }
+
+app.use('/api/users', usersRouter)
+app.use('/api/group', apiAuth.validateToken,gorupRouter)
+app.use('/api/expense', apiAuth.validateToken,expenseRouter)
 
 //To detect and log invalid api hits 
 app.all('*', (req, res) => {
