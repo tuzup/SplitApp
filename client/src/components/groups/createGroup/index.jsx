@@ -8,6 +8,7 @@ import Loading from '../../loading';
 import useResponsive from '../../../theme/hooks/useResponsive';
 import { createGroupService } from '../../../services/groupServices';
 import AlertBanner from '../../AlertBanner';
+import configData from '../../../config.json'
 
 
 export default function Creategroup() {
@@ -39,7 +40,9 @@ export default function Creategroup() {
         },
         validationSchema: groupSchema,
         onSubmit: async () => {
-            await createGroupService(values, setAlert, setAlertMessage)
+            const create_response = await createGroupService(values, setAlert, setAlertMessage)
+            console.log(create_response)
+            window.location = configData.VIEW_GROUP_URL + create_response.data.Id
         },
     });
 

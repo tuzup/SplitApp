@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 //const API = axios.create({ baseURL: 'http://localhost:3001'})
-const API = axios.create({ baseURL: 'http://192.168.29.250:3001'})
+const API = axios.create({ baseURL: 'http://192.168.1.106:3001'})
 
 const profile = JSON.parse(localStorage.getItem('profile'))
 
@@ -35,3 +35,7 @@ export const getGroupDetails = (formData) => API.post('/group/v1/view', formData
 export const getGroupExpense = (formData) => API.post('/expense/v1/group', formData, accessHeader)
 
 export const addExpense = (formDate) => API.post('/expense/v1/add', formDate, accessHeader)
+
+export const getGroupCategoryExp = (formData) => API.post('/expense/v1/group/categoryExp', formData, accessHeader)
+
+export const getGroupMonthlyExp = (formData) => API.post('/expense/v1/group/monthlyExp', formData, accessHeader)

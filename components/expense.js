@@ -330,7 +330,7 @@ exports.groupCategoryExpense = async (req, res) => {
                         $sum: "$expenseAmount"
                     }
                 }
-            }
+            },{ $sort : {"_id" : 1 } }
         ])
 
         res.status(200).json({
@@ -373,7 +373,8 @@ exports.groupMonthlyExpense = async (req, res) => {
                         $sum: "$expenseAmount"
                     }
                 }
-            }
+            },
+            { $sort : {"_id.month" : 1 } }
         ])
         res.status(200).json({
             status: "success",
@@ -407,7 +408,7 @@ exports.userCategoryExpense = async (req, res) => {
                         $sum: "$expensePerMember"
                     }
                 }
-            }
+            },{ $sort : {"_id" : 1 } }
         ])
 
         res.status(200).json({
@@ -450,7 +451,8 @@ exports.userMonthlyExpense = async (req, res) => {
                         $sum: "$expensePerMember"
                     }
                 }
-            }
+            },
+            { $sort : {"_id.month" : 1 } }
         ])
         res.status(200).json({
             status: "success",

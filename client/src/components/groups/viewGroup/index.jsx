@@ -9,6 +9,8 @@ import useResponsive from '../../../theme/hooks/useResponsive';
 import { convertToCurrency, currencyFind, categoryIcon } from '../../../utils/helper';
 import ExpenseCard from './expenseCard';
 import AddExpense from './addExpense';
+import GroupCategoryGraph from './groupCategoryGraph';
+import GroupMonthlyGraph from './groupMonthlyGraph';
 
 const profile = JSON.parse(localStorage.getItem('profile'))
 const emailId = profile?.emailId
@@ -290,6 +292,8 @@ export default function ViewGroup() {
 
 
                         <Grid container mt={2} spacing={2}
+                        justifyContent={'center'}
+                        alignItems={'center'}
                             sx={{
                                 ...(mdUp && { px: 6 })
                             }}
@@ -320,22 +324,15 @@ export default function ViewGroup() {
                         </Grid>
                         </Grid>
                         <Grid item xs={12} md={6} >
-                        <Box sx={{
-                        bgcolor: (theme) => theme.palette['info'].lighter,
-                        borderRadius: 2,
-                        p: 5,
-                        color: (theme) => theme.palette['primary'].darker,
-                        pb: 3,
-                        height : 570
-                    }}>
-                        | Group Expense summary graph to come here |
-                        </Box>
+                        <GroupCategoryGraph/>
                         </Grid>
+                        <Grid item xs={12} md={expFocus? 6: 12}>
+                        <GroupMonthlyGraph/>
+                        </Grid>
+                        </Grid>
+
+
                         
-                        </Grid>
-
-
-
 
                     </Box>
 
