@@ -7,11 +7,16 @@ import { Box, Button, Chip, Container, FormControl, FormHelperText, Grid, IconBu
 import { Form, FormikProvider, useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import useResponsive from '../../../theme/hooks/useResponsive';
-import { currencyFind } from '../../../utils/helper';
-import Iconify from '../../Iconify';
-import { addExpenseService } from '../../../services/expenseServices';
-import configData from '../../../config.json'
+import useResponsive from '../../theme/hooks/useResponsive';
+import { currencyFind } from '../../utils/helper';
+import Iconify from '../Iconify';
+import { addExpenseService } from '../../services/expenseServices';
+import configData from '../../config.json'
+import { useParams } from 'react-router-dom'
+import { getGroupDetailsService } from '../../services/groupServices';
+import Loading from '../loading';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 const style = {
   position: 'absolute',
@@ -25,11 +30,18 @@ const style = {
 };
 
 
-export default function AddExpense({ addExptoggle,
-  handleAddExpClose, groupId, groupMembers, groupCurrency, setAlert, setAlertMessage }) {
+export default function AddExpense() {  
+  const params = useParams();
   const mdUp = useResponsive('up', 'md');
   const profile = JSON.parse(localStorage.getItem('profile'))
   const currentUser = profile?.emailId
+  const groupId = params.groupId
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  var [groupMembers,setGroupMembers] = useState()
+  var [groupCurrency,setGroupCurrency] = useState()
+ 
   //Formink schema 
   const addExpenseSchema = Yup.object().shape({
     expenseName: Yup.string().required('Expense name is required'),
@@ -52,9 +64,9 @@ export default function AddExpense({ addExptoggle,
     },
     validationSchema: addExpenseSchema,
     onSubmit: async () => {
-      console.log(await addExpenseService(values, setAlert, setAlertMessage))
-      window.location = configData.VIEW_GROUP_URL+groupId
-      handleAddExpClose()
+      setLoading(true)
+      if(await addExpenseService(values, setAlert, setAlertMessage))
+       window.location = configData.VIEW_GROUP_URL+groupId
     },
   });
 
@@ -72,20 +84,27 @@ export default function AddExpense({ addExptoggle,
   };
 
 
-
+  useEffect(() => {
+    const getGroupDetails = async () => {
+        setLoading(true)
+        const groupIdJson = {
+            id: params.groupId
+        }
+        const response_group = await getGroupDetailsService(groupIdJson, setAlert, setAlertMessage)
+        setGroupCurrency(response_group?.data?.group?.groupCurrency)
+        setGroupMembers(response_group?.data?.group?.groupMembers)
+        setLoading(false)
+    }
+    getGroupDetails()
+}, []);
   return (
-    <Modal
-      open={addExptoggle}
-      onClose={handleAddExpClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <>
+    {loading? <Loading/> : 
       <Box sx={{
-        position: 'absolute',
+        position: 'relative',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 390,
         bgcolor: 'background.paper',
         boxShadow: 24,
         p: 4,
@@ -261,7 +280,7 @@ export default function AddExpense({ addExptoggle,
 
               {mdUp && <Grid item xs={0} md={6} />}
               <Grid item xs={6} md={3}>
-                <Button fullWidth size="large"variant="outlined" onClick={handleAddExpClose}>
+                <Button fullWidth size="large"variant="outlined" component={RouterLink} to={configData.VIEW_GROUP_URL+groupId}>
                   Cancel
                 </Button>
               </Grid>
@@ -274,19 +293,7 @@ export default function AddExpense({ addExptoggle,
             </Grid>
           </Form>
         </FormikProvider>
-
-
-
-
-
-
-
-
-
-
-
-
-      </Box>
-    </Modal>
+      </Box> }
+      </>                  
   )
 }
