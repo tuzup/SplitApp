@@ -3,6 +3,8 @@
 # MERN Stack Group Expense Splitting Application 
 Build with the MERN stack (MongoDB, Express, React and NodeJS).
 
+#### This project is still in development stage only ! 
+
 
 ![SplitApp](https://github.com/tuzup/SplitApp/blob/master/Screenshots/Group%20View%20Page.jpg?raw=true)
 
