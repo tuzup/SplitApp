@@ -1,4 +1,4 @@
-import { Box, Button, Container, Fab, Grid, Stack, styled, Typography } from '@mui/material';
+import { Box, Button, Container, Fab, Grid, Link, Stack, styled, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getGroupDetailsService, getGroupExpenseService } from '../../../services/groupServices';
@@ -8,9 +8,11 @@ import Loading from '../../loading';
 import useResponsive from '../../../theme/hooks/useResponsive';
 import { convertToCurrency, currencyFind, categoryIcon } from '../../../utils/helper';
 import ExpenseCard from './expenseCard';
-import AddExpense from './addExpense';
+import AddExpense from '../addExpense';
 import GroupCategoryGraph from './groupCategoryGraph';
 import GroupMonthlyGraph from './groupMonthlyGraph';
+import { Link as RouterLink } from 'react-router-dom';
+import dataConfig from '../../../config.json';
 
 const profile = JSON.parse(localStorage.getItem('profile'))
 const emailId = profile?.emailId
@@ -22,6 +24,8 @@ export default function ViewGroup() {
     const [groupExpense, setGroupExpense] = useState([]);
     const [alert, setAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
+    const [alertExpense, setAlertExpense] = useState(false);
+    const [alertExpenseMessage, setAlertExpenseMessage] = useState('');
     const [showAllExp, setShowAllExp] = useState(false);
     const [expFocus, setExpFocus] = useState(false);
     const [expenses, setExpenses] = useState()
@@ -72,7 +76,7 @@ export default function ViewGroup() {
                 id: params.groupId
             }
             const response_group = await getGroupDetailsService(groupIdJson, setAlert, setAlertMessage)
-            const response_expense = await getGroupExpenseService(groupIdJson, setAlert, setAlertMessage)
+            const response_expense = await getGroupExpenseService(groupIdJson, setAlertExpense, setAlertExpenseMessage)
 
             response_group && setGroup(response_group?.data?.group)
             response_expense && setGroupExpense(response_expense?.data)
@@ -105,7 +109,7 @@ export default function ViewGroup() {
     return (
         
         <Container>
-            {loading ? <Loading /> :
+            {loading? <Loading /> :
                 <>
                     <Box sx={{
                         bgcolor: (theme) => theme.palette['info'].lighter,
@@ -141,20 +145,11 @@ export default function ViewGroup() {
                                 {group?.groupCategory}
                             </Typography>
 
-
-                            <AddExpense addExptoggle={addExpToggle} 
-                                handleAddExpClose={handleAddExpClose} 
-                                groupId={group?._id} 
-                                groupMembers={group?.groupMembers} 
-                                groupCurrency={group?.groupCurrency}
-                                setAlert={setAlert}
-                                setAlertMessage={setAlertMessage}
-                            />
-
-                            <Fab onClick={handleAddExpOpen} 
+                            <Fab component={RouterLink}
+                            to={dataConfig.ADD_EXPENSE_URL+group?._id}
                             color="primary" aria-label="add"
                                 variant={mdUp && "extended"}
-                                sx={{
+                                sx={{ textDecoration: 'none',
                                     ...(!mdUp && {
                                         margin: 0,
                                         top: 'auto',
@@ -290,7 +285,26 @@ export default function ViewGroup() {
 
                         </Grid>
 
-
+                        {alertExpense ? 
+                        <Grid container
+                        direction="column"
+                        style={{ 
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          textAlign: 'center',
+                          minHeight: 'calc(50vh - 200px )',
+                            }}
+                    
+                      >
+                        <Typography variant="body2" fontSize={18} textAlign={'center'}>
+                        No expense present for this group! Record your first group expense now <br/>
+                            <Link component={RouterLink}
+                            to={dataConfig.ADD_EXPENSE_URL+group?._id}>
+                                Add Expense
+                            </Link>
+                        </Typography>
+                        </Grid> :        
                         <Grid container mt={2} spacing={2}
                         justifyContent={'center'}
                         alignItems={'center'}
@@ -329,7 +343,7 @@ export default function ViewGroup() {
                         <Grid item xs={12} md={expFocus? 6: 12}>
                         <GroupMonthlyGraph/>
                         </Grid>
-                        </Grid>
+                        </Grid>}
 
 
                         

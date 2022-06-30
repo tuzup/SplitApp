@@ -19,11 +19,6 @@ const navConfig = [
     icon: getIcon('clarity:group-solid'),
   },
   {
-    title: 'add expense',
-    path: configData.ADD_EXPENSE_URL,
-    icon: getIcon('fluent:form-new-28-filled'),
-  },
-  {
     title: 'Create Group',
     path: configData.CREATE_GROUP_URL,
     icon: getIcon('fa6-solid:users-gear'),

@@ -16,6 +16,7 @@ import PageUserDeleted from './components/profile/PageUserDeleted';
 import Group from './components/groups';
 import CreateGroup from './components/groups/createGroup';
 import ViewGroup from './components/groups/viewGroup';
+import AddExpense from './components/groups/addExpense';
 
 
 export default function Router() {
@@ -27,7 +28,8 @@ export default function Router() {
         {path:configData.DASHBOARD_URL},
         {path: configData.CREATE_GROUP_URL,
         element: <CreateGroup/>},
-        {path:configData.ADD_EXPENSE_URL},
+        {path:configData.ADD_EXPENSE_ROUTER_URL,
+        element: <AddExpense/>},
         {path:configData.USER_GROUPS_URL,
           element: <Group/>
         },
