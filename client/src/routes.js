@@ -17,6 +17,7 @@ import Group from './components/groups';
 import CreateGroup from './components/groups/createGroup';
 import ViewGroup from './components/groups/viewGroup';
 import AddExpense from './components/groups/addExpense';
+import Dashboard from './components/dashboard';
 
 
 export default function Router() {
@@ -25,7 +26,8 @@ export default function Router() {
       path: configData.DASHBOARD_HOME_URL,
       element: <DashboardLayout />,
       children: [
-        {path:configData.DASHBOARD_URL},
+        {path:configData.DASHBOARD_URL,
+        element: <Dashboard/>},
         {path: configData.CREATE_GROUP_URL,
         element: <CreateGroup/>},
         {path:configData.ADD_EXPENSE_ROUTER_URL,

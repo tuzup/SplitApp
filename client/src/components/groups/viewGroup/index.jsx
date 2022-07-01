@@ -338,7 +338,7 @@ export default function ViewGroup() {
                         </Grid>
                         </Grid>
                         <Grid item xs={12} md={6} >
-                        <GroupCategoryGraph/>
+                        <GroupCategoryGraph currencyType={group?.currencyType}/>
                         </Grid>
                         <Grid item xs={12} md={expFocus? 6: 12}>
                         <GroupMonthlyGraph/>

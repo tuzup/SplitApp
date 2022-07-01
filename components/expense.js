@@ -218,7 +218,7 @@ exports.viewGroupExpense = async (req, res) => {
         var groupExpense = await model.Expense.find({
             groupId: req.body.id
         }).sort({
-            $natural: -1 //to get the newest first 
+            expenseDate: -1 //to get the newest first 
         })
         if (groupExpense.length == 0) {
             var err = new Error("No expense present for the group")
@@ -254,7 +254,7 @@ exports.viewUserExpense = async (req, res) => {
         var userExpense = await model.Expense.find({
             expenseMembers: req.body.user
         }).sort({
-            $natural: -1 //to get the newest first 
+            expenseDate: -1 //to get the newest first 
         })
         if (userExpense.length == 0) {
             var err = new Error("No expense present for the user")
@@ -387,6 +387,58 @@ exports.groupMonthlyExpense = async (req, res) => {
         })
     }
 }
+
+
+new Date(new Date().setMonth(new Date().getMonth() - 5))
+/*
+Group Daily Expense Function 
+This function is used to get the dailyly amount spend in a group 
+Accepts : group Id 
+Returns : Expense per day (current year)
+*/
+exports.groupDailyExpense = async (req, res) => {
+    try {
+        var dailyExpense = await model.Expense.aggregate([{
+                $match: { groupId: req.body.id,
+                expenseDate: {
+                    $gte: new Date(new Date().setMonth(new Date().getMonth() - 1)), 
+                    $lte: new Date()}             
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        date: {
+                            $dayOfMonth: "$expenseDate"
+                        },
+                        month: {
+                            $month: "$expenseDate"
+                        },
+                        year: {
+                            $year: "$expenseDate"
+                        }
+                    },
+                    amount: {
+                        $sum: "$expenseAmount"
+                    }
+                }
+            },
+            { $sort : {"_id.month" :1, "_id.date" : 1  } }
+        ])
+        res.status(200).json({
+            status: "success",
+            data: dailyExpense
+        })
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+
 
 /*
 Category wise user expense calculator function 

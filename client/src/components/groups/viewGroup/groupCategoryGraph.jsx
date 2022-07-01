@@ -8,9 +8,9 @@ import Loading from '../../loading';
 import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'chart.js/auto'
-import { convertToCurrency } from '../../../utils/helper';
+import { convertToCurrency, currencyFind } from '../../../utils/helper';
 
-const GroupCategoryGraph = () => {
+const GroupCategoryGraph = (currencyType) => {
     const params = useParams();
     const [alert, setAlert] = useState(false)
     const [alertMessage, setAlertMessage] = useState()
@@ -44,7 +44,7 @@ const GroupCategoryGraph = () => {
             datalabels: {
                 color:'error',
                 formatter: (value) => {
-                  return "Rs " + convertToCurrency(value) ;
+                  return currencyFind(currencyType) + ' ' + convertToCurrency(value) ;
                 }
               },
             legend: {

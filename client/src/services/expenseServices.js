@@ -24,8 +24,6 @@ export const getGroupCategoryExpService = async (data, setAlert, setAlertMessage
         return false
    }
 }
-
-
 export const getGroupMonthlyExpService = async (data, setAlert, setAlertMessage) => {
      try{
           return await api.getGroupMonthlyExp(data)
@@ -37,3 +35,17 @@ export const getGroupMonthlyExpService = async (data, setAlert, setAlertMessage)
         return false
    }
 }
+
+
+export const getGroupDailyExpService = async (data, setAlert, setAlertMessage) => {
+     try{
+          return await api.getGroupDailyExp(data)
+
+     }catch(err){
+        setAlert(true)
+        err.response.status === 400 || err.response.status === 401
+        ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+        return false
+   }
+}
+
