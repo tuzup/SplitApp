@@ -1,20 +1,11 @@
-<div id="top"></div>
 
-##SplitApp
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 <div align="center">
   <a href="https://split-app00.herokuapp.com/">
     <img src="https://github.com/tuzup/SplitApp/blob/master/client/public/static/logo.png?raw=true" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">MERN Stack Group Expense Splitting Application</h3>
+  <h3 align="center">SplitApp</h3>
 
   <p align="center">
     Build with the MERN stack (MongoDB, Express, React and NodeJS).
@@ -30,6 +21,7 @@
   </p>
 </div>
 
+# MERN Stack Group Expense Splitting Application
 
 ![SplitApp](https://github.com/tuzup/SplitApp/blob/master/Screenshots/Group%20View%20Page.jpg?raw=true)
 
