@@ -44,5 +44,8 @@ router.post('/v1/group/dailyExp', controller.groupDailyExpense)
 //Get user monthly expense router 
 router.post('/v1/user/monthlyExp', controller.userMonthlyExpense)
 
+//Get user daily expense router 
+router.post('/v1/user/dailyExp', controller.userDailyExpense)
+
 
 module.exports = router;

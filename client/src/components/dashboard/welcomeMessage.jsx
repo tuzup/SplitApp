@@ -2,16 +2,16 @@ import { Box, Button, Grid, Typography } from "@mui/material"
 
 export const WelcomeMessage = () => {
     return (
-        <Grid container spacing={2} justifyContent={'center'}
-            alignItems={'center'}
-        >
-            <Grid xs={12}>
-                <Box sx={{
-                    p: 5,
-                    bgcolor: (theme) => theme.palette['success'].light ,
-                    borderRadius: 2
-                }}>
-                    <Grid container>
+        <Box sx={{
+            p: 5,
+            bgcolor: (theme) => theme.palette['primary'].lighter,
+            borderRadius: 2
+        }}>
+            <Grid container spacing={2} justifyContent={'center'}
+                alignItems={'center'}
+            >
+
+                <Grid container>
                     <Grid item lg={6} md={6} xs={12}>
 
                         <Typography variant="h5" pb={2}>
@@ -22,7 +22,7 @@ export const WelcomeMessage = () => {
                         </Typography>
                         <Button variant="contained"
                             sx={{
-                                bgcolor: (theme) => theme.palette['success'].dark,
+
                             }}
                         >
                             View Groups
@@ -31,9 +31,9 @@ export const WelcomeMessage = () => {
                     <Grid item lg={5} md={6} xs={12}>
                         <img src="/static/illustrations/dashboard-card.png" alt="dashboard" />
                     </Grid>
-                    </Grid>
-                </Box>
+                </Grid>
+
             </Grid>
-        </Grid>
+        </Box>
     )
 }

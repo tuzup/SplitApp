@@ -251,6 +251,7 @@ returns: Expenses
 */
 exports.viewUserExpense = async (req, res) => {
     try {
+        validator.notNull(req.body.user)
         var userExpense = await model.Expense.find({
             expenseMembers: req.body.user
         }).sort({
@@ -509,6 +510,55 @@ exports.userMonthlyExpense = async (req, res) => {
         res.status(200).json({
             status: "success",
             data: monthlyExpense
+        })
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+/*
+User Daily Expense Function 
+This function is used to get the daily amount spend by a user
+Accepts : Email Id 
+Returns : Expense per month
+*/
+exports.userDailyExpense = async (req, res) => {
+    try {
+        var dailyExpense = await model.Expense.aggregate([{
+                $match: {
+                    expenseMembers: req.body.user,
+                    expenseDate: {
+                        $gte: new Date(new Date().setMonth(new Date().getMonth() - 1)), 
+                        $lte: new Date()}
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        date: {
+                            $dayOfMonth: "$expenseDate"
+                        },
+                        month: {
+                            $month: "$expenseDate"
+                        },
+                        year: {
+                            $year: "$expenseDate"
+                        }
+                    },
+                    amount: {
+                        $sum: "$expenseAmount"
+                    }
+                }
+            },
+            { $sort : {"_id.month" :1, "_id.date" : 1  } }
+        ])
+        res.status(200).json({
+            status: "success",
+            data: dailyExpense
         })
     } catch (err) {
         logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)

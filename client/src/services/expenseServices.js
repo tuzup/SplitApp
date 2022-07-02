@@ -49,3 +49,41 @@ export const getGroupDailyExpService = async (data, setAlert, setAlertMessage) =
    }
 }
 
+
+export const getUserExpenseService = async(data, setAlert, setAlertMessage) => {
+     try{
+         const expense_details = await api.getUserExpense(data)
+         return expense_details
+     }catch(err){
+         setAlert(true)
+         err.response.status === 400 || err.response.status === 401
+         ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+         return false
+     }
+ }
+
+
+ export const getUserMonthlyExpService = async (data, setAlert, setAlertMessage) => {
+     try{
+          return await api.getUserMonthlyExp(data)
+
+     }catch(err){
+        setAlert(true)
+        err.response.status === 400 || err.response.status === 401
+        ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+        return false
+   }
+}
+
+
+export const getUserDailyExpService = async (data, setAlert, setAlertMessage) => {
+     try{
+          return await api.getUserDailyExp(data)
+
+     }catch(err){
+        setAlert(true)
+        err.response.status === 400 || err.response.status === 401
+        ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+        return false
+   }
+}
