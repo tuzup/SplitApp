@@ -19,7 +19,7 @@ const emailId = profile?.emailId
 var showCount = 10
 export default function ViewGroup() {
     const params = useParams();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [group, setGroup] = useState({});
     const [groupExpense, setGroupExpense] = useState([]);
     const [alert, setAlert] = useState(false);
