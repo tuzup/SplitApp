@@ -5,7 +5,9 @@ import { getUserGroupsService } from "../../services/groupServices"
 import Loading from "../loading"
 import { CalenderExpenseGraph } from "./CalenderExpenseGraph"
 import { CategoryExpenseChart } from "./CategoryExpenseGraph"
+import { EndMessage } from "./endMessage"
 import { GroupExpenseChart } from "./GroupExpenseChart"
+import { RecentTransactions } from "./RecentTransactions"
 import { SummaryCards } from "./summaryCards"
 import { WelcomeMessage } from "./welcomeMessage"
 
@@ -19,23 +21,23 @@ export default function Dashboard() {
     const [userGroup, setUserGroup] = useState()
 
     useEffect(() => {
-    const getUserDetails = async() => {
-        setLoading(true);
-        const userIdJson = {
-            user: profile.emailId
-        }
-        const response_expense = await getUserExpenseService(userIdJson,setAlert,setAlertMessage)
-        setUserExp(response_expense.data);
-        const response_group = await getUserGroupsService(profile)
-        setUserGroup(response_group.data);
-        setLoading(false)
+        const getUserDetails = async () => {
+            setLoading(true);
+            const userIdJson = {
+                user: profile.emailId
+            }
+            const response_expense = await getUserExpenseService(userIdJson, setAlert, setAlertMessage)
+            setUserExp(response_expense.data);
+            const response_group = await getUserGroupsService(profile)
+            setUserGroup(response_group.data);
+            setLoading(false)
 
-    }   
-    getUserDetails();
-        
+        }
+        getUserDetails();
+
 
     }, [])
-    
+
     return (
         <Container maxWidth={'xl'}>
             {loading ? <Loading /> :
@@ -43,36 +45,38 @@ export default function Dashboard() {
                     <Grid item xs={12} md={8}>
                         <Grid container spacing={5}>
                             <Grid item xs={12}>
-                                <WelcomeMessage/>
+                                <WelcomeMessage />
                             </Grid>
                             <Grid item xs={12}>
-                                <SummaryCards userTotalExp={userExp?.total}/>
+                                <SummaryCards userTotalExp={userExp?.total} />
                             </Grid>
                             <Grid item xs={12}>
-                                <CalenderExpenseGraph/>
+                                <CalenderExpenseGraph />
                             </Grid>
-                            <Grid item xs={12} md={6}>
-                                <GroupExpenseChart/>
+                            <Grid item xs={12} md={12}>
+                                <GroupExpenseChart />
                             </Grid>
-                            <Grid item xs={12} md={6}>
-                                <CategoryExpenseChart/>
-                            </Grid>
+                            {/* <Grid item xs={12} md={6}>
+                                <CategoryExpenseChart />
+                            </Grid> */}
                         </Grid>
 
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <Box sx={{
-                            boxShadow: 5,
-                            borderRadius: 2,
-                            p: 5,
-                            minHeight: 850
-                        }}>
-                            <Typography variant="subtitle2" pb={2} >
-                                Your Recent transactions,
-                            </Typography>
-                        </Box>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <RecentTransactions />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <CategoryExpenseChart />
+                            </Grid>
+                            <Grid item md={12} xs={0}>
+                                <EndMessage/>
+                            </Grid>
+                        </Grid>
                     </Grid>
+
                 </Grid>
 
             }</Container>

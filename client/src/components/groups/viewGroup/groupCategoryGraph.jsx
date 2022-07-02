@@ -1,4 +1,4 @@
-import { Container, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -74,7 +74,6 @@ const GroupCategoryGraph = (currencyType) => {
     }, [])
     return (
         <>
-            {console.log(data)}
             {loading ? <Loading /> :
                 <>
                     <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />

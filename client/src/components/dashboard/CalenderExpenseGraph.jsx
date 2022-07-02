@@ -4,6 +4,7 @@ import 'chart.js/auto'
 import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { getUserDailyExpService, getUserMonthlyExpService } from "../../services/expenseServices";
+import { monthNamesMMM } from "../../utils/helper";
 
 export const CalenderExpenseGraph = () => {
 
@@ -20,7 +21,7 @@ export const CalenderExpenseGraph = () => {
     }
 
     const data = {
-        labels: montlyView? userDailyExp?.map(daily => (daily._id.date + " / " + daily._id.month)):userMonthlyExp?.map(monthly => (monthly._id.month)),
+        labels: montlyView? userDailyExp?.map(daily => (monthNamesMMM[daily._id.month-1] + '-' + daily._id.date)):userMonthlyExp?.map(monthly => ( monthNamesMMM[monthly._id.month-1])),
         datasets: [
             {
                 label:  montlyView? "Daily expense" : "Monthly expense",
@@ -81,14 +82,14 @@ export const CalenderExpenseGraph = () => {
             boxShadow: 5
         }}>
             <Typography variant="h6">
-                Calender Expense Graph
+                Expense Graph - {montlyView? "Daily View" : "Monthly View"}
             </Typography>
             
             <Box height={350} my={2}>
                 <Line data={data} options={options} />
             </Box>
             <FormGroup>
-                <FormControlLabel control={<Switch defaultChecked onClick={toggleMonthlyView} />} label="Daily expense view" />
+                <FormControlLabel control={<Switch defaultChecked onClick={toggleMonthlyView} />} label="Monthly expense view" />
             </FormGroup>
 
         </Box>}

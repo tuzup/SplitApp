@@ -83,7 +83,6 @@ export default function ViewGroup() {
             response_expense?.data?.expense && setExpenses(response_expense?.data?.expense?.slice(0,5)) 
             if(response_expense?.data?.expense?.length <=5 || !response_expense) 
                 setShowAllExp(true)
-            console.log()
             setLoading(false)
         }
         getGroupDetails()

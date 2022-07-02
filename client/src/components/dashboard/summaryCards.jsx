@@ -4,7 +4,6 @@ import { convertToCurrency } from '../../utils/helper'
 import Iconify from '../Iconify'
 
 export const SummaryCards = ({ userTotalExp }) => {
-    console.log(userTotalExp)
     const LabelIconStyle = styled('div')(({ theme }) => ({
         borderRadius: 60,
         width: 60,

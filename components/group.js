@@ -252,6 +252,7 @@ exports.addSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers) 
     var group = await model.Group.findOne({
         _id: groupId
     })
+    group.groupTotal += expenseAmount
     group.split[0][expenseOwner] += expenseAmount
     expensePerPerson = expenseAmount / expenseMembers.length
     //Updating the split values per user 
@@ -274,6 +275,7 @@ exports.clearSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers
     var group = await model.Group.findOne({
         _id: groupId
     })
+    group.groupTotal -= expenseAmount
     group.split[0][expenseOwner] -= expenseAmount
     expensePerPerson = expenseAmount / expenseMembers.length
     //Updating the split values per user 

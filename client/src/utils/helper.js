@@ -38,7 +38,7 @@ export function categoryIcon(groupCategory){
   }
 }
 
-const monthNamesMMM = ["JAN", "FRB", "MAR", "APR", "MAY", "JUN",
+export const monthNamesMMM = ["JAN", "FRB", "MAR", "APR", "MAY", "JUN",
   "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
 ];
 export function getMonthMMM(expDate) {

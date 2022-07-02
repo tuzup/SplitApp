@@ -1,9 +1,25 @@
-## SplitApp
-#### [Live App](https://split-app00.herokuapp.com/)
-# MERN Stack Group Expense Splitting Application 
-Build with the MERN stack (MongoDB, Express, React and NodeJS).
+<div align="center">
+  <a href="https://split-app00.herokuapp.com/">
+    <img src="https://github.com/tuzup/SplitApp/blob/master/client/public/static/logo.png?raw=true" alt="Logo" width="80" height="80">
+  </a>
 
-#### This project is still in development stage only ! 
+  <h3 align="center">SplitApp</h3>
+
+  <p align="center">
+    MERN Stack Group Expense Splitting Application <br/>
+    Build with the MERN stack (MongoDB, Express, React and NodeJS).
+    <br />
+    <a href="https://github.com/tuzup/SplitApp/"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://split-app00.herokuapp.com/">View Demo</a>
+    ·
+    <a href="https://github.com/tuzup/SplitApp/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/tuzup/SplitApp/issues">Request Feature</a>
+  </p>
+</div>
+
 
 
 ![SplitApp](https://github.com/tuzup/SplitApp/blob/master/Screenshots/Group%20View%20Page.jpg?raw=true)

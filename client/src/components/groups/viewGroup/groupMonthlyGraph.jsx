@@ -7,6 +7,7 @@ import AlertBanner from '../../AlertBanner';
 import Loading from '../../loading';
 import { Line } from "react-chartjs-2";
 import 'chart.js/auto'
+import { monthNamesMMM } from '../../../utils/helper';
 
 const GroupMonthlyGraph = () => {
     const params = useParams();
@@ -23,8 +24,8 @@ const GroupMonthlyGraph = () => {
 
     const data = {
         labels: montlyView ?
-            monthlyExp?.map(monthly => (monthly._id.month)) :
-            dailyExp?.map(daily => (daily._id.date) + " / " + (daily._id.month)),
+            monthlyExp?.map(monthly => (monthNamesMMM[monthly._id.month-1])) :
+            dailyExp?.map(daily => (monthNamesMMM[daily._id.month-1] + "-"  + daily._id.date)),
         datasets: [
             {
                 label: 'Monthly Expenses',
@@ -79,7 +80,6 @@ const GroupMonthlyGraph = () => {
     }, [])
     return (
         <>
-            {console.log(data)}
             {loading ? <Loading /> :
                 <>
                     <Box height={350} mb={5}>

@@ -44,6 +44,7 @@ exports.addExpense = async (req, res) => {
                 }
             }
             expense.expensePerMember = expense.expenseAmount / expense.expenseMembers.length
+            expense.expenseCurrency = group.currencyType
             var newExp = new model.Expense(expense)
             var newExpense = await model.Expense.create(newExp)
 

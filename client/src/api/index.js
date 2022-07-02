@@ -47,3 +47,7 @@ export const getUserExpense = (formData) => API.post('/api/expense/v1/user', for
 export const getUserMonthlyExp = (formData) => API.post('/api/expense/v1/user/monthlyExp', formData, accessHeader)
 
 export const getUserDailyExp = (formData) => API.post('/api/expense/v1/user/dailyExp', formData, accessHeader)
+
+export const getUserCategoryExp = (formData) => API.post('/api/expense/v1/user/categoryExp', formData, accessHeader)
+
+export const getRecentUserExp = (formData) => API.post('/api/expense/v1/user/recent', formData, accessHeader)

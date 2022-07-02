@@ -1,10 +1,13 @@
 import { Box, Button, Grid, Typography } from "@mui/material"
+import { Link as RouterLink } from 'react-router-dom';
+import configData from '../../config.json'
 
 export const WelcomeMessage = () => {
     return (
         <Box sx={{
             p: 5,
             bgcolor: (theme) => theme.palette['primary'].lighter,
+            color: (theme) => theme.palette['primary'].darker,
             borderRadius: 2
         }}>
             <Grid container spacing={2} justifyContent={'center'}
@@ -21,9 +24,8 @@ export const WelcomeMessage = () => {
                             Keep track of shared expenses and settle your corresponding balances in a convenient and personalized way.
                         </Typography>
                         <Button variant="contained"
-                            sx={{
-
-                            }}
+                            component={RouterLink}
+                            to={configData.USER_GROUPS_URL}
                         >
                             View Groups
                         </Button>

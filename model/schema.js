@@ -58,6 +58,9 @@ const Group = new mongoose.Schema({
     groupCategory: {
         type: String,
         default: "Others"
+    },groupTotal: {
+        type: Number, 
+        default: 0
     },
     split: {
         type: Array
@@ -83,6 +86,10 @@ const Expense = new mongoose.Schema({
     expenseCategory:{
         type: String,
         default: "Others"
+    },
+    expenseCurrency:{
+        type: String,
+        default: "INR"
     },
     expenseDate:{
         type: Date,

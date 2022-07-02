@@ -41,7 +41,6 @@ export default function Creategroup() {
         validationSchema: groupSchema,
         onSubmit: async () => {
             const create_response = await createGroupService(values, setAlert, setAlertMessage)
-            console.log(create_response)
             window.location = configData.VIEW_GROUP_URL + create_response.data.Id
         },
     });
@@ -67,7 +66,6 @@ export default function Creategroup() {
             setLoading(true)
             const response = await getEmailList()
             var list = response.data.user
-            list && console.log(list.indexOf(currentUser))
             list.indexOf(currentUser) > -1 && list.splice(list.indexOf(currentUser), 1)
             setEmailList(list)
             setLoading(false)
