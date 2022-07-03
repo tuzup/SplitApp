@@ -9,7 +9,6 @@ export const EndMessage = () => {
             bgcolor: (theme) => theme.palette['success'].light,
             color: (theme) => theme.palette['success'].darker,
             borderRadius: 2,
-            height: 410
         }}>
             <Grid container spacing={3} justifyContent={'center'}
                 alignItems={'center'}

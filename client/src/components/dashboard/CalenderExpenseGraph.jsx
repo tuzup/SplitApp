@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { getUserDailyExpService, getUserMonthlyExpService } from "../../services/expenseServices";
 import { monthNamesMMM } from "../../utils/helper";
+import useResponsive from "../../theme/hooks/useResponsive";
 
 export const CalenderExpenseGraph = () => {
-
+    const mdUp = useResponsive('up', 'md');
     const [montlyView, setMonthlyView] = useState(false)
     const [loading, setLoading] = useState(true)
     const profile = JSON.parse(localStorage.getItem("profile"))
@@ -76,11 +77,13 @@ export const CalenderExpenseGraph = () => {
     return (
         <>{loading? <Loading/> : 
         <Box sx={{
-            p: 5,
             bgcolor: 'background.paper',
             borderRadius: 2,
-            boxShadow: 5
-        }}>
+            boxShadow: 5,
+            ...(mdUp && {p:5}),
+            ...(!mdUp && {p:1})
+        }}
+        >
             <Typography variant="h6">
                 Expense Graph - {montlyView? "Daily View" : "Monthly View"}
             </Typography>
