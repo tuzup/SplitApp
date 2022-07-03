@@ -19,7 +19,7 @@ const emailId = profile?.emailId
 var showCount = 10
 export default function ViewGroup() {
     const params = useParams();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [group, setGroup] = useState({});
     const [groupExpense, setGroupExpense] = useState([]);
     const [alert, setAlert] = useState(false);
@@ -83,7 +83,6 @@ export default function ViewGroup() {
             response_expense?.data?.expense && setExpenses(response_expense?.data?.expense?.slice(0,5)) 
             if(response_expense?.data?.expense?.length <=5 || !response_expense) 
                 setShowAllExp(true)
-            console.log()
             setLoading(false)
         }
         getGroupDetails()
@@ -338,7 +337,7 @@ export default function ViewGroup() {
                         </Grid>
                         </Grid>
                         <Grid item xs={12} md={6} >
-                        <GroupCategoryGraph/>
+                        <GroupCategoryGraph currencyType={group?.currencyType}/>
                         </Grid>
                         <Grid item xs={12} md={expFocus? 6: 12}>
                         <GroupMonthlyGraph/>

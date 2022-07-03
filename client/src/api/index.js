@@ -39,3 +39,15 @@ export const addExpense = (formDate) => API.post('/api/expense/v1/add', formDate
 export const getGroupCategoryExp = (formData) => API.post('/api/expense/v1/group/categoryExp', formData, accessHeader)
 
 export const getGroupMonthlyExp = (formData) => API.post('/api/expense/v1/group/monthlyExp', formData, accessHeader)
+
+export const getGroupDailyExp = (formData) => API.post('/api/expense/v1/group/dailyExp', formData, accessHeader)
+
+export const getUserExpense = (formData) => API.post('/api/expense/v1/user', formData, accessHeader)
+
+export const getUserMonthlyExp = (formData) => API.post('/api/expense/v1/user/monthlyExp', formData, accessHeader)
+
+export const getUserDailyExp = (formData) => API.post('/api/expense/v1/user/dailyExp', formData, accessHeader)
+
+export const getUserCategoryExp = (formData) => API.post('/api/expense/v1/user/categoryExp', formData, accessHeader)
+
+export const getRecentUserExp = (formData) => API.post('/api/expense/v1/user/recent', formData, accessHeader)

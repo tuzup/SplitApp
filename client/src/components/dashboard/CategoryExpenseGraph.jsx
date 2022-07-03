@@ -1,21 +1,23 @@
+import { Box, Grid } from "@mui/material"
 import { Typography } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getGroupCategoryExpService } from '../../../services/expenseServices';
-import AlertBanner from '../../AlertBanner';
-import Loading from '../../loading';
+import { getGroupCategoryExpService, getUserCategoryExpService } from '../../services/expenseServices';
+import AlertBanner from '../AlertBanner';
+import Loading from '../loading';
 import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'chart.js/auto'
-import { convertToCurrency, currencyFind } from '../../../utils/helper';
+import { convertToCurrency, currencyFind } from '../../utils/helper';
+export const CategoryExpenseChart = () => {
 
-const GroupCategoryGraph = (currencyType) => {
     const params = useParams();
     const [alert, setAlert] = useState(false)
     const [alertMessage, setAlertMessage] = useState()
     const [loading, setLoading] = useState(true)
     const [categoryExp, setCategoryExp] = useState()
+    const profile = JSON.parse(localStorage.getItem("profile"))
 
     const data = {
         labels: categoryExp?.map(category => (category._id)),
@@ -39,19 +41,19 @@ const GroupCategoryGraph = (currencyType) => {
     }
 
     const options = {
-        
+        maintainAspectRatio: false,
         plugins: {   
             datalabels: {
-                color:'error',
+                display:false,
                 formatter: (value) => {
-                  return currencyFind(currencyType) + ' ' + convertToCurrency(value) ;
+                  return convertToCurrency(value) ;
                 }
               },
             legend: {
                 display: true,
                 position: 'bottom',
                 labels: {
-                    padding: 18
+                    padding: 10
                 },
             },
         }
@@ -61,31 +63,35 @@ const GroupCategoryGraph = (currencyType) => {
     useEffect(() => {
         const getGroupCategoryExpense = async () => {
             setLoading(true)
-            const groupIdJson = {
-                id: params.groupId
+            const userIdJson = {
+                user: profile.emailId
             }
             const category_exp =
-                await getGroupCategoryExpService(groupIdJson, setAlert, setAlertMessage)
+                await getUserCategoryExpService(userIdJson, setAlert, setAlertMessage)
             setCategoryExp(category_exp.data.data)
             setLoading(false)
         }
         getGroupCategoryExpense()
 
     }, [])
+
     return (
         <>
-            {loading ? <Loading /> :
-                <>
+        {loading ? <Loading /> :
+        <Box sx={{
+            p: 5,
+            bgcolor: 'background.paper',
+            borderRadius: 2,
+            boxShadow: 5
+        }}>
+              <Typography variant="h6" mb={2}>
+                Category Expense Chart
+            </Typography>
                     <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
+                    <Box height={500}>
                     <Doughnut data={data} options={options} plugins={[ChartDataLabels]}/>
-                    {/* <Doughnut data={data} options={options} plugins={[ChartDataLabels]}/> */}
-                    <Typography variant='subtitle' p={3}>
-                        <center>Category Expense chart</center>
-                    </Typography>
-                </>}
+                    </Box>                   
+        </Box>}
         </>
-
     )
 }
-
-export default GroupCategoryGraph

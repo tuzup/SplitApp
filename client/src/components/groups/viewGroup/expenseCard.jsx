@@ -18,7 +18,6 @@ ExpenseCard.propTypes = {
     expenseAmount: PropTypes.number,
     expensePerMember: PropTypes.number,
     expenseOwner: PropTypes.string,
-    expenseDate: PropTypes.instanceOf(Date),
     currencyType: PropTypes.string
 }
 
