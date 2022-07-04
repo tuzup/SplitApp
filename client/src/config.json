@@ -1,5 +1,4 @@
 {
-    "SERVER_URL": "https://example.com/api/",
     "DASHBOARD_URL" : "/dashboard/app",
     "DASHBOARD_HOME_URL" : "/dashboard",
     "LOGIN_URL" : "/",
