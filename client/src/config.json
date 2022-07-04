@@ -1,0 +1,16 @@
+{
+    "DASHBOARD_URL" : "/dashboard/app",
+    "DASHBOARD_HOME_URL" : "/dashboard",
+    "LOGIN_URL" : "/",
+    "REGISTER_URL": "/register",
+    "USER_GROUPS_URL" : "/dashboard/groups",
+    "VIEW_GROUP_ROUTER_URL" : "/dashboard/groups/view/:groupId",
+    "VIEW_GROUP_URL" : "/dashboard/groups/view/",
+    "ADD_EXPENSE_URL" : "/dashboard/addExpense/",
+    "ADD_EXPENSE_ROUTER_URL" : "/dashboard/addExpense/:groupId",
+    "CREATE_GROUP_URL" : "/dashboard/crateGroup",
+    "ABOUT_URL" : "/dashboard/about",
+    "USER_PROFILE_URL" : "/dashboard/userProfile",
+    "USER_DELETED_URL" : "/userProfile/confirmDelete",
+    "USER_PASS_UPDATE_URL" : "/dashboard/userProfile/updatePassword"
+  }

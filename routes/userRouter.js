@@ -27,4 +27,7 @@ router.delete('/v1/delete', apiAuth.validateToken,controller.deleteUser)
 //Update Password router
 router.post('/v1/updatePassword',apiAuth.validateToken, controller.updatePassword)
 
+//Get all User Emalil Id 
+router.get('/v1/emailList',apiAuth.validateToken, controller.emailList)
+
 module.exports = router;

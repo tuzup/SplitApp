@@ -1,16 +1,18 @@
 var mongoose = require('mongoose')
 var logger = require('../helper/logger')
 
-mongoose.connect(process.env.MONGODB_URI, {
-    maxPoolSize: 50,
-    wtimeoutMS: 2500,
-    useNewUrlParser: true
+mongoose.connect(process.env.MONGODB_URI, 
+//     {
+//     maxPoolSize: 50,
+//     wtimeoutMS: 2500,
+//     useNewUrlParser: true
+// }
+).then(() => {
+    logger.info(`DB Connection Established`)
+    console.log("DB Connected")
 }).catch(err => {
     logger.error(`DB Connection Fail | ${err.stack}`)
     console.log(err)
-}).then(() => {
-    logger.info(`DB Connection Established`)
-    console.log("DB Connected")
 })
 
 const User = new mongoose.Schema({
@@ -53,6 +55,13 @@ const Group = new mongoose.Schema({
         type: Array,
         required: true
     },
+    groupCategory: {
+        type: String,
+        default: "Others"
+    },groupTotal: {
+        type: Number, 
+        default: 0
+    },
     split: {
         type: Array
     }
@@ -73,6 +82,18 @@ const Expense = new mongoose.Schema({
     expenseAmount: {
         type: Number,
         required: true
+    },
+    expenseCategory:{
+        type: String,
+        default: "Others"
+    },
+    expenseCurrency:{
+        type: String,
+        default: "INR"
+    },
+    expenseDate:{
+        type: Date,
+        default: Date.now
     },
     expenseOwner: {
         type: String,

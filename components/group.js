@@ -88,7 +88,7 @@ exports.viewGroup = async (req, res) => {
             status: "Success",
             group: group,
         })
-    } catch {
+    } catch(err) {
         logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
         res.status(err.status || 500).json({
             message: err.message
@@ -114,6 +114,8 @@ exports.findUserGroup = async (req, res) => {
         }
         const groups = await model.Group.find({
             groupMembers: req.body.emailId
+        }).sort({
+            $natural: -1 //to get the newest first 
         })
         res.status(200).json({
             status: "Success",
@@ -182,7 +184,7 @@ exports.editGroup = async (req, res) => {
             }, {
                 $set: {
                     groupName: editGroup.groupName,
-                    groupDesciption: editGroup.groupDesciption,
+                    groupDescription: editGroup.groupDescription,
                     currencyType: editGroup.currencyType,
                     groupMembers: editGroup.groupMembers,
                     split: editGroup.split
@@ -250,6 +252,7 @@ exports.addSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers) 
     var group = await model.Group.findOne({
         _id: groupId
     })
+    group.groupTotal += expenseAmount
     group.split[0][expenseOwner] += expenseAmount
     expensePerPerson = expenseAmount / expenseMembers.length
     //Updating the split values per user 
@@ -272,6 +275,7 @@ exports.clearSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers
     var group = await model.Group.findOne({
         _id: groupId
     })
+    group.groupTotal -= expenseAmount
     group.split[0][expenseOwner] -= expenseAmount
     expensePerPerson = expenseAmount / expenseMembers.length
     //Updating the split values per user 

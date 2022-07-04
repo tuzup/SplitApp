@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "e353960d-9aa2-4c5c-a602-3cae4f754498",
-		"name": "SplitApp",
+		"_postman_id": "83b49bd1-f253-4f5c-9887-950c49cc2256",
+		"name": "SplitApp : 3001",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -23,11 +23,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/register",
+							"raw": "localhost:3001/users/v1/register",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -52,11 +52,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/login",
+							"raw": "localhost:3001/users/v1/login",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -70,7 +70,13 @@
 					"name": "View User",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsQGdtYWlsLmNvbQ.eXfSG1iM6BBKK0XgSUdqqeccig-DjDtG1WoP2zEh70k",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"emailId\": \"test-mail@gmail.com\"\n}",
@@ -81,11 +87,46 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/view",
+							"raw": "localhost:3001/users/v1/view",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
+							"path": [
+								"users",
+								"v1",
+								"view"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View User Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsQGdtYWlsLmNvbQ.eXfSG1iM6BBKK0XgSUdqqeccig-DjDtG1WoP2zEh70k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailId\": \"test-mail@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/users/v1/view",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -110,11 +151,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/edit",
+							"raw": "localhost:3001/users/v1/edit",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -139,11 +180,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/updatePassword",
+							"raw": "localhost:3001/users/v1/updatePassword",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -157,10 +198,16 @@
 					"name": "Delete Group",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsQGdtYWlsLmNvbQ.eXfSG1iM6BBKK0XgSUdqqeccig-DjDtG1WoP2zEh70k",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"emailId\": \"test-mail@gmail.com\"\n}",
+							"raw": "{\n    \"groupId\": \"62bbf39f3ae54806c78c3838\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -168,11 +215,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/v1/delete",
+							"raw": "localhost:3001/users/v1/delete",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"users",
 								"v1",
@@ -191,10 +238,16 @@
 					"name": "Create Group",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"groupName\": \"Trip to Goa\",\n    \"groupDescription\" : \"Sample group description\",\n    \"currencyType\": \"INR\",\n    \"groupOwner\": \"test-mail@gmail.com\",\n    \"groupMembers\": [\"test-mail@gmail.com\", \"test-mail1@gmail.com\"]\n}",
+							"raw": "{\n    \"groupName\": \"To check split\",\n    \"groupDescription\" : \"Sample group description\",\n    \"currencyType\": \"INR\",\n    \"groupOwner\": \"test-mail@gmail.com\",\n    \"groupMembers\": [\"test-mail@gmail.com\", \"test-mail1@gmail.com\", \"test-mail3@gmail.com\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -202,11 +255,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/group/v1/add",
+							"raw": "localhost:3001/group/v1/add",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"group",
 								"v1",
@@ -231,11 +284,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/group/v1/view",
+							"raw": "localhost:3001/group/v1/view",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"group",
 								"v1",
@@ -260,11 +313,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/group/v1/user",
+							"raw": "localhost:3001/group/v1/user",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"group",
 								"v1",
@@ -278,10 +331,16 @@
 					"name": "Edit Group",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Barer eyJhbGciOiJIUzI1NiJ9.czRzdW5ueWdlb3JnZUBnbWFpbC5jb20.l-7GNryU_LGY6kNYDE8B6Z9zY5iN4uzTL8zgzn94YnI",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"62ad8da2009376b34d6d1407\",\n    \"groupName\": \"Trip to Kerala\",\n    \"groupDescription\" : \"Sample group description\",\n    \"currencyType\": \"INR\",\n    \"groupOwner\": \"test-mail@gmail.com\",\n    \"groupMembers\": [\"test-mail@gmail.com\", \"test-mail1@gmail.com\"]\n}",
+							"raw": "{\n    \"id\": \"62b6190ef9581a7a995205c7\",\n    \"groupName\": \"Molina Project\",\n    \"groupDescription\" : \"\",\n    \"currencyType\": \"USD\",\n    \"groupOwner\": \"s4sunnygeorge@gmail.com\",\n    \"groupMembers\": [\"test-mail@gmail.com\",\"s4sunnygeorge@gmail.com\", \"test-mail1@gmail.com\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -289,11 +348,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/group/v1/edit",
+							"raw": "localhost:3001/group/v1/edit",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"group",
 								"v1",
@@ -312,10 +371,16 @@
 					"name": "Add Expense",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Barer eyJhbGciOiJIUzI1NiJ9.czRzdW5ueWdlb3JnZUBnbWFpbC5jb20.l-7GNryU_LGY6kNYDE8B6Z9zY5iN4uzTL8zgzn94YnI",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"groupId\": \"62adaf6c5023f39e801026c2s\",\n    \"expenseName\": \"Food\",\n    \"expenseDescription\": \"Fooding with Francis\",\n    \"expenseAmount\": 2000,\n    \"expenseOwner\": \"test-mail@gmail.com\",\n    \"expenseMembers\": [\"test-mail@gmail.com\",\"test-mail1@gmail.com\"]\n\n}",
+							"raw": "{\n    \"groupId\": \"62b5bc6cf9581a7a9952050f\",\n    \"expenseName\": \"Food\",\n    \"expenseDescription\": \"Fooding with Francis\",\n    \"expenseAmount\": 5000,\n    \"expenseOwner\": \"test-mail@gmail.com\",\n    \"expenseMembers\": [\"test-mail@gmail.com\",\"test-mail1@gmail.com\",\"s4sunnygeorge@gmail.com\"]\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -323,11 +388,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/add",
+							"raw": "localhost:3001/expense/v1/add",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -352,11 +417,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/edit",
+							"raw": "localhost:3001/expense/v1/edit",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -381,11 +446,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/view",
+							"raw": "localhost:3001/expense/v1/view",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -396,13 +461,19 @@
 					"response": []
 				},
 				{
-					"name": "View Group Expense",
+					"name": "View Group Category Exp",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsN0BnbWFpbC5jb20.lcC7PGa6CTwZW71NSTPVNepRD4uNboDLIZxZ26Yx_IU",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"groupId\": \"62adaf6c5023f39e801026c2\"\n}",
+							"raw": "{\n    \"id\": \"62b741a050a531177cac703f\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -410,11 +481,83 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/group",
+							"raw": "localhost:3001/expense/v1/group/categoryExp",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
+							"path": [
+								"expense",
+								"v1",
+								"group",
+								"categoryExp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Group Monthly Exp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsN0BnbWFpbC5jb20.lcC7PGa6CTwZW71NSTPVNepRD4uNboDLIZxZ26Yx_IU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"62b741a050a531177cac703f\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/expense/v1/group/monthlyExp",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"expense",
+								"v1",
+								"group",
+								"monthlyExp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Group Expense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsN0BnbWFpbC5jb20.lcC7PGa6CTwZW71NSTPVNepRD4uNboDLIZxZ26Yx_IU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"62b741a050a531177cac703f\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/expense/v1/group",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -428,7 +571,13 @@
 					"name": "View User Expense",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsN0BnbWFpbC5jb20.lcC7PGa6CTwZW71NSTPVNepRD4uNboDLIZxZ26Yx_IU",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n   \"user\": \"test-mail@gmail.com\"\n}",
@@ -439,15 +588,87 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/user",
+							"raw": "localhost:3001/expense/v1/user",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
 								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View User Category Expense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsN0BnbWFpbC5jb20.lcC7PGa6CTwZW71NSTPVNepRD4uNboDLIZxZ26Yx_IU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"user\": \"s4sunnygeorge@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/expense/v1/user/monthlyExp",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"expense",
+								"v1",
+								"user",
+								"monthlyExp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View User Monthly Expense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": " asd eyJhbGciOiJIUzI1NiJ9.dGVzdC1tYWlsN0BnbWFpbC5jb20.lcC7PGa6CTwZW71NSTPVNepRD4uNboDLIZxZ26Yx_IU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"user\": \"test-mail@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/expense/v1/user/categoryExp",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"expense",
+								"v1",
+								"user",
+								"categoryExp"
 							]
 						}
 					},
@@ -468,11 +689,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/user",
+							"raw": "localhost:3001/expense/v1/user",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
@@ -483,7 +704,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Group Expense",
+					"name": "Delete Expense",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -497,11 +718,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/expense/v1/delete",
+							"raw": "localhost:3001/expense/v1/delete",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3001",
 							"path": [
 								"expense",
 								"v1",
