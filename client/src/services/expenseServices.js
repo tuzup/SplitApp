@@ -112,3 +112,39 @@ export const getRecentUserExpService = async (data, setAlert, setAlertMessage) =
           return false
      }
 }
+
+export const getExpDetailsService = async (data, setAlert, setAlertMessage) => {
+     try{
+          return await api.getExpDetails(data)
+     }catch(err){
+          setAlert(true)
+          err.response.status === 400 || err.response.status === 401
+          ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+          return false
+     }
+}
+
+
+export const editExpenseService = async (data,setAlert, setAlertMessage) => {
+     try{
+          const edit_exp_response = await api.editExpense(data)
+          return edit_exp_response
+     }catch(err){
+          setAlert(true)
+          err.response.status === 400 || err.response.status === 401
+          ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+          return false
+     }
+  }
+
+  export const deleteExpenseService = async (data,setAlert, setAlertMessage) => {
+     try{
+          const delete_exp_response = await api.deleteExpense(data)
+          return delete_exp_response
+     }catch(err){
+          setAlert(true)
+          err.response.status === 400 || err.response.status === 401
+          ? setAlertMessage(err.response.data.message) : setAlertMessage("Oops! Something went worng")
+          return false
+     }
+  }

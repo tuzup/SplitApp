@@ -7,8 +7,8 @@ import Iconify from '../../Iconify';
 import Loading from '../../loading';
 import useResponsive from '../../../theme/hooks/useResponsive';
 import { convertToCurrency, currencyFind, categoryIcon } from '../../../utils/helper';
-import ExpenseCard from './expenseCard';
-import AddExpense from '../addExpense';
+import ExpenseCard from '../../expense/expenseCard';
+import AddExpense from '../../expense/addExpense';
 import GroupCategoryGraph from './groupCategoryGraph';
 import GroupMonthlyGraph from './groupMonthlyGraph';
 import { Link as RouterLink } from 'react-router-dom';
@@ -322,6 +322,7 @@ export default function ViewGroup() {
                             {expenses?.map(myExpense => (
                             <Grid item xs={12} md={expFocus? 6: 12}>                               
                                          <ExpenseCard 
+                                         expenseId={myExpense?._id}
                                          expenseName={myExpense?.expenseName}
                                          expenseAmount ={myExpense?.expenseAmount}
                                          expensePerMember = {myExpense?.expensePerMember}
