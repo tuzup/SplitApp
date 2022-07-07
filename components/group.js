@@ -187,6 +187,7 @@ exports.editGroup = async (req, res) => {
                     groupDescription: editGroup.groupDescription,
                     currencyType: editGroup.currencyType,
                     groupMembers: editGroup.groupMembers,
+                    groupCategory: editGroup.groupCategory,
                     split: editGroup.split
                 }
             })

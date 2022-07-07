@@ -30,6 +30,8 @@ export const getEmailList = () => API.get('/api/users/v1/emailList', accessHeade
 
 export const createGroup = (formData) => API.post('/api/group/v1/add', formData,  accessHeader)
 
+export const editGroup = (formData) => API.post('/api/group/v1/edit', formData, accessHeader)
+
 export const getGroupDetails = (formData) => API.post('/api/group/v1/view', formData, accessHeader)
 
 export const getGroupExpense = (formData) => API.post('/api/expense/v1/group', formData, accessHeader)

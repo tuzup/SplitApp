@@ -6,6 +6,8 @@
     "USER_GROUPS_URL" : "/dashboard/groups",
     "VIEW_GROUP_ROUTER_URL" : "/dashboard/groups/view/:groupId",
     "VIEW_GROUP_URL" : "/dashboard/groups/view/",
+    "EDIT_GROUP_URL" : "/dashboard/groups/edit/",
+    "EDIT_GROUP_ROUTER_URL" : "/dashboard/groups/edit/:groupId",
     "ADD_EXPENSE_URL" : "/dashboard/addExpense/",
     "ADD_EXPENSE_ROUTER_URL" : "/dashboard/addExpense/:groupId",
     "EDIT_EXPENSE_URL" : "/dashboard/editExpense/",

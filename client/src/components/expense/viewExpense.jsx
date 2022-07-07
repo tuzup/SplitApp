@@ -1,4 +1,4 @@
-import { Box, Button, Grid, styled, Typography } from '@mui/material'
+import { Box, Button, Container, Grid, Paper, styled, Typography } from '@mui/material'
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getExpDetailsService } from "../../services/expenseServices";
@@ -6,6 +6,8 @@ import useResponsive from "../../theme/hooks/useResponsive";
 import { convertToCurrency, currencyFind } from '../../utils/helper';
 import Loading from "../loading";
 import AlertBanner from '../AlertBanner';
+import { Link as RouterLink } from 'react-router-dom';
+import dataConfig from '../../config.json';
 
 export const ViewExpense = () => {
     const navigate = useNavigate();
@@ -16,7 +18,8 @@ export const ViewExpense = () => {
     const [alert, setAlert] = useState(false)
     const [alertMessage, setAlertMessage] = useState('')
     const [expenseDetails, setExpenseDetails] = useState()
-
+    const [color] = useState(['primary', 'secondary', 'error', 'warning', 'info', 'success']);
+    const [expenseDate, setExpenseDate] = useState()
     const TextStyle = styled('span')(({ theme }) => ({
         marginLeft: 5,
         padding: 6,
@@ -33,6 +36,8 @@ export const ViewExpense = () => {
             }
             const response_exp = await getExpDetailsService(expenseIdJson, setAlert, setAlertMessage)
             setExpenseDetails(response_exp?.data?.expense)
+            const date =new Date(response_exp?.data?.expense?.expenseDate).toDateString()
+            setExpenseDate(date)
             setLoading(false)
         }
 
@@ -42,81 +47,73 @@ export const ViewExpense = () => {
     return (
         <>
             {loading ? <Loading /> :
-
-                <Box sx={{
-                    position: 'relative',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
+                <Container maxWidth='md' disableGutters='true' sx={{
                     bgcolor: 'background.paper',
-                    boxShadow: 24,
-                    p: 4,
                     borderRadius: 2,
-                    ...(mdUp && { width: 700 })
-                }}
-                >
+                    boxShadow: 5,
+                }}>
                     <AlertBanner severity='error' alertMessage={alertMessage} showAlert={alert} />
-                    <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
-                        View Expense
-                    </Typography>
+                    <Box sx={{
+                        bgcolor: (theme) => theme.palette[color[Math.floor(Math.random() * 5)]].lighter, p: 6, mb: 3,
+                        width: '100%'
+                    }}
 
-                    <Grid container spacing={3} >
-                        <Grid item xs={12} >
-                            <Typography>
-                                Name :
-                                <TextStyle>
-                                    {expenseDetails?.expenseName}</TextStyle>
+                    >
+                        <Typography variant='h3'>
+                            {expenseDetails?.expenseName}
+                        </Typography>
+                        <Typography variant='body'>
+                            {expenseDetails?.expenseDescription}
+                        </Typography>
+                    </Box>
+                    <Grid container spacing={3} p={4}>
+
+                        <Grid item xs={6} >
+                            <Typography variant='h6'>
+                                Category : {expenseDetails?.expenseCategory}
                             </Typography>
                         </Grid>
-                        <Grid item xs={12} >
-                            Description :
-                            <TextStyle>
-                                {expenseDetails?.expenseDescription}
-                            </TextStyle>
+                        <Grid item xs={6}>
+                        <Typography variant='h6'>
+                            Date : {expenseDate}
+
+                            </Typography>
+                        </Grid>
+                       
+
+                        <Grid item xs={6}>
+                            <Typography variant='h6'>
+                                Amount : {currencyFind(expenseDetails?.expenseCurrency) + " " + convertToCurrency(expenseDetails?.expenseAmount)}
+                            </Typography>
                         </Grid>
 
-                        <Grid item xs={12} >
-
-                            Owner :
-                            <TextStyle>
-                                {expenseDetails?.expenseOwner}
-                            </TextStyle>
+                        <Grid item xs={6} >
+                            <Typography variant='h6'>
+                                Expense Owner : {expenseDetails?.expenseOwner}
+                            </Typography>
                         </Grid>
 
                         <Grid item xs={12}>
-                            Members :
+                            <Typography variant='h6' color={(theme) => theme.palette['error'].main}>
+                                Amount per person: {currencyFind(expenseDetails?.expenseCurrency) + " " + convertToCurrency(expenseDetails?.expensePerMember)}
+                            </Typography>
+                        </Grid>
 
+                        <Grid item xs={12}>
+                            <Typography variant='h6'>
+                                Members :
+                            </Typography>
                             {expenseDetails?.expenseMembers.map((member) => (
-                                <TextStyle>
+                                <Typography variant='body2'>
                                     {member}
                                     &nbsp;
-                                </TextStyle>
+                                </Typography>
                             ))}
 
 
                         </Grid>
 
-                        <Grid item xs={6} >
 
-                            Amount :
-                            <TextStyle>
-                                {currencyFind(expenseDetails?.expenseCurrency) + " " + convertToCurrency(expenseDetails?.expenseAmount)}
-                            </TextStyle>
-                        </Grid>
-                        <Grid item xs={6} >
-
-                            Category :
-                            <TextStyle>
-                                {expenseDetails?.expenseCategory}
-                            </TextStyle>
-                        </Grid>
-                        <Grid item xs={12}>
-
-                            Date :
-                            <TextStyle>
-                                {expenseDetails?.expenseDate}
-                            </TextStyle>
-                        </Grid>
 
                         {mdUp && <Grid item xs={0} md={6} />}
                         <Grid item xs={6} md={3}>
@@ -125,13 +122,15 @@ export const ViewExpense = () => {
                             </Button>
                         </Grid>
                         <Grid item xs={6} md={3}>
-                            <Button fullWidth size="large" variant="contained">
+                            <Button fullWidth size="large" variant="contained" component={RouterLink}
+                                to={dataConfig.EDIT_EXPENSE_URL + expenseId}>
                                 Edit Expense
                             </Button>
                         </Grid>
 
                     </Grid>
-                </Box>}
+                </Container>
+            }
         </>
     )
 }
