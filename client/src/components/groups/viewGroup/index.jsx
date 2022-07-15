@@ -7,8 +7,8 @@ import Iconify from '../../Iconify';
 import Loading from '../../loading';
 import useResponsive from '../../../theme/hooks/useResponsive';
 import { convertToCurrency, currencyFind, categoryIcon } from '../../../utils/helper';
-import ExpenseCard from './expenseCard';
-import AddExpense from '../addExpense';
+import ExpenseCard from '../../expense/expenseCard';
+import AddExpense from '../../expense/addExpense';
 import GroupCategoryGraph from './groupCategoryGraph';
 import GroupMonthlyGraph from './groupMonthlyGraph';
 import { Link as RouterLink } from 'react-router-dom';
@@ -117,7 +117,12 @@ export default function ViewGroup() {
                         color: (theme) => theme.palette['primary'].darker,
                         pb: 3
                     }}>
+                       
                         <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
+                        <Link component={RouterLink}
+                            to={dataConfig.EDIT_GROUP_URL+group?._id}>
+                        <Iconify icon = "akar-icons:edit" sx={{float: 'right', fontSize: 18}} />
+                        </Link>
                         <Typography variant="h4" pb={1}>
                             {group?.groupName}
                         </Typography>
@@ -322,6 +327,7 @@ export default function ViewGroup() {
                             {expenses?.map(myExpense => (
                             <Grid item xs={12} md={expFocus? 6: 12}>                               
                                          <ExpenseCard 
+                                         expenseId={myExpense?._id}
                                          expenseName={myExpense?.expenseName}
                                          expenseAmount ={myExpense?.expenseAmount}
                                          expensePerMember = {myExpense?.expensePerMember}

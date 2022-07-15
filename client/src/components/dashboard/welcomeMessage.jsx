@@ -5,6 +5,7 @@ import configData from '../../config.json'
 export const WelcomeMessage = () => {
     return (
         <Box sx={{
+            boxShadow: 5,
             p: 5,
             bgcolor: (theme) => theme.palette['primary'].lighter,
             color: (theme) => theme.palette['primary'].darker,

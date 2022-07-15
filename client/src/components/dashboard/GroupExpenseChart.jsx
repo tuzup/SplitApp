@@ -1,14 +1,16 @@
 import { Box, Grid, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
-import { PolarArea } from "react-chartjs-2"
+import { Bar, Pie } from "react-chartjs-2"
 import { getUserGroupsService } from "../../services/groupServices"
 import AlertBanner from "../AlertBanner"
 import Loading from "../loading"
 import 'chart.js/auto'
 import { convertToCurrency } from "../../utils/helper"
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import useResponsive from '../../theme/hooks/useResponsive';
 
 export const GroupExpenseChart = () => {
+    const mdUp = useResponsive('up', 'md');
     const [loading, setLoading] = useState(true)
     const [groupExp, setGroupExp] = useState()
     const [alert, setAlert] = useState(false)
@@ -40,14 +42,14 @@ export const GroupExpenseChart = () => {
         maintainAspectRatio: false,
         plugins: {   
             datalabels: {
-                display:true,
+                display:false,
                 formatter: (value) => {
                   return convertToCurrency(value) ;
                 }
               },
             legend: {
                 display: true,
-                position: 'right',
+                position: mdUp? 'right' : 'bottom',
                 labels: {
                     padding: 10
                 },
@@ -83,7 +85,7 @@ export const GroupExpenseChart = () => {
             </Typography>
             <AlertBanner showAlert={alert} alertMessage={alertMessage} severity = 'error' />
             <Box height={500}>
-            <PolarArea data={data} options={options} plugins={[ChartDataLabels]}/>
+            <Pie data={data} options={options} plugins={[ChartDataLabels]}/>
             </Box>
         </Box>}
         </>

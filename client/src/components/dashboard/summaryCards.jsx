@@ -30,7 +30,7 @@ export const SummaryCards = ({ userTotalExp }) => {
                         </Typography>
                         <Typography variant="h5"
                             sx={{ color: (theme) => theme.palette['primary'].darker }}>
-                            {userTotalExp ? convertToCurrency(userTotalExp) : 0}
+                            ₹ {userTotalExp ? convertToCurrency(userTotalExp) : 0}
                         </Typography>
                     </Box>
                 </Stack>
@@ -55,7 +55,7 @@ export const SummaryCards = ({ userTotalExp }) => {
                         </Typography>
                         <Typography variant="h5"
                             sx={{ color: (theme) => theme.palette['success'].darker }}>
-                            0
+                            ₹ 5,000
                         </Typography>
                     </Box>
                 </Stack>
@@ -78,7 +78,7 @@ export const SummaryCards = ({ userTotalExp }) => {
                         </Typography>
                         <Typography variant="h5"
                             sx={{ color: (theme) => theme.palette['error'].darker }}>
-                            0
+                                ₹ 350
                         </Typography>
                     </Box>
                 </Stack>

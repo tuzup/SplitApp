@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { getRecentUserExpService } from '../../services/expenseServices'
-import ExpenseCard from '../groups/viewGroup/expenseCard'
+import ExpenseCard from '../expense/expenseCard'
 
 
 export const RecentTransactions = () => {
@@ -39,6 +39,7 @@ export const RecentTransactions = () => {
             {recentExp?.map(myExpense => (
 
                 <ExpenseCard
+                    expenseId={myExpense?._id}
                     expenseName={myExpense?.expenseName}
                     expenseAmount={myExpense?.expenseAmount}
                     expensePerMember={myExpense?.expensePerMember}
