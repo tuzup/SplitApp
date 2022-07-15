@@ -10,12 +10,13 @@ import * as Yup from 'yup';
 import useResponsive from '../../theme/hooks/useResponsive';
 import { currencyFind } from '../../utils/helper';
 import Iconify from '../Iconify';
-import { addExpenseService } from '../../services/expenseServices';
+import { editExpenseService, getExpDetailsService } from '../../services/expenseServices';
 import configData from '../../config.json'
 import { useParams } from 'react-router-dom'
 import { getGroupDetailsService } from '../../services/groupServices';
 import Loading from '../loading';
 import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 
 const style = {
@@ -30,7 +31,8 @@ const style = {
 };
 
 
-export default function AddExpense() {  
+export default function EditExpense() {
+    const navigate = useNavigate();  
   const params = useParams();
   const mdUp = useResponsive('up', 'md');
   const profile = JSON.parse(localStorage.getItem('profile'))
@@ -41,9 +43,11 @@ export default function AddExpense() {
   const [alertMessage, setAlertMessage] = useState('')
   var [groupMembers,setGroupMembers] = useState()
   var [groupCurrency,setGroupCurrency] = useState()
+  const [expenseDetails, setExpenseDetails] = useState()
+  var name ;
  
   //Formink schema 
-  const addExpenseSchema = Yup.object().shape({
+  const editExpenseSchema = Yup.object().shape({
     expenseName: Yup.string().required('Expense name is required'),
     expenseDescription: Yup.string(),
     expenseAmount: Yup.string().required('Amount is required'),
@@ -52,21 +56,21 @@ export default function AddExpense() {
 
   const formik = useFormik({
     initialValues: {
-      expenseName: '',
-      expenseDescription: '',
-      expenseAmount: '',
-      expenseCategory: '',
-      expenseDate: Date(),
-      expenseMembers: [currentUser],
-      expenseOwner: currentUser,
-      groupId: groupId
-
+      expenseName: null,
+      expenseDescription: null,
+      expenseAmount: null,
+      expenseCategory: null,
+      expenseDate: null,
+      expenseMembers: null,
+      expenseOwner: null,
+      groupId: null,
+      id: null
     },
-    validationSchema: addExpenseSchema,
+    validationSchema: editExpenseSchema,
     onSubmit: async () => {
       setLoading(true)
-      if(await addExpenseService(values, setAlert, setAlertMessage))
-       window.location = configData.VIEW_GROUP_URL+groupId
+      if(await editExpenseService(values, setAlert, setAlertMessage))
+      navigate(-1)
     },
   });
 
@@ -82,20 +86,33 @@ export default function AddExpense() {
       },
     },
   };
-
-
   useEffect(() => {
-    const getGroupDetails = async () => {
+    const getExpenseDetails = async () => {
         setLoading(true)
+        const expenseIdJson = {
+            id: params.expenseId
+        }
+        const response_exp = await getExpDetailsService(expenseIdJson, setAlert, setAlertMessage)
+        setExpenseDetails(response_exp?.data?.expense)
+        const exp = response_exp?.data?.expense
         const groupIdJson = {
-            id: params.groupId
+            id: response_exp?.data?.expense?.groupId
         }
         const response_group = await getGroupDetailsService(groupIdJson, setAlert, setAlertMessage)
+        formik.values.expenseName = exp?.expenseName
+        formik.values.expenseDescription = exp?.expenseDescription
+        formik.values.expenseOwner = exp?.expenseOwner
+        formik.values.expenseMembers = exp?.expenseMembers
+        formik.values.expenseAmount = exp?.expenseAmount
+        formik.values.expenseCategory = exp?.expenseCategory
+        formik.values.expenseDate = exp?.expenseDate
+        formik.values.groupId = exp?.groupId
+        formik.values.id = exp?._id
         setGroupCurrency(response_group?.data?.group?.groupCurrency)
         setGroupMembers(response_group?.data?.group?.groupMembers)
         setLoading(false)
     }
-    getGroupDetails()
+    getExpenseDetails()
 }, []);
   return (
     <>
@@ -113,7 +130,7 @@ export default function AddExpense() {
       }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
-          Add Expense
+          Edit Expense
         </Typography>
         <FormikProvider value={formik}>
 
@@ -146,7 +163,7 @@ export default function AddExpense() {
                 />
               </Grid>
 
-              <Grid item xs={612} >
+              <Grid item xs={12} >
                 <FormControl fullWidth
                   error={Boolean(touched.expenseOwner && errors.expenseOwner)}
                 >
@@ -216,7 +233,7 @@ export default function AddExpense() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        {currencyFind(groupCurrency)}
+                        {currencyFind(expenseDetails?.expenseCurrency)}
                       </InputAdornment>
                     ),
                   }}
@@ -280,13 +297,13 @@ export default function AddExpense() {
 
               {mdUp && <Grid item xs={0} md={6} />}
               <Grid item xs={6} md={3}>
-                <Button fullWidth size="large"variant="outlined" component={RouterLink} to={configData.VIEW_GROUP_URL+groupId}>
+                <Button fullWidth size="large"variant="outlined" onClick={() => navigate(-1)}>
                   Cancel
                 </Button>
               </Grid>
               <Grid item xs={6} md={3}>
                 <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-                  Add Expense
+                  Edit Expense
                 </LoadingButton>
               </Grid>
              
