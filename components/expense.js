@@ -120,7 +120,8 @@ exports.editExpense = async (req, res) => {
                     expenseAmount: expense.expenseAmount,
                     expenseOwner: expense.expenseOwner,
                     expenseMembers: expense.expenseMembers,
-                    expensePerMember: expense.expenseAmount / expense.expenseMembers.length
+                    expensePerMember: expense.expenseAmount / expense.expenseMembers.length,
+                    expenseType: expense.expenseType
                 }
             })
 

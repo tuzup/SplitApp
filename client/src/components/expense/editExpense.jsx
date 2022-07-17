@@ -52,6 +52,7 @@ export default function EditExpense() {
     expenseDescription: Yup.string(),
     expenseAmount: Yup.string().required('Amount is required'),
     expenseCategory: Yup.string().required('Category is required'),
+    expenseType: Yup.string().required('Payment Method is required'),
   });
 
   const formik = useFormik({
@@ -64,6 +65,7 @@ export default function EditExpense() {
       expenseMembers: null,
       expenseOwner: null,
       groupId: null,
+      expenseType: null,
       id: null
     },
     validationSchema: editExpenseSchema,
@@ -107,6 +109,7 @@ export default function EditExpense() {
         formik.values.expenseCategory = exp?.expenseCategory
         formik.values.expenseDate = exp?.expenseDate
         formik.values.groupId = exp?.groupId
+        formik.value.expenseType = exp?.expenseType
         formik.values.id = exp?._id
         setGroupCurrency(response_group?.data?.group?.groupCurrency)
         setGroupMembers(response_group?.data?.group?.groupMembers)
@@ -262,6 +265,26 @@ export default function EditExpense() {
                     <MenuItem value={'Others'}>Others</MenuItem>
                   </Select>
                   <FormHelperText>{touched.expenseCategory && errors.expenseCategory}</FormHelperText>
+
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} >
+                <FormControl fullWidth
+                  error={Boolean(touched.expenseCategory && errors.expenseCategory)}
+                >
+                  <InputLabel id="expense-type">Payment Method</InputLabel>
+                  <Select
+                    name='expenseType'
+                    labelId="expense-type"
+                    id="demo-simple-select"
+                    label="Payment Method"
+                    {...getFieldProps('expenseType')}
+                  >
+                    <MenuItem value={'Cash'}>Cash</MenuItem>
+                    <MenuItem value={'UPI Payment'}>UPI Payment</MenuItem>
+                    <MenuItem value={'Card'}>Card</MenuItem>
+                  </Select>
+                  <FormHelperText>{touched.expenseType && errors.expenseType}</FormHelperText>
 
                 </FormControl>
               </Grid>
