@@ -327,7 +327,7 @@ export default function EditExpense() {
               </Grid>
               <Grid item xs={6} md={3}>
                 <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-                  Edit Expense
+                  Edit
                 </LoadingButton>
               </Grid>
              

@@ -13,7 +13,7 @@ export const SummaryCards = ({ userTotalExp }) => {
         <Grid container spacing={2}
             justifyContent={'center'}
             alignItems={'center'}>
-            <Grid item xs={12} md={4}>
+             <Grid item xs={12} md={12}> {/*Change md to 4  */}
                 <Stack spacing={2} direction='row'
                     sx={{
                         bgcolor: (theme) => theme.palette['primary'].lighter,
@@ -36,7 +36,7 @@ export const SummaryCards = ({ userTotalExp }) => {
                 </Stack>
             </Grid>
 
-            <Grid item xs={12} md={4}
+            {/* <Grid item xs={12} md={4}
 
             >
                 <Stack spacing={2} direction='row' sx={{
@@ -82,7 +82,7 @@ export const SummaryCards = ({ userTotalExp }) => {
                         </Typography>
                     </Box>
                 </Stack>
-            </Grid>
+            </Grid> */}
         </Grid>
 
     )
