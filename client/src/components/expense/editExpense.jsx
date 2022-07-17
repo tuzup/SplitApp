@@ -97,6 +97,7 @@ export default function EditExpense() {
         const response_exp = await getExpDetailsService(expenseIdJson, setAlert, setAlertMessage)
         setExpenseDetails(response_exp?.data?.expense)
         const exp = response_exp?.data?.expense
+        console.log(exp)
         const groupIdJson = {
             id: response_exp?.data?.expense?.groupId
         }
@@ -109,7 +110,7 @@ export default function EditExpense() {
         formik.values.expenseCategory = exp?.expenseCategory
         formik.values.expenseDate = exp?.expenseDate
         formik.values.groupId = exp?.groupId
-        formik.value.expenseType = exp?.expenseType
+        formik.values.expenseType = exp?.expenseType
         formik.values.id = exp?._id
         setGroupCurrency(response_group?.data?.group?.groupCurrency)
         setGroupMembers(response_group?.data?.group?.groupMembers)
