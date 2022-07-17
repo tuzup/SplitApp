@@ -48,6 +48,7 @@ export default function AddExpense() {
     expenseDescription: Yup.string(),
     expenseAmount: Yup.string().required('Amount is required'),
     expenseCategory: Yup.string().required('Category is required'),
+    expenseType: Yup.string().required('Payment Method is required'),
   });
 
   const formik = useFormik({
@@ -59,7 +60,8 @@ export default function AddExpense() {
       expenseDate: Date(),
       expenseMembers: [currentUser],
       expenseOwner: currentUser,
-      groupId: groupId
+      groupId: groupId, 
+      expenseType: "Cash"
 
     },
     validationSchema: addExpenseSchema,
@@ -245,6 +247,26 @@ export default function AddExpense() {
                     <MenuItem value={'Others'}>Others</MenuItem>
                   </Select>
                   <FormHelperText>{touched.expenseCategory && errors.expenseCategory}</FormHelperText>
+
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} >
+                <FormControl fullWidth
+                  error={Boolean(touched.expenseType&& errors.expenseType)}
+                >
+                  <InputLabel id="expense-type">Payment Method</InputLabel>
+                  <Select
+                    name='expenseType'
+                    labelId="expense-type"
+                    id="demo-simple-select"
+                    label="Payment Method"
+                    {...getFieldProps('expenseType')}
+                  >
+                    <MenuItem value={'Cash'}>Cash</MenuItem>
+                    <MenuItem value={'UPI Payment'}>UPI Payment</MenuItem>
+                    <MenuItem value={'Card'}>Card</MenuItem>
+                  </Select>
+                  <FormHelperText>{touched.expenseType && errors.expenseType}</FormHelperText>
 
                 </FormControl>
               </Grid>

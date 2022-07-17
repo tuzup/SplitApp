@@ -106,6 +106,10 @@ const Expense = new mongoose.Schema({
     expensePerMember: {
         type: Number,
         required: true
+    },
+    expenseType: {
+        type: String, 
+        default: "Cash"
     }
 })
 

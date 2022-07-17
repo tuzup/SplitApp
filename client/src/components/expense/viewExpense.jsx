@@ -68,12 +68,12 @@ export const ViewExpense = () => {
                     </Box>
                     <Grid container spacing={3} p={4}>
 
-                        <Grid item xs={6} >
+                        <Grid item md={6} xs={12} >
                             <Typography variant='h6'>
                                 Category : {expenseDetails?.expenseCategory}
                             </Typography>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item md={6} xs={12}>
                         <Typography variant='h6'>
                             Date : {expenseDate}
 
@@ -81,13 +81,19 @@ export const ViewExpense = () => {
                         </Grid>
                        
 
-                        <Grid item xs={6}>
+                        <Grid item md={6} xs={12}>
                             <Typography variant='h6'>
                                 Amount : {currencyFind(expenseDetails?.expenseCurrency) + " " + convertToCurrency(expenseDetails?.expenseAmount)}
                             </Typography>
                         </Grid>
 
-                        <Grid item xs={6} >
+                        <Grid item md={6} xs={12}>
+                            <Typography variant='h6'>
+                                Payment Method : {expenseDetails?.expenseType}
+                            </Typography>
+                        </Grid>
+
+                        <Grid item md={6} xs={12} >
                             <Typography variant='h6'>
                                 Expense Owner : {expenseDetails?.expenseOwner}
                             </Typography>
@@ -124,7 +130,7 @@ export const ViewExpense = () => {
                         <Grid item xs={6} md={3}>
                             <Button fullWidth size="large" variant="contained" component={RouterLink}
                                 to={dataConfig.EDIT_EXPENSE_URL + expenseId}>
-                                Edit Expense
+                                Edit
                             </Button>
                         </Grid>
 
