@@ -8,11 +8,11 @@ import Loading from '../../loading';
 import useResponsive from '../../../theme/hooks/useResponsive';
 import { convertToCurrency, currencyFind, categoryIcon } from '../../../utils/helper';
 import ExpenseCard from '../../expense/expenseCard';
-import AddExpense from '../../expense/addExpense';
 import GroupCategoryGraph from './groupCategoryGraph';
 import GroupMonthlyGraph from './groupMonthlyGraph';
 import { Link as RouterLink } from 'react-router-dom';
 import dataConfig from '../../../config.json';
+import { GroupSettlements } from './groupSettlements';
 
 const profile = JSON.parse(localStorage.getItem('profile'))
 const emailId = profile?.emailId
@@ -30,6 +30,7 @@ export default function ViewGroup() {
     const [expFocus, setExpFocus] = useState(false);
     const [expenses, setExpenses] = useState()
     const [addExpToggle, setAddExpToggle] = useState(false)
+    const [viewSettlement, setViewSettlement] = useState(false)
 
 
     const toggleAllExp = () => {
@@ -46,6 +47,14 @@ export default function ViewGroup() {
 
     const handleAddExpClose = () =>{
         setAddExpToggle(false)
+    }
+
+    const toggleExpView = () => {
+        setViewSettlement(false)
+    }
+
+    const toggleSettleView = () => {
+        setViewSettlement(true)
     }
 
     const mdUp = useResponsive('up', 'md');
@@ -316,11 +325,33 @@ export default function ViewGroup() {
                                 ...(mdUp && { px: 6 })
                             }}
                         >
-                            <Grid item xs={12}>
-                                <Typography variant="h5" mt={4}>
+                            <Grid item xs={12} mt={4} >
+                                <Typography variant="subtitle" onClick={toggleExpView} sx={{cursor: 'pointer', fontSize: 18, py: 1,
+                                ...(!viewSettlement && {
+                                fontWeight: 800,
+                                borderBottom: 2,
+                                color: (theme) => theme.palette['info'].dark
+                                })
+                                }}>
                                     Group Expenses
                                 </Typography>
+                                <Typography variant="subtitle" ml={4} onClick={toggleSettleView} sx={{cursor: 'pointer', fontSize: 18, py: 1,
+                                ...(viewSettlement && {
+                                fontWeight: 800,
+                                borderBottom: 2,
+                                color: (theme) => theme.palette['info'].dark
+                                })
+                                }}>
+                                    Group Settlement
+                                </Typography>
                             </Grid>
+                            {viewSettlement ?  
+                            
+                            <Grid item md={12} sx={{width: '100%'}}>
+                                <GroupSettlements currencyType={group?.currencyType} />
+                            </Grid>
+                            
+                            : 
                             <Grid item xs={12} md={expFocus? 12: 6}>
                             <Grid container spacing={2}>
                              
@@ -341,11 +372,11 @@ export default function ViewGroup() {
                             <Button onClick={toggleAllExp}>View More</Button>
                             </Grid>}
                         </Grid>
-                        </Grid>
+                        </Grid>}
                         <Grid item xs={12} md={6} >
                         <GroupCategoryGraph currencyType={group?.currencyType}/>
                         </Grid>
-                        <Grid item xs={12} md={expFocus? 6: 12}>
+                        <Grid item xs={12} md={expFocus || viewSettlement ? 6: 12}>
                         <GroupMonthlyGraph/>
                         </Grid>
                         </Grid>}

@@ -1,6 +1,7 @@
 const model = require('../model/schema')
 const validator = require('../helper/validation')
 const logger = require('../helper/logger')
+const splitCalculator = require('../helper/split')
 
 /*
 Create Group Function This function basically create new groups
@@ -256,9 +257,11 @@ exports.addSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers) 
     group.groupTotal += expenseAmount
     group.split[0][expenseOwner] += expenseAmount
     expensePerPerson = expenseAmount / expenseMembers.length
+    expensePerPerson = Math.round((expensePerPerson  + Number.EPSILON) * 100) / 100;
     //Updating the split values per user 
     for (var user of expenseMembers) {
         group.split[0][user] -= expensePerPerson
+        group.split[0][user] = Math.round((group.split[0][user]  + Number.EPSILON) * 100) / 100;
     }
     //Updating back the split values to the gorup 
     return await model.Group.updateOne({
@@ -279,12 +282,43 @@ exports.clearSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers
     group.groupTotal -= expenseAmount
     group.split[0][expenseOwner] -= expenseAmount
     expensePerPerson = expenseAmount / expenseMembers.length
+    expensePerPerson = Math.round((expensePerPerson  + Number.EPSILON) * 100) / 100;
     //Updating the split values per user 
     for (var user of expenseMembers) {
         group.split[0][user] += expensePerPerson
+        group.split[0][user] = Math.round((group.split[0][user]  + Number.EPSILON) * 100) / 100;
     }
     //Updating back the split values to the gorup 
     return await model.Group.updateOne({
         _id: groupId
     }, group)
+}
+
+
+/*
+Group Settlement Calculator 
+This function is used to calculate the balnce sheet in a group, who owes whom 
+Accepts : group Id 
+return : group settlement detals
+*/
+exports.groupBalanceSheet = async(req, res) =>{
+    try {
+        const group = await model.Group.findOne({
+            _id: req.body.id
+        })
+        if (!group) {
+            var err = new Error("Invalid Group Id")
+            err.status = 400
+            throw err
+        }
+        res.status(200).json({
+            status: "Success",
+            data: splitCalculator(group.split[0])
+        })
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
 }
