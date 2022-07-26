@@ -240,6 +240,50 @@ exports.deleteGroup = async (req, res) => {
 
 
 /*
+Make Settlement Function 
+This function is used to make the settlements in the gorup 
+
+*/
+exports.makeSettlement = async(req, res) =>{
+    try{
+        var reqBody = new model.Settlement(req.body)
+        validator.notNull(reqBody.groupId)
+        validator.notNull(reqBody.settleTo)
+        validator.notNull(reqBody.settleFrom)
+        validator.notNull(reqBody.settleAmount)
+        validator.notNull(reqBody.settleDate)
+        const group = await model.Group.findOne({
+            _id: req.body.groupId
+        })
+        if (!group) {
+            var err = new Error("Invalid Group Id")
+            err.status = 400
+            throw err
+        }
+       
+       group.split[0][req.body.settleFrom] += req.body.settleAmount
+       group.split[0][req.body.settleTo] -= req.body.settleAmount
+
+       var id = await model.Settlement.create(reqBody)
+       var update_response = await model.Group.updateOne({_id: group._id}, {$set:{split: group.split}})
+        
+
+       res.status(200).json({
+        message: "Settlement successfully!",
+        status: "Success",
+        update: update_response,
+        response: id
+    })
+    }catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+/*
 Add Split function 
 This function is called when a new expense is added 
 This function updates the member split amount present in the goroup 
