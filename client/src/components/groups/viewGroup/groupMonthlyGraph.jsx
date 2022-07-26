@@ -84,10 +84,11 @@ const GroupMonthlyGraph = () => {
                 <>
                     <Box height={350} mb={5}>
                         <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
-                        <FormGroup>
-                            <FormControlLabel control={<Switch defaultChecked onClick={toggleMonthlyView} />} label="Daily expense view" />
-                        </FormGroup>
+                        
                         <Line data={data} options={options} />
+                        <FormGroup>
+                            <FormControlLabel control={<Switch defaultChecked onClick={toggleMonthlyView} />} label="Daily view" />
+                        </FormGroup>
                     </Box>
                     <Typography variant='subtitle'>
                         <center>{montlyView ? <>Monthly expense graph</> : <>Daily expense graph</>} </center>

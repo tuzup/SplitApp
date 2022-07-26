@@ -61,3 +61,5 @@ export const getRecentUserExp = (formData) => API.post('/api/expense/v1/user/rec
 export const getExpDetails = (formData) => API.post('/api/expense/v1/view', formData, accessHeader)
 
 export const getSettle = (formData) => API.post('/api/group/v1/settlement', formData, accessHeader)
+
+export const makeSettle = (formData) => API.post('/api/group/v1/makeSettlement', formData, accessHeader)

@@ -1,4 +1,4 @@
-import { Box, Button, Container, Fab, Grid, Link, Stack, styled, Typography } from '@mui/material';
+import { Box, Button, Container, Divider, Fab, Grid, Link, Stack, styled, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getGroupDetailsService, getGroupExpenseService } from '../../../services/groupServices';
@@ -12,7 +12,7 @@ import GroupCategoryGraph from './groupCategoryGraph';
 import GroupMonthlyGraph from './groupMonthlyGraph';
 import { Link as RouterLink } from 'react-router-dom';
 import dataConfig from '../../../config.json';
-import { GroupSettlements } from './groupSettlements';
+import { GroupSettlements } from '../settlement';
 
 const profile = JSON.parse(localStorage.getItem('profile'))
 const emailId = profile?.emailId
@@ -30,7 +30,7 @@ export default function ViewGroup() {
     const [expFocus, setExpFocus] = useState(false);
     const [expenses, setExpenses] = useState()
     const [addExpToggle, setAddExpToggle] = useState(false)
-    const [viewSettlement, setViewSettlement] = useState(false)
+    const [viewSettlement, setViewSettlement] = useState(0)
 
 
     const toggleAllExp = () => {
@@ -50,11 +50,15 @@ export default function ViewGroup() {
     }
 
     const toggleExpView = () => {
-        setViewSettlement(false)
+        setViewSettlement(0)
     }
 
     const toggleSettleView = () => {
-        setViewSettlement(true)
+        setViewSettlement(1)
+    }
+
+    const toggleMySettleView = () => {
+        setViewSettlement(2)
     }
 
     const mdUp = useResponsive('up', 'md');
@@ -317,41 +321,85 @@ export default function ViewGroup() {
                                 Add Expense
                             </Link>
                         </Typography>
-                        </Grid> :        
-                        <Grid container mt={2} spacing={2}
+                        </Grid> :   
+                        
+                        <>
+                        <Stack 
+                        pt={4}
+                        px={{xs:0 , md:6}}
+                        divider={<Divider orientation="vertical" flexItem />}
+                        direction="row"
+                        justifyContent='space-evenly'
+                        alignItems="center"
+                        spacing={1}
+                        >
+                            <Typography variant="subtitle" onClick={toggleExpView} noWrap sx={{cursor: 'pointer', fontSize: 18,
+                             width:'100%',
+                             textAlign: 'center',
+                                ...(viewSettlement === 0 && {
+                                fontWeight: 800,
+                                borderRadius: 1,
+                                px: 1,
+                                color: (theme) => theme.palette['info'].dark,
+                                bgcolor: (theme) => theme.palette['primary'].lighter,
+                                py:'5px',
+                                }),
+                                ...(!mdUp && {
+                                    fontSize: 11
+                                })
+                                }}>
+                                    Group Expenses
+                                </Typography>
+
+                                <Typography variant="subtitle" onClick={toggleSettleView}  noWrap sx={{cursor: 'pointer', fontSize: 18,
+                             width:'100%',
+                             textAlign: 'center',
+                                ...(viewSettlement === 1 && {
+                                fontWeight: 800,
+                                borderRadius: 1,
+                                px: 1,
+                                color: (theme) => theme.palette['info'].dark,
+                                bgcolor: (theme) => theme.palette['primary'].lighter,
+                                py:'5px',
+                                }),
+                                ...(!mdUp && {
+                                    fontSize: 11
+                                })
+                                }}>
+                                    Group Balance
+                                </Typography>
+
+                                <Typography variant="subtitle" onClick={toggleMySettleView}  noWrap sx={{cursor: 'pointer', fontSize: 18,
+                             width:'100%',
+                             textAlign: 'center',
+                                ...(viewSettlement === 2 && {
+                                fontWeight: 800,
+                                borderRadius: 1,
+                                px: 1,
+                                color: (theme) => theme.palette['info'].dark,
+                                bgcolor: (theme) => theme.palette['primary'].lighter,
+                                py:'5px',
+                                }),
+                                ...(!mdUp && {
+                                    fontSize: 11
+                                })
+                                }}>
+                                    My Balance
+                                </Typography>
+                        </Stack>
+                        <Grid container mt={2} rowSpacing={2} columnSpacing={{ xs: 1, md: 2 }}
                         justifyContent={'center'}
                         alignItems={'center'}
                             sx={{
                                 ...(mdUp && { px: 6 })
                             }}
                         >
-                            <Grid item xs={12} mt={4} >
-                                <Typography variant="subtitle" onClick={toggleExpView} sx={{cursor: 'pointer', fontSize: 18, py: 1,
-                                ...(!viewSettlement && {
-                                fontWeight: 800,
-                                borderBottom: 2,
-                                color: (theme) => theme.palette['info'].dark
-                                })
-                                }}>
-                                    Group Expenses
-                                </Typography>
-                                <Typography variant="subtitle" ml={4} onClick={toggleSettleView} sx={{cursor: 'pointer', fontSize: 18, py: 1,
-                                ...(viewSettlement && {
-                                fontWeight: 800,
-                                borderBottom: 2,
-                                color: (theme) => theme.palette['info'].dark
-                                })
-                                }}>
-                                    Group Settlement
-                                </Typography>
-                            </Grid>
-                            {viewSettlement ?  
-                            
-                            <Grid item md={12} sx={{width: '100%'}}>
+                            {viewSettlement === 1 &&  
+                            <Grid item md={12} xs={12}>
                                 <GroupSettlements currencyType={group?.currencyType} />
                             </Grid>
-                            
-                            : 
+                            } 
+                            {viewSettlement === 0 && 
                             <Grid item xs={12} md={expFocus? 12: 6}>
                             <Grid container spacing={2}>
                              
@@ -373,13 +421,19 @@ export default function ViewGroup() {
                             </Grid>}
                         </Grid>
                         </Grid>}
+                        {viewSettlement === 0 && 
+                        <>
                         <Grid item xs={12} md={6} >
                         <GroupCategoryGraph currencyType={group?.currencyType}/>
                         </Grid>
                         <Grid item xs={12} md={expFocus || viewSettlement ? 6: 12}>
                         <GroupMonthlyGraph/>
                         </Grid>
-                        </Grid>}
+                        </>
+                        }
+                        </Grid>
+                        </>
+                        }
 
 
                         
