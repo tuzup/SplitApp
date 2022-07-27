@@ -5,7 +5,12 @@ import Copyright from "./Copyright"
 const About = () => {
   return (
     <>
-<Container maxWidth='md' sx={{my: 10}}>
+<Container maxWidth='md' sx={{
+            bgcolor: 'background.paper',
+            boxShadow: 2,
+            my: 10,
+            p:10,
+        }}>
 <div align="center">
   <a href="/">
     <img src="https://github.com/tuzup/SplitApp/blob/master/client/public/static/logo.png?raw=true" alt="Logo" width="80" height="80"/>
@@ -103,28 +108,37 @@ MERN Stack Group Expense Splitting Application
 <br/>
 <p>In the first terminal</p>
 <pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}>
+<Typography sx={{wordWrap: 'break-word'}}>
 cd client <br/><br/>
-//<span class="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">client</span>-side dependencies <br/>
+//<span class5="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">client</span>-side dependencies <br/>
 npm <span class="hljs-keyword">install</span>  <br/>
 <br/>
 //<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">client</span><br/>
 npm <span class="hljs-keyword">start</span> 
+</Typography>
 </Box></pre>
-<p>In the second terminal</p>
+
+<p>For setting up backend</p>
 <br/>
 <ul style={{marginLeft: '40px'}}>
-<li>cd create a .env file in the root of your directory.</li>
-<li>Supply the following credentials</li>
+<li>create a .env file in the root of your directory.</li>
+<li>Provided the below details</li>
 </ul>
 <pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}><span class="hljs-attr">PORT</span>=<span class="hljs-number">3001</span>
 <br/><span class="hljs-attr">MONGODB_URI</span>=
 <br/><span class="hljs-attr">ACCESS_TOKEN_SECRET</span>=
 </Box></pre><p>Please follow <a href="https://dev.to/dalalrohit/how-to-connect-to-mongodb-atlas-using-node-js-k9i">This tutorial</a> to create your mongoDB connection url, which you&#39;ll use as your MONGODB_URI</p>
+<br/>
+<p>Provide some random key in 'ACCESS_TOKEN_SECRET' or you could generate one using node. Enter the below command in terminal to genrate a random secret key </p>
+<Box component="div" sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}>
+<Typography sx={{wordWrap: 'break-word'}}>node -e "console.log(require('crypto').randomBytes(256).toString('base64'));" </Typography>
+</Box>
+<p>In the second terminal (*in the project root directory (back-end))</p>
 <pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}>
-//<span class="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">server</span>-side dependencies<br/>
+<Typography sx={{wordWrap: 'break-word'}}>//to install server-side dependencies</Typography>
 npm <span class="hljs-keyword">install</span> <br/><br/>
-//<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">server</span>
-<br/>npm <span class="hljs-keyword">start</span> 
+<Typography sx={{wordWrap: 'break-word'}}>//<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">server</span></Typography>
+<Typography sx={{wordWrap: 'break-word'}}>npm <span class="hljs-keyword">start</span> </Typography>
 </Box></pre><h2 id="comment">Comment</h2>
 <br/>
 <p>I intend to keep adding more features to this application, so if you like it, please give it a star, that will encourage me to 
