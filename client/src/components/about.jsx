@@ -1,12 +1,13 @@
 import { Typography } from "@mui/material"
 import { Box, Container } from "@mui/system"
+import Copyright from "./Copyright"
 
 const About = () => {
   return (
     <>
-<Container>
+<Container maxWidth='md' sx={{my: 10}}>
 <div align="center">
-  <a href="https://split-app00.herokuapp.com/">
+  <a href="/">
     <img src="https://github.com/tuzup/SplitApp/blob/master/client/public/static/logo.png?raw=true" alt="Logo" width="80" height="80"/>
   </a>
 
@@ -15,9 +16,9 @@ const About = () => {
   <p align="center">
     Build with the MERN stack (MongoDB, Express, React and NodeJS).
     <br />
-    <a href="https://github.com/tuzup/SplitApp/"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
+    <br/>
+    <Copyright/>
+    <br/>
     <a href="https://github.com/tuzup/SplitApp/issues">Report Bug</a>
     &nbsp;&nbsp;&nbsp;
     <a href="https://github.com/tuzup/SplitApp/issues">Request Feature</a>
@@ -86,7 +87,9 @@ MERN Stack Group Expense Splitting Application
 <br/>
 <h4 id="database">Database</h4>
 <br/>
-<p>MongoDB (MongoDB Atlas)</p>
+<ul style={{marginLeft: '40px'}}>
+<li>MongoDB (MongoDB Atlas)</li>
+</ul>
 <br/>
 <h2 id="configuration-and-setup">Configuration and Setup</h2>
 <br/>
@@ -100,11 +103,15 @@ MERN Stack Group Expense Splitting Application
 <br/>
 <p>In the first terminal</p>
 <pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}>
-cd client <br/>
-npm <span class="hljs-keyword">install</span> (<span class="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">client</span>-side dependencies) <br/>
-npm <span class="hljs-keyword">start</span> (<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">client</span>)
+cd client <br/><br/>
+//<span class="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">client</span>-side dependencies <br/>
+npm <span class="hljs-keyword">install</span>  <br/>
+<br/>
+//<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">client</span><br/>
+npm <span class="hljs-keyword">start</span> 
 </Box></pre>
 <p>In the second terminal</p>
+<br/>
 <ul style={{marginLeft: '40px'}}>
 <li>cd create a .env file in the root of your directory.</li>
 <li>Supply the following credentials</li>
@@ -114,8 +121,10 @@ npm <span class="hljs-keyword">start</span> (<span class="hljs-keyword">to</span
 <br/><span class="hljs-attr">ACCESS_TOKEN_SECRET</span>=
 </Box></pre><p>Please follow <a href="https://dev.to/dalalrohit/how-to-connect-to-mongodb-atlas-using-node-js-k9i">This tutorial</a> to create your mongoDB connection url, which you&#39;ll use as your MONGODB_URI</p>
 <pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}>
-npm <span class="hljs-keyword">install</span> (<span class="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">server</span>-side dependencies)
-<br/>npm <span class="hljs-keyword">start</span> (<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">server</span>)
+//<span class="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">server</span>-side dependencies<br/>
+npm <span class="hljs-keyword">install</span> <br/><br/>
+//<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">server</span>
+<br/>npm <span class="hljs-keyword">start</span> 
 </Box></pre><h2 id="comment">Comment</h2>
 <br/>
 <p>I intend to keep adding more features to this application, so if you like it, please give it a star, that will encourage me to 
@@ -132,7 +141,9 @@ to keep improving the project.</p>
 <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 <br/>
 <p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-
+<br/>
+<Copyright/>
+<br/>
 </Container>
  </>
   )
