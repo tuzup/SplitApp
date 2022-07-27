@@ -137,7 +137,7 @@ export default function GroupCards({ title, description, groupMembers, share, cu
           <Grid item md={6} xs={12}>
             <AvatarGroup max={3} sx={{ width: '100%' }}>
               {groupMembers.map(member => (
-                <Avatar alt={member.toUpperCase()} src={gravatarUrl(member, { size: 350 })} />
+                <Avatar key={member} alt={member.toUpperCase()} src={gravatarUrl(member, { size: 350 })} />
               ))}
             </AvatarGroup>
           </Grid>

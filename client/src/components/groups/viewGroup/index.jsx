@@ -29,7 +29,6 @@ export default function ViewGroup() {
     const [showAllExp, setShowAllExp] = useState(false);
     const [expFocus, setExpFocus] = useState(false);
     const [expenses, setExpenses] = useState()
-    const [addExpToggle, setAddExpToggle] = useState(false)
     const [viewSettlement, setViewSettlement] = useState(0)
 
 
@@ -41,13 +40,6 @@ export default function ViewGroup() {
         showCount += 5
     }
 
-    const handleAddExpOpen = () =>{
-        setAddExpToggle(true)
-    }
-
-    const handleAddExpClose = () =>{
-        setAddExpToggle(false)
-    }
 
     const toggleExpView = () => {
         setViewSettlement(0)
@@ -62,17 +54,6 @@ export default function ViewGroup() {
     }
 
     const mdUp = useResponsive('up', 'md');
-    const checkActive = (split) => {
-        if (split)
-            split = split[0]
-        for (var key in split) {
-            if (split.hasOwnProperty(key)) {
-                if (split[key] != 0)
-                    return true
-            }
-        }
-        return false
-    }
 
     const findUserSplit = (split) => {
         if (split) {
@@ -132,6 +113,8 @@ export default function ViewGroup() {
                     }}>
                        
                         <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
+                        <AlertBanner showAlert={alertExpense} alertMessage={alertExpenseMessage} severity='error' />
+
                         <Link component={RouterLink}
                             to={dataConfig.EDIT_GROUP_URL+group?._id}>
                         <Iconify icon = "akar-icons:edit" sx={{float: 'right', fontSize: 18}} />
@@ -165,7 +148,7 @@ export default function ViewGroup() {
                             <Fab component={RouterLink}
                             to={dataConfig.ADD_EXPENSE_URL+group?._id}
                             color="primary" aria-label="add"
-                                variant={mdUp && "extended"}
+                                variant="extended"
                                 sx={{ textDecoration: 'none',
                                     ...(!mdUp && {
                                         margin: 0,
@@ -173,7 +156,7 @@ export default function ViewGroup() {
                                         right: 20,
                                         bottom: 20,
                                         left: 'auto',
-                                        position: 'fixed'
+                                        position: 'fixed' 
                                     }),
                                 }}>
                                 <Iconify icon='eva:file-add-fill' sx={{
@@ -404,7 +387,7 @@ export default function ViewGroup() {
                             <Grid container spacing={2}>
                              
                             {expenses?.map(myExpense => (
-                            <Grid item xs={12} md={expFocus? 6: 12}>                               
+                            <Grid item xs={12} md={expFocus? 6: 12} key={myExpense?._id}>                               
                                          <ExpenseCard 
                                          expenseId={myExpense?._id}
                                          expenseName={myExpense?.expenseName}

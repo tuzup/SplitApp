@@ -1,9 +1,11 @@
 
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { getRecentUserExpService } from '../../services/expenseServices'
+import AlertBanner from '../AlertBanner'
 import ExpenseCard from '../expense/expenseCard'
+import Loading from '../loading'
 
 
 export const RecentTransactions = () => {
@@ -20,6 +22,7 @@ export const RecentTransactions = () => {
             }
             const recent_exp = await getRecentUserExpService(userIdJson, setAlert, setAlertMessage)
             recent_exp && setRecentExp(recent_exp?.data?.expense)
+            setLoading(false)
 
         }
         getRecentExp()
@@ -28,17 +31,21 @@ export const RecentTransactions = () => {
     }, [])
 
     return (
+        <>
+        {loading ? <Loading/> : 
         <Box sx={{
             boxShadow: 5,
             bgcolor: 'background.paper',
             borderRadius: 2,
         }}>
+            <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
             <Typography variant="h6" p={2} >
                 Your Recent transactions,
             </Typography>
             {recentExp?.map(myExpense => (
 
                 <ExpenseCard
+                    key={myExpense?._id}
                     expenseId={myExpense?._id}
                     expenseName={myExpense?.expenseName}
                     expenseAmount={myExpense?.expenseAmount}
@@ -48,8 +55,7 @@ export const RecentTransactions = () => {
                     currencyType={myExpense?.expenseCurrency}
                 />
             ))}
-
-
-        </Box>
+        </Box>}
+        </>
     )
 }

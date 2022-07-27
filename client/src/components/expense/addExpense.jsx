@@ -9,25 +9,13 @@ import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import useResponsive from '../../theme/hooks/useResponsive';
 import { currencyFind } from '../../utils/helper';
-import Iconify from '../Iconify';
 import { addExpenseService } from '../../services/expenseServices';
 import configData from '../../config.json'
 import { useParams } from 'react-router-dom'
 import { getGroupDetailsService } from '../../services/groupServices';
 import Loading from '../loading';
 import { Link as RouterLink } from 'react-router-dom';
-
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 390,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
+import AlertBanner from '../AlertBanner';
 
 
 export default function AddExpense() {  
@@ -114,6 +102,7 @@ export default function AddExpense() {
         ...(mdUp && { width: 700 })
       }}
       >
+        <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
           Add Expense
         </Typography>

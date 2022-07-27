@@ -39,14 +39,14 @@ export const GroupSettlements = ({ currencyType }) => {
                     <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
 
                     {groupSettlement?.map((mySettle, index) => (
-                        <>
+                        <Box key={index}>
                             {mySettle[2] > 0 &&
                                 <>
                                     {noSettle && setNoSettle(false)}
-                                    <SettlementCard mySettle={mySettle} currencyType={currencyType} />
+                                    <SettlementCard  mySettle={mySettle} currencyType={currencyType} />
                                 </>
                             }
-                        </>
+                        </Box>
                     ))}
 
                     {noSettle &&

@@ -58,7 +58,7 @@ export default function Group() {
           <Grid container spacing={4} >
 
             {group?.map(myGroup => (
-              <Grid item xs={12} md={6} lg={6}>
+              <Grid item xs={12} md={6} lg={6} key={myGroup?._id}>
                 <Link component={RouterLink}
                 to={dataConfig.VIEW_GROUP_URL+myGroup?._id}
                 sx={{ textDecoration: 'none' }}
