@@ -47,7 +47,6 @@ export default function Dashboard() {
         <Container maxWidth={'xl'}>
             {loading ? <Loading /> :
                 <Grid container spacing={3}>
-                    <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
                     <Grid item xs={12} md={8}>
                         <Grid container spacing={5}>
                             <Grid item xs={12}>

@@ -75,7 +75,7 @@ export default function AccountPopover() {
         }}
       >
         {user&&
-        <Avatar src={gravatarUrl(user?.emailId, {size: 200})} alt="photoURL" />}
+        <Avatar src={gravatarUrl(user?.emailId, {size: 200, default: configData.USER_DEFAULT_LOGO_URL})} alt="photoURL" />}
       </IconButton>
 
       <MenuPopover

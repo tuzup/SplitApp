@@ -18,5 +18,7 @@
     "ABOUT_URL" : "/about",
     "USER_PROFILE_URL" : "/dashboard/userProfile",
     "USER_DELETED_URL" : "/userProfile/confirmDelete",
-    "USER_PASS_UPDATE_URL" : "/dashboard/userProfile/updatePassword"
+    "USER_PASS_UPDATE_URL" : "/dashboard/userProfile/updatePassword",
+
+    "USER_DEFAULT_LOGO_URL" : "https://res.cloudinary.com/tuzup/image/upload/v1658929366/SplitApp/user_l7xmft.png"
   }
