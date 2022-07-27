@@ -8,6 +8,7 @@ import useResponsive from '../../../theme/hooks/useResponsive';
 import AlertBanner from '../../AlertBanner';
 import Loading from '../../loading'
 import SettlementCard from './settlementCard';
+import UserBalanceChart from './userBalanceChart';
 
 
 export const GroupSettlements = ({ currencyType }) => {
@@ -53,6 +54,9 @@ export const GroupSettlements = ({ currencyType }) => {
                         <Typography fontSize={18} textAlign={'center'} py={10}>
                             No Settlement requiered !
                         </Typography>}
+
+
+                        <UserBalanceChart/>
 
                 </Box>
             }
