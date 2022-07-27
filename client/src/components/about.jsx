@@ -112,7 +112,7 @@ npm <span class="hljs-keyword">start</span> (<span class="hljs-keyword">to</span
 <pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}><span class="hljs-attr">PORT</span>=<span class="hljs-number">3001</span>
 <br/><span class="hljs-attr">MONGODB_URI</span>=
 <br/><span class="hljs-attr">ACCESS_TOKEN_SECRET</span>=
-</Box></pre><p>Please follow <a href="https://dev.to/dalalrohit/how-to-connect-to-mongodb-atlas-using-node-js-k9i">This tutorial</a> to create your mongoDB connection url, which you&#39;ll use as your DB_URL</p>
+</Box></pre><p>Please follow <a href="https://dev.to/dalalrohit/how-to-connect-to-mongodb-atlas-using-node-js-k9i">This tutorial</a> to create your mongoDB connection url, which you&#39;ll use as your MONGODB_URI</p>
 <pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}>
 npm <span class="hljs-keyword">install</span> (<span class="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">server</span>-side dependencies)
 <br/>npm <span class="hljs-keyword">start</span> (<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">server</span>)
