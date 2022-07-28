@@ -23,7 +23,7 @@ const style = {
 };
 
 const SettlementCard = ({ mySettle, currencyType }) => {
-    const mdUp = useResponsive('up', 'md');
+    const xsUp = useResponsive('up', 'sm');
     const [reload, setReload] = useState(false)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -37,27 +37,28 @@ const SettlementCard = ({ mySettle, currencyType }) => {
     };
 
     return (
-        <Stack direction="row" spacing={3} justifyContent="space-evenly"
+        <Stack direction="row" spacing={1} justifyContent="space-evenly"
             alignItems="center"
             sx={{
                 bgcolor: (theme) => theme.palette['warning'].lighter,
                 p: 3,
                 borderRadius: 2,
-                boxShadow: 4
+                boxShadow: 4,
             }}
         >
             <Avatar src={gravatarUrl(mySettle[0], { size: 200, default: configData.USER_DEFAULT_LOGO_URL })} alt="photoURL" sx={{ width: 46, height: 46 }}/>
             <Stack spacing={0}>
-                <Typography variant='body' noWrap sx={{fontWeight: 600}}>
+                <Typography variant='body' noWrap sx={{fontWeight: 600, ...(!xsUp && {fontSize: 12})}}>
                     {mySettle[0].split('@')[0]}
                 </Typography>
                     
-                <Typography variant='body' noWrap >
+                <Typography variant='body' noWrap sx={{...(!xsUp && {fontSize: 12})}}>
                    to <Typography variant='subtitle' sx={{fontWeight: 600}}>{mySettle[1].split('@')[0]}</Typography>
                 </Typography>
-            </Stack>
-            <Stack spacing={0} alignItems="center">
-            <Typography variant='body2' sx={{fontSize: 10, color: (theme) => theme.palette['error'].dark}}>
+
+                {!xsUp && 
+                <>
+                <Typography variant='body2' sx={{fontSize: 10, mt: '3px', color: (theme) => theme.palette['error'].dark}}>
                 Settlement Amount
             </Typography>
             <Typography variant='body2' noWrap
@@ -68,7 +69,23 @@ const SettlementCard = ({ mySettle, currencyType }) => {
             >
                 {currencyFind(currencyType)} {mySettle[2]}
             </Typography>
+            </>
+                }
             </Stack>
+            {xsUp && 
+            <Stack spacing={0} alignItems="center">
+            <Typography variant='body2' sx={{fontSize: 10  ,color: (theme) => theme.palette['error'].dark}}>
+                Settlement Amount
+            </Typography>
+            <Typography variant='body2' noWrap
+                sx={{
+                    fontWeight: 900,
+                    color: (theme) => theme.palette['error'].dark,
+                }}
+            >
+                {currencyFind(currencyType)} {mySettle[2]}
+            </Typography>
+            </Stack>}
 
             <Button onClick={handleOpen}>Settle</Button>
 
@@ -76,7 +93,7 @@ const SettlementCard = ({ mySettle, currencyType }) => {
                 open={open}
                 onClose={handleClose}
             >
-                <Box sx={style} width={mdUp ? '50%' : '90%'}>
+                <Box sx={style} width={xsUp ? '50%' : '90%'}>
                     <BalanceSettlement currencyType={currencyType} settleTo={mySettle[1]} settleFrom={mySettle[0]} amount={mySettle[2]} handleClose={handleClose} setReload={setReload} />
                 </Box>
             </Modal>
