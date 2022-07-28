@@ -9,7 +9,7 @@ const About = () => {
             bgcolor: 'background.paper',
             boxShadow: 2,
             my: 10,
-            p:10,
+            py:10
         }}>
 <div align="center">
   <a href="/">
@@ -107,14 +107,16 @@ MERN Stack Group Expense Splitting Application
 </ul>
 <br/>
 <p>In the first terminal</p>
-<pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}>
+<pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4, overflowY: "scroll",}}>
 <Typography sx={{wordWrap: 'break-word'}}>
+  <code>
 cd client <br/><br/>
 //<span class5="hljs-keyword">to</span> <span class="hljs-keyword">install</span> <span class="hljs-keyword">client</span>-side dependencies <br/>
 npm <span class="hljs-keyword">install</span>  <br/>
 <br/>
 //<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">client</span><br/>
 npm <span class="hljs-keyword">start</span> 
+</code>
 </Typography>
 </Box></pre>
 
@@ -124,7 +126,7 @@ npm <span class="hljs-keyword">start</span>
 <li>create a .env file in the root of your directory.</li>
 <li>Provided the below details</li>
 </ul>
-<pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}><span class="hljs-attr">PORT</span>=<span class="hljs-number">3001</span>
+<pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4, overflowY: "scroll"}}><span class="hljs-attr">PORT</span>=<span class="hljs-number">3001</span>
 <br/><span class="hljs-attr">MONGODB_URI</span>=
 <br/><span class="hljs-attr">ACCESS_TOKEN_SECRET</span>=
 </Box></pre><p>Please follow <a href="https://dev.to/dalalrohit/how-to-connect-to-mongodb-atlas-using-node-js-k9i">This tutorial</a> to create your mongoDB connection url, which you&#39;ll use as your MONGODB_URI</p>
@@ -134,7 +136,7 @@ npm <span class="hljs-keyword">start</span>
 <Typography sx={{wordWrap: 'break-word'}}>node -e "console.log(require('crypto').randomBytes(256).toString('base64'));" </Typography>
 </Box>
 <p>In the second terminal (*in the project root directory (back-end))</p>
-<pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4}}>
+<pre><Box sx={{bgcolor:"#f0f0f0", p: 4, my: 4, overflowY: "scroll"}}>
 <Typography sx={{wordWrap: 'break-word'}}>//to install server-side dependencies</Typography>
 npm <span class="hljs-keyword">install</span> <br/><br/>
 <Typography sx={{wordWrap: 'break-word'}}>//<span class="hljs-keyword">to</span> <span class="hljs-keyword">start</span> the <span class="hljs-keyword">server</span></Typography>
