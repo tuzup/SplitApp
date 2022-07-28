@@ -33,9 +33,9 @@ export default function ViewGroup() {
 
 
     const toggleAllExp = () => {
-        setExpenses(groupExpense?.expense?.slice(0, showCount)) 
-        if(showCount >= groupExpense?.expense?.length)
-        setShowAllExp(true)
+        setExpenses(groupExpense?.expense?.slice(0, showCount))
+        if (showCount >= groupExpense?.expense?.length)
+            setShowAllExp(true)
         setExpFocus(true)
         showCount += 5
     }
@@ -74,8 +74,8 @@ export default function ViewGroup() {
 
             response_group && setGroup(response_group?.data?.group)
             response_expense && setGroupExpense(response_expense?.data)
-            response_expense?.data?.expense && setExpenses(response_expense?.data?.expense?.slice(0,5)) 
-            if(response_expense?.data?.expense?.length <=5 || !response_expense) 
+            response_expense?.data?.expense && setExpenses(response_expense?.data?.expense?.slice(0, 5))
+            if (response_expense?.data?.expense?.length <= 5 || !response_expense)
                 setShowAllExp(true)
             setLoading(false)
         }
@@ -100,9 +100,9 @@ export default function ViewGroup() {
 
     }))
     return (
-        
+
         <Container>
-            {loading? <Loading /> :
+            {loading ? <Loading /> :
                 <>
                     <Box sx={{
                         bgcolor: (theme) => theme.palette['info'].lighter,
@@ -111,13 +111,12 @@ export default function ViewGroup() {
                         color: (theme) => theme.palette['primary'].darker,
                         pb: 3
                     }}>
-                       
+
                         <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
-                        <AlertBanner showAlert={alertExpense} alertMessage={alertExpenseMessage} severity='error' />
 
                         <Link component={RouterLink}
-                            to={dataConfig.EDIT_GROUP_URL+group?._id}>
-                        <Iconify icon = "akar-icons:edit" sx={{float: 'right', fontSize: 18}} />
+                            to={dataConfig.EDIT_GROUP_URL + group?._id}>
+                            <Iconify icon="akar-icons:edit" sx={{ float: 'right', fontSize: 18 }} />
                         </Link>
                         <Typography variant="h4" pb={1}>
                             {group?.groupName}
@@ -146,17 +145,18 @@ export default function ViewGroup() {
                             </Typography>
 
                             <Fab component={RouterLink}
-                            to={dataConfig.ADD_EXPENSE_URL+group?._id}
-                            color="primary" aria-label="add"
+                                to={dataConfig.ADD_EXPENSE_URL + group?._id}
+                                color="primary" aria-label="add"
                                 variant="extended"
-                                sx={{ textDecoration: 'none',
+                                sx={{
+                                    textDecoration: 'none',
                                     ...(!mdUp && {
                                         margin: 0,
                                         top: 'auto',
                                         right: 20,
                                         bottom: 20,
                                         left: 'auto',
-                                        position: 'fixed' 
+                                        position: 'fixed'
                                     }),
                                 }}>
                                 <Iconify icon='eva:file-add-fill' sx={{
@@ -229,7 +229,7 @@ export default function ViewGroup() {
                                         </Typography>
                                         <Typography variant="h5"
                                             sx={{ color: (theme) => theme.palette['primary'].darker }}>
-                                            {currencyFind(group?.currencyType)} {groupExpense.total ? convertToCurrency(groupExpense.total) : 0}
+                                            {currencyFind(group?.groupCurrency)} {groupExpense.total ? convertToCurrency(groupExpense.total) : 0}
                                         </Typography>
                                     </Box>
                                 </Stack>
@@ -254,7 +254,7 @@ export default function ViewGroup() {
                                         </Typography>
                                         <Typography variant="h5"
                                             sx={{ color: (theme) => theme.palette['success'].darker }}>
-                                            {currencyFind(group?.currencyType)} {findUserSplit(group?.split) > 0 ? convertToCurrency(findUserSplit(group?.split)) : 0}
+                                            {currencyFind(group?.groupCurrency)} {findUserSplit(group?.split) > 0 ? convertToCurrency(findUserSplit(group?.split)) : 0}
                                         </Typography>
                                     </Box>
                                 </Stack>
@@ -277,150 +277,151 @@ export default function ViewGroup() {
                                         </Typography>
                                         <Typography variant="h5"
                                             sx={{ color: (theme) => theme.palette['error'].darker }}>
-                                            {currencyFind(group?.currencyType)} {findUserSplit(group?.split) < 0 ? convertToCurrency(Math.abs(findUserSplit(group?.split))) : 0}
+                                            {currencyFind(group?.groupCurrency)} {findUserSplit(group?.split) < 0 ? convertToCurrency(Math.abs(findUserSplit(group?.split))) : 0}
                                         </Typography>
                                     </Box>
                                 </Stack>
                             </Grid>
 
                         </Grid>
-
-                        {alertExpense ? 
-                        <Grid container
-                        direction="column"
-                        style={{ 
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          textAlign: 'center',
-                          minHeight: 'calc(50vh - 200px )',
-                            }}
-                    
-                      >
-                        <Typography variant="body2" fontSize={18} textAlign={'center'}>
-                        No expense present for this group! Record your first group expense now <br/>
-                            <Link component={RouterLink}
-                            to={dataConfig.ADD_EXPENSE_URL+group?._id}>
-                                Add Expense
-                            </Link>
-                        </Typography>
-                        </Grid> :   
-                        
-                        <>
-                        <Stack 
-                        pt={4}
-                        px={{xs:0 , md:6}}
-                        divider={<Divider orientation="vertical" flexItem />}
-                        direction="row"
-                        justifyContent='space-evenly'
-                        alignItems="center"
-                        spacing={1}
+                        <Stack
+                            pt={4}
+                            px={{ xs: 0, md: 6 }}
+                            divider={<Divider orientation="vertical" flexItem />}
+                            direction="row"
+                            justifyContent='space-evenly'
+                            alignItems="center"
+                            spacing={1}
                         >
-                            <Typography variant="subtitle" onClick={toggleExpView} noWrap sx={{cursor: 'pointer', fontSize: 18,
-                             width:'100%',
-                             textAlign: 'center',
+                            <Typography variant="subtitle" onClick={toggleExpView} noWrap sx={{
+                                cursor: 'pointer', fontSize: 18,
+                                width: '100%',
+                                textAlign: 'center',
                                 ...(viewSettlement === 0 && {
-                                fontWeight: 800,
-                                borderRadius: 1,
-                                px: 1,
-                                color: (theme) => theme.palette['info'].dark,
-                                bgcolor: (theme) => theme.palette['primary'].lighter,
-                                py:'5px',
+                                    fontWeight: 800,
+                                    borderRadius: 1,
+                                    px: 1,
+                                    color: (theme) => theme.palette['info'].dark,
+                                    bgcolor: (theme) => theme.palette['primary'].lighter,
+                                    py: '5px',
                                 }),
                                 ...(!mdUp && {
                                     fontSize: 11
                                 })
-                                }}>
-                                    Group Expenses
-                                </Typography>
+                            }}>
+                                Group Expenses
+                            </Typography>
 
-                                <Typography variant="subtitle" onClick={toggleSettleView}  noWrap sx={{cursor: 'pointer', fontSize: 18,
-                             width:'100%',
-                             textAlign: 'center',
+                            <Typography variant="subtitle" onClick={toggleSettleView} noWrap sx={{
+                                cursor: 'pointer', fontSize: 18,
+                                width: '100%',
+                                textAlign: 'center',
                                 ...(viewSettlement === 1 && {
-                                fontWeight: 800,
-                                borderRadius: 1,
-                                px: 1,
-                                color: (theme) => theme.palette['info'].dark,
-                                bgcolor: (theme) => theme.palette['primary'].lighter,
-                                py:'5px',
+                                    fontWeight: 800,
+                                    borderRadius: 1,
+                                    px: 1,
+                                    color: (theme) => theme.palette['info'].dark,
+                                    bgcolor: (theme) => theme.palette['primary'].lighter,
+                                    py: '5px',
                                 }),
                                 ...(!mdUp && {
                                     fontSize: 11
                                 })
-                                }}>
-                                    Group Balance
-                                </Typography>
+                            }}>
+                                Group Balance
+                            </Typography>
 
-                                <Typography variant="subtitle" onClick={toggleMySettleView}  noWrap sx={{cursor: 'pointer', fontSize: 18,
-                             width:'100%',
-                             textAlign: 'center',
+                            <Typography variant="subtitle" onClick={toggleMySettleView} noWrap sx={{
+                                cursor: 'pointer', fontSize: 18,
+                                width: '100%',
+                                textAlign: 'center',
                                 ...(viewSettlement === 2 && {
-                                fontWeight: 800,
-                                borderRadius: 1,
-                                px: 1,
-                                color: (theme) => theme.palette['info'].dark,
-                                bgcolor: (theme) => theme.palette['primary'].lighter,
-                                py:'5px',
+                                    fontWeight: 800,
+                                    borderRadius: 1,
+                                    px: 1,
+                                    color: (theme) => theme.palette['info'].dark,
+                                    bgcolor: (theme) => theme.palette['primary'].lighter,
+                                    py: '5px',
                                 }),
                                 ...(!mdUp && {
                                     fontSize: 11
                                 })
-                                }}>
-                                    My Balance
-                                </Typography>
+                            }}>
+                                My Balance
+                            </Typography>
                         </Stack>
                         <Grid container mt={2} rowSpacing={2} columnSpacing={{ xs: 1, md: 2 }}
-                        justifyContent={'center'}
-                        alignItems={'center'}
+                            justifyContent={'center'}
+                            alignItems={'center'}
                             sx={{
                                 ...(mdUp && { px: 6 })
                             }}
                         >
-                            {viewSettlement === 1 &&  
-                            <Grid item md={12} xs={12}>
-                                <GroupSettlements currencyType={group?.currencyType} />
-                            </Grid>
-                            } 
-                            {viewSettlement === 0 && 
-                            <Grid item xs={12} md={expFocus? 12: 6}>
-                            <Grid container spacing={2}>
-                             
-                            {expenses?.map(myExpense => (
-                            <Grid item xs={12} md={expFocus? 6: 12} key={myExpense?._id}>                               
-                                         <ExpenseCard 
-                                         expenseId={myExpense?._id}
-                                         expenseName={myExpense?.expenseName}
-                                         expenseAmount ={myExpense?.expenseAmount}
-                                         expensePerMember = {myExpense?.expensePerMember}
-                                         expenseOwner={myExpense?.expenseOwner}
-                                         expenseDate={myExpense?.expenseDate}
-                                         currencyType={group?.currencyType}
-                                         />
-                            </Grid>) )}
-                           
-                           {!showAllExp && <Grid item xs={12}>
-                            <Button onClick={toggleAllExp}>View More</Button>
-                            </Grid>}
-                        </Grid>
-                        </Grid>}
-                        {viewSettlement === 0 && 
-                        <>
-                        <Grid item xs={12} md={6} >
-                        <GroupCategoryGraph currencyType={group?.currencyType}/>
-                        </Grid>
-                        <Grid item xs={12} md={expFocus || viewSettlement ? 6: 12}>
-                        <GroupMonthlyGraph/>
-                        </Grid>
-                        </>
-                        }
-                        </Grid>
-                        </>
-                        }
+                            {viewSettlement == 2 && 
+                            <Typography>
+                                My Balance - Under development 
+                            </Typography>
+                            }
+                            {viewSettlement === 1 &&
+                                <Grid item md={12} xs={12}>
+                                    <GroupSettlements currencyType={group?.groupCurrency} />
+                                </Grid>
+                            }
+                            {viewSettlement === 0 &&
+                                <>
+                                    {alertExpense ?
+                                        <Grid container
+                                            direction="column"
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                textAlign: 'center',
+                                                minHeight: '200px'
+                                            }}
+                                        >
+                                            <Typography variant="body2" fontSize={18} textAlign={'center'}>
+                                                No expense present for this group! Record your first group expense now <br />
+                                                <Link component={RouterLink}
+                                                    to={dataConfig.ADD_EXPENSE_URL + group?._id}>
+                                                    Add Expense
+                                                </Link>
+                                            </Typography>
+                                        </Grid>
+                                        : <>
+                                            <Grid item xs={12} md={expFocus ? 12 : 6}>
+                                                <Grid container spacing={2}>
 
+                                                    {expenses?.map(myExpense => (
+                                                        <Grid item xs={12} md={expFocus ? 6 : 12} key={myExpense?._id}>
+                                                            <ExpenseCard
+                                                                expenseId={myExpense?._id}
+                                                                expenseName={myExpense?.expenseName}
+                                                                expenseAmount={myExpense?.expenseAmount}
+                                                                expensePerMember={myExpense?.expensePerMember}
+                                                                expenseOwner={myExpense?.expenseOwner}
+                                                                expenseDate={myExpense?.expenseDate}
+                                                                currencyType={group?.groupCurrency}
+                                                            />
+                                                        </Grid>))}
 
-                        
+                                                    {!showAllExp && <Grid item xs={12}>
+                                                        <Button onClick={toggleAllExp}>View More</Button>
+                                                    </Grid>}
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={12} md={6} >
+                                                <GroupCategoryGraph currencyType={group?.groupCurrency} />
+                                            </Grid>
+                                            <Grid item xs={12} md={expFocus || viewSettlement ? 6 : 12}>
+                                                <GroupMonthlyGraph />
+                                            </Grid>
+                                        </>
+                                    }
+                                </>
+                            }
 
+                        </Grid>
                     </Box>
 
                 </>}

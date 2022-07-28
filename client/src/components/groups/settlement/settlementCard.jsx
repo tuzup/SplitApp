@@ -2,7 +2,7 @@ import { Avatar, Button, Grid, Modal, Stack, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import Iconify from "../../Iconify"
 import useResponsive from '../../../theme/hooks/useResponsive';
-import { currencyFind } from '../../../utils/helper';
+import { convertToCurrency, currencyFind } from '../../../utils/helper';
 import BalanceSettlement from "./balanceSettlement";
 import React from 'react'
 import { useState } from "react";
@@ -46,7 +46,7 @@ const SettlementCard = ({ mySettle, currencyType }) => {
                 boxShadow: 4,
             }}
         >
-            <Avatar src={gravatarUrl(mySettle[0], { size: 200, default: configData.USER_DEFAULT_LOGO_URL })} alt="photoURL" sx={{ width: 46, height: 46 }}/>
+            <Avatar src={gravatarUrl(mySettle[0], { size: 200, default: configData.USER_DEFAULT_LOGO_URL })} alt="photoURL" sx={{ width: 56, height: 56 }}/>
             <Stack spacing={0}>
                 <Typography variant='body' noWrap sx={{fontWeight: 600, ...(!xsUp && {fontSize: 12})}}>
                     {mySettle[0].split('@')[0]}
@@ -67,7 +67,7 @@ const SettlementCard = ({ mySettle, currencyType }) => {
                     color: (theme) => theme.palette['error'].dark,
                 }}
             >
-                {currencyFind(currencyType)} {mySettle[2]}
+                {currencyFind(currencyType)} {convertToCurrency(mySettle[2])}
             </Typography>
             </>
                 }
@@ -83,7 +83,7 @@ const SettlementCard = ({ mySettle, currencyType }) => {
                     color: (theme) => theme.palette['error'].dark,
                 }}
             >
-                {currencyFind(currencyType)} {mySettle[2]}
+                {currencyFind(currencyType)} {convertToCurrency(mySettle[2])}
             </Typography>
             </Stack>}
 

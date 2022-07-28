@@ -3,7 +3,7 @@
 
 
 export function convertToCurrency(number) {
-  number = Math.floor(Math.abs(number))
+  number = Math.abs(Math.round((number  + Number.EPSILON) * 100) / 100)
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

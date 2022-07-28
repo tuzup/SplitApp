@@ -6,6 +6,7 @@ import { getGroupSettleService } from '../../../services/groupServices';
 import useResponsive from '../../../theme/hooks/useResponsive';
 
 import AlertBanner from '../../AlertBanner';
+import Iconify from '../../Iconify';
 import Loading from '../../loading'
 import SettlementCard from './settlementCard';
 import UserBalanceChart from './userBalanceChart';
@@ -52,13 +53,25 @@ export const GroupSettlements = ({ currencyType }) => {
                     ))}
                     </Grid>
 
-                    {noSettle &&
-                        <Typography fontSize={18} textAlign={'center'} py={10}>
-                            No Settlement requiered !
-                        </Typography>}
+                    {noSettle ?
+                        <Grid container
+                        direction="column"
+                        style={{ 
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          textAlign: 'center',
+                          minHeight: '200px' }}
+                      >
+                        <Iconify icon="icon-park-twotone:doc-success"  sx={{color: (theme) => theme.palette['success'].dark, fontSize: 100}} />
+                        <Typography fontSize={18} textAlign={'center'} my={1}>
+                        No Settlement requiered !
+                        </Typography>
+                        </Grid>
+                         : <UserBalanceChart/>}
 
 
-                        <UserBalanceChart/>
+                        
 
                 </Box>
             }

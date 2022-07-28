@@ -42,7 +42,7 @@ const Group = new mongoose.Schema({
     groupDescription: {
         type: String
     },
-    currencyType: {
+    groupCurrency: {
         type: String,
         default: "INR"
     },

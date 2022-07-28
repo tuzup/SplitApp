@@ -81,7 +81,7 @@ export const EditGroup = () => {
             formik.values.groupDescription = groupDetails?.groupDescription
             formik.values.groupMembers = groupDetails?.groupMembers
             formik.values.groupOwner = groupDetails?.groupOwner
-            formik.values.groupCurrency = groupDetails?.currencyType
+            formik.values.groupCurrency = groupDetails?.groupCurrency
             formik.values.groupCategory = groupDetails?.groupCategory
 
             setLoading(false)

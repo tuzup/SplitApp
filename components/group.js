@@ -18,7 +18,7 @@ exports.createGroup = async (req, res) => {
         var newGroup = new model.Group(req.body)
         //Performing validation on the input
         if (validator.notNull(newGroup.groupName) &&
-            validator.currencyValidation(newGroup.currencyType)) {
+            validator.currencyValidation(newGroup.groupCurrency)) {
 
             /*
             Split Json is used to store the user split value (how much a person owes)
@@ -153,7 +153,7 @@ exports.editGroup = async (req, res) => {
         editGroup.split = group.split
 
         if (validator.notNull(editGroup.groupName) &&
-            validator.currencyValidation(editGroup.currencyType)) {
+            validator.currencyValidation(editGroup.groupCurrency)) {
 
             for (var user of editGroup.groupMembers) {
                 //Validation to check if the members exist in the DB 
@@ -186,7 +186,7 @@ exports.editGroup = async (req, res) => {
                 $set: {
                     groupName: editGroup.groupName,
                     groupDescription: editGroup.groupDescription,
-                    currencyType: editGroup.currencyType,
+                    groupCurrency: editGroup.groupCurrency,
                     groupMembers: editGroup.groupMembers,
                     groupCategory: editGroup.groupCategory,
                     split: editGroup.split
@@ -305,8 +305,16 @@ exports.addSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers) 
     //Updating the split values per user 
     for (var user of expenseMembers) {
         group.split[0][user] -= expensePerPerson
-        group.split[0][user] = Math.round((group.split[0][user]  + Number.EPSILON) * 100) / 100;
     }
+    
+    //Nullifying split - check if the group balance is zero else added the diff to owner 
+    let bal=0
+    for(val of Object.entries(group.split[0]))
+    {
+        bal += val[1]
+    }
+    group.split[0][expenseOwner] -= bal
+    group.split[0][expenseOwner] = Math.round((group.split[0][expenseOwner]  + Number.EPSILON) * 100) / 100;
     //Updating back the split values to the gorup 
     return await model.Group.updateOne({
         _id: groupId
@@ -330,8 +338,16 @@ exports.clearSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers
     //Updating the split values per user 
     for (var user of expenseMembers) {
         group.split[0][user] += expensePerPerson
-        group.split[0][user] = Math.round((group.split[0][user]  + Number.EPSILON) * 100) / 100;
     }
+
+    //Nullifying split - check if the group balance is zero else added the diff to owner 
+    let bal=0
+    for(val of Object.entries(group.split[0]))
+    {
+        bal += val[1]
+    }
+    group.split[0][expenseOwner] -= bal
+    group.split[0][expenseOwner] = Math.round((group.split[0][expenseOwner]  + Number.EPSILON) * 100) / 100;
     //Updating back the split values to the gorup 
     return await model.Group.updateOne({
         _id: groupId
