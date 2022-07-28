@@ -1,4 +1,4 @@
-import { Button, Modal, Stack, Typography } from "@mui/material"
+import { Avatar, Button, Grid, Modal, Stack, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import Iconify from "../../Iconify"
 import useResponsive from '../../../theme/hooks/useResponsive';
@@ -6,6 +6,9 @@ import { currencyFind } from '../../../utils/helper';
 import BalanceSettlement from "./balanceSettlement";
 import React from 'react'
 import { useState } from "react";
+import configData from '../../../config.json'
+import gravatarUrl from 'gravatar-url';
+
 
 
 const style = {
@@ -16,84 +19,69 @@ const style = {
     bgcolor: 'background.paper',
     boxShadow: 2,
     p: 4,
-    borderRadius : 1
-  };
-  
-const SettlementCard = ({mySettle, currencyType}) => {
+    borderRadius: 1
+};
+
+const SettlementCard = ({ mySettle, currencyType }) => {
     const mdUp = useResponsive('up', 'md');
     const [reload, setReload] = useState(false)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
-        if(reload)
-        window.location.reload()
-        else{
-        setOpen(false)
+        if (reload)
+            window.location.reload()
+        else {
+            setOpen(false)
         }
-    
+
     };
 
-  return (
-    <Box>
-    <Stack
-        pt={2}
-        px={{ xs: 0, md: 6 }}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={0}
-    >
-
-        <Typography variant='body2' noWrap sx={{
-            width: '100%',
-            fontSize: 17,
-            ...(!mdUp && {
-                fontSize: 10
-            })
-        }}>
-            {mySettle[0].split('@')[0]}
-        </Typography>
-
-        <Iconify icon="akar-icons:arrow-right" sx={{ width: '100%', ...(!mdUp && { fontSize: 10 }) }} />
-
-
-        <Typography variant='body2' noWrap
+    return (
+        <Stack direction="row" spacing={3} justifyContent="space-evenly"
+            alignItems="center"
             sx={{
-                width: '100%',
-                fontSize: 17,
-                ...(!mdUp && {
-                    fontSize: 10
-                })
+                bgcolor: (theme) => theme.palette['warning'].lighter,
+                p: 3,
+                borderRadius: 2,
+                boxShadow: 4
             }}
         >
-            {mySettle[1].split('@')[0]}
-        </Typography>
-        <Typography variant='body2' noWrap
-            sx={{
-                width: '120%',
-                fontWeight: 800,
-                color: (theme) => theme.palette['error'].dark,
-                ...(!mdUp && {
-                    fontSize: 10
-                })
-            }}
-        >
-            :  &nbsp; {currencyFind(currencyType)} {mySettle[2]}
-        </Typography>
+            <Avatar src={gravatarUrl(mySettle[0], { size: 200, default: configData.USER_DEFAULT_LOGO_URL })} alt="photoURL" sx={{ width: 46, height: 46 }}/>
+            <Stack spacing={0}>
+                <Typography variant='body' noWrap sx={{fontWeight: 600}}>
+                    {mySettle[0].split('@')[0]}
+                </Typography>
+                    
+                <Typography variant='body' noWrap >
+                   to <Typography variant='subtitle' sx={{fontWeight: 600}}>{mySettle[1].split('@')[0]}</Typography>
+                </Typography>
+            </Stack>
+            <Stack spacing={0} alignItems="center">
+            <Typography variant='body2' sx={{fontSize: 10, color: (theme) => theme.palette['error'].dark}}>
+                Settlement Amount
+            </Typography>
+            <Typography variant='body2' noWrap
+                sx={{
+                    fontWeight: 900,
+                    color: (theme) => theme.palette['error'].dark,
+                }}
+            >
+                {currencyFind(currencyType)} {mySettle[2]}
+            </Typography>
+            </Stack>
 
-        <Button onClick={handleOpen}>Settle</Button>
-        <Modal
-            open={open}
-            onClose={handleClose}  
-        >
-            <Box sx={style} width={mdUp ? '50%' : '90%'}>
-               <BalanceSettlement currencyType={currencyType} settleTo={mySettle[1]} settleFrom={mySettle[0]} amount={mySettle[2]} handleClose={handleClose} setReload={setReload}/>
-            </Box>
-        </Modal>
+            <Button onClick={handleOpen}>Settle</Button>
 
-    </Stack>
-</Box>
-  )
+            <Modal
+                open={open}
+                onClose={handleClose}
+            >
+                <Box sx={style} width={mdUp ? '50%' : '90%'}>
+                    <BalanceSettlement currencyType={currencyType} settleTo={mySettle[1]} settleFrom={mySettle[0]} amount={mySettle[2]} handleClose={handleClose} setReload={setReload} />
+                </Box>
+            </Modal>
+        </Stack>
+    )
 }
 
 export default SettlementCard
