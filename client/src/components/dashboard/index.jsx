@@ -1,7 +1,7 @@
-import { Box, Container, Grid, Typography } from "@mui/material"
+import {  Container, Grid, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { getUserExpenseService, getUserMonthlyExpService } from "../../services/expenseServices"
+import { getUserExpenseService} from "../../services/expenseServices"
 import { getUserGroupsService } from "../../services/groupServices"
 import Loading from "../loading"
 import { CalenderExpenseGraph } from "./CalenderExpenseGraph"
@@ -13,6 +13,7 @@ import { SummaryCards } from "./summaryCards"
 import { WelcomeMessage } from "./welcomeMessage"
 import { Link as RouterLink } from 'react-router-dom';
 import configData from '../../config.json'
+import AlertBanner from "../AlertBanner"
 
 
 export default function Dashboard() {
@@ -21,7 +22,6 @@ export default function Dashboard() {
     const [alert, setAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [userExp, setUserExp] = useState()
-    const [userGroup, setUserGroup] = useState()
     const [newUser, setNewUser] = useState(false)
 
     useEffect(() => {
@@ -35,7 +35,6 @@ export default function Dashboard() {
             const response_group = await getUserGroupsService(profile)
             if (response_group.data.groups.length == 0)
                 setNewUser(true)
-            setUserGroup(response_group.data.groups);
             setLoading(false)
 
         }
@@ -96,20 +95,20 @@ export default function Dashboard() {
                         </Grid>
 
                     </Grid>
-                    {!newUser &&            
-                    <Grid item xs={12} md={4}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <RecentTransactions />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <CategoryExpenseChart />
-                            </Grid>
-                            <Grid item md={12} xs={0}>
-                                <EndMessage />
+                    {!newUser &&
+                        <Grid item xs={12} md={4}>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12}>
+                                    <RecentTransactions />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <CategoryExpenseChart />
+                                </Grid>
+                                <Grid item md={12} xs={0}>
+                                    <EndMessage />
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
                     }
 
                 </Grid>

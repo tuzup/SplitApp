@@ -9,25 +9,13 @@ import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import useResponsive from '../../theme/hooks/useResponsive';
 import { currencyFind } from '../../utils/helper';
-import Iconify from '../Iconify';
 import { addExpenseService } from '../../services/expenseServices';
 import configData from '../../config.json'
 import { useParams } from 'react-router-dom'
 import { getGroupDetailsService } from '../../services/groupServices';
 import Loading from '../loading';
 import { Link as RouterLink } from 'react-router-dom';
-
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 390,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
+import AlertBanner from '../AlertBanner';
 
 
 export default function AddExpense() {  
@@ -48,6 +36,8 @@ export default function AddExpense() {
     expenseDescription: Yup.string(),
     expenseAmount: Yup.string().required('Amount is required'),
     expenseCategory: Yup.string().required('Category is required'),
+    expenseType: Yup.string().required('Payment Method is required'),
+    expenseMembers: Yup.array().min(1, 'Atleast one expense members is required')
   });
 
   const formik = useFormik({
@@ -57,9 +47,10 @@ export default function AddExpense() {
       expenseAmount: '',
       expenseCategory: '',
       expenseDate: Date(),
-      expenseMembers: [currentUser],
+      expenseMembers: [],
       expenseOwner: currentUser,
-      groupId: groupId
+      groupId: groupId, 
+      expenseType: "Cash"
 
     },
     validationSchema: addExpenseSchema,
@@ -93,6 +84,7 @@ export default function AddExpense() {
         const response_group = await getGroupDetailsService(groupIdJson, setAlert, setAlertMessage)
         setGroupCurrency(response_group?.data?.group?.groupCurrency)
         setGroupMembers(response_group?.data?.group?.groupMembers)
+        formik.values.expenseMembers = response_group?.data?.group?.groupMembers
         setLoading(false)
     }
     getGroupDetails()
@@ -112,6 +104,7 @@ export default function AddExpense() {
         ...(mdUp && { width: 700 })
       }}
       >
+        <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
           Add Expense
         </Typography>
@@ -173,7 +166,7 @@ export default function AddExpense() {
               </Grid>
 
               <Grid item xs={12}>
-                <FormControl sx={{ width: '100%' }}>
+                <FormControl sx={{ width: '100%' }} error={Boolean(touched.expenseMembers && errors.expenseMembers)}>
                   <InputLabel id="expense-members-label">Expense Members</InputLabel>
                   <Select
                     labelId="expense-members-label"
@@ -188,8 +181,7 @@ export default function AddExpense() {
                         ))}
                       </Box>
                     )}
-                    MenuProps={MenuProps}
-                  >
+                    MenuProps={MenuProps}>
                     {groupMembers?.map((member) => (
                       <MenuItem
                         key={member}
@@ -199,6 +191,7 @@ export default function AddExpense() {
                       </MenuItem>
                     ))}
                   </Select>
+                  <FormHelperText>{touched.expenseMembers&& errors.expenseMembers}</FormHelperText>
                 </FormControl>
               </Grid>
 
@@ -245,6 +238,26 @@ export default function AddExpense() {
                     <MenuItem value={'Others'}>Others</MenuItem>
                   </Select>
                   <FormHelperText>{touched.expenseCategory && errors.expenseCategory}</FormHelperText>
+
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} >
+                <FormControl fullWidth
+                  error={Boolean(touched.expenseType&& errors.expenseType)}
+                >
+                  <InputLabel id="expense-type">Payment Method</InputLabel>
+                  <Select
+                    name='expenseType'
+                    labelId="expense-type"
+                    id="demo-simple-select"
+                    label="Payment Method"
+                    {...getFieldProps('expenseType')}
+                  >
+                    <MenuItem value={'Cash'}>Cash</MenuItem>
+                    <MenuItem value={'UPI Payment'}>UPI Payment</MenuItem>
+                    <MenuItem value={'Card'}>Card</MenuItem>
+                  </Select>
+                  <FormHelperText>{touched.expenseType && errors.expenseType}</FormHelperText>
 
                 </FormControl>
               </Grid>

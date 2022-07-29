@@ -74,7 +74,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Link underline="none" component={RouterLink} to={dataConfig.USER_PROFILE_URL}>
           <AccountStyle>
           {user&&
-        <Avatar src={gravatarUrl(user?.emailId, {size: 200})} alt="photoURL" />}
+        <Avatar src={gravatarUrl(user?.emailId, {size: 200, default: dataConfig.USER_DEFAULT_LOGO_URL})} alt="photoURL" />}
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                 {user?.firstName} {user?.lastName}

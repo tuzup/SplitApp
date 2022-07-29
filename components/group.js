@@ -1,6 +1,7 @@
 const model = require('../model/schema')
 const validator = require('../helper/validation')
 const logger = require('../helper/logger')
+const splitCalculator = require('../helper/split')
 
 /*
 Create Group Function This function basically create new groups
@@ -17,7 +18,7 @@ exports.createGroup = async (req, res) => {
         var newGroup = new model.Group(req.body)
         //Performing validation on the input
         if (validator.notNull(newGroup.groupName) &&
-            validator.currencyValidation(newGroup.currencyType)) {
+            validator.currencyValidation(newGroup.groupCurrency)) {
 
             /*
             Split Json is used to store the user split value (how much a person owes)
@@ -152,7 +153,7 @@ exports.editGroup = async (req, res) => {
         editGroup.split = group.split
 
         if (validator.notNull(editGroup.groupName) &&
-            validator.currencyValidation(editGroup.currencyType)) {
+            validator.currencyValidation(editGroup.groupCurrency)) {
 
             for (var user of editGroup.groupMembers) {
                 //Validation to check if the members exist in the DB 
@@ -185,7 +186,7 @@ exports.editGroup = async (req, res) => {
                 $set: {
                     groupName: editGroup.groupName,
                     groupDescription: editGroup.groupDescription,
-                    currencyType: editGroup.currencyType,
+                    groupCurrency: editGroup.groupCurrency,
                     groupMembers: editGroup.groupMembers,
                     groupCategory: editGroup.groupCategory,
                     split: editGroup.split
@@ -239,6 +240,50 @@ exports.deleteGroup = async (req, res) => {
 
 
 /*
+Make Settlement Function 
+This function is used to make the settlements in the gorup 
+
+*/
+exports.makeSettlement = async(req, res) =>{
+    try{
+        var reqBody = new model.Settlement(req.body)
+        validator.notNull(reqBody.groupId)
+        validator.notNull(reqBody.settleTo)
+        validator.notNull(reqBody.settleFrom)
+        validator.notNull(reqBody.settleAmount)
+        validator.notNull(reqBody.settleDate)
+        const group = await model.Group.findOne({
+            _id: req.body.groupId
+        })
+        if (!group) {
+            var err = new Error("Invalid Group Id")
+            err.status = 400
+            throw err
+        }
+       
+       group.split[0][req.body.settleFrom] += req.body.settleAmount
+       group.split[0][req.body.settleTo] -= req.body.settleAmount
+
+       var id = await model.Settlement.create(reqBody)
+       var update_response = await model.Group.updateOne({_id: group._id}, {$set:{split: group.split}})
+        
+
+       res.status(200).json({
+        message: "Settlement successfully!",
+        status: "Success",
+        update: update_response,
+        response: id
+    })
+    }catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+}
+
+
+/*
 Add Split function 
 This function is called when a new expense is added 
 This function updates the member split amount present in the goroup 
@@ -256,10 +301,20 @@ exports.addSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers) 
     group.groupTotal += expenseAmount
     group.split[0][expenseOwner] += expenseAmount
     expensePerPerson = expenseAmount / expenseMembers.length
+    expensePerPerson = Math.round((expensePerPerson  + Number.EPSILON) * 100) / 100;
     //Updating the split values per user 
     for (var user of expenseMembers) {
         group.split[0][user] -= expensePerPerson
     }
+    
+    //Nullifying split - check if the group balance is zero else added the diff to owner 
+    let bal=0
+    for(val of Object.entries(group.split[0]))
+    {
+        bal += val[1]
+    }
+    group.split[0][expenseOwner] -= bal
+    group.split[0][expenseOwner] = Math.round((group.split[0][expenseOwner]  + Number.EPSILON) * 100) / 100;
     //Updating back the split values to the gorup 
     return await model.Group.updateOne({
         _id: groupId
@@ -279,12 +334,51 @@ exports.clearSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers
     group.groupTotal -= expenseAmount
     group.split[0][expenseOwner] -= expenseAmount
     expensePerPerson = expenseAmount / expenseMembers.length
+    expensePerPerson = Math.round((expensePerPerson  + Number.EPSILON) * 100) / 100;
     //Updating the split values per user 
     for (var user of expenseMembers) {
         group.split[0][user] += expensePerPerson
     }
+
+    //Nullifying split - check if the group balance is zero else added the diff to owner 
+    let bal=0
+    for(val of Object.entries(group.split[0]))
+    {
+        bal += val[1]
+    }
+    group.split[0][expenseOwner] -= bal
+    group.split[0][expenseOwner] = Math.round((group.split[0][expenseOwner]  + Number.EPSILON) * 100) / 100;
     //Updating back the split values to the gorup 
     return await model.Group.updateOne({
         _id: groupId
     }, group)
+}
+
+
+/*
+Group Settlement Calculator 
+This function is used to calculate the balnce sheet in a group, who owes whom 
+Accepts : group Id 
+return : group settlement detals
+*/
+exports.groupBalanceSheet = async(req, res) =>{
+    try {
+        const group = await model.Group.findOne({
+            _id: req.body.id
+        })
+        if (!group) {
+            var err = new Error("Invalid Group Id")
+            err.status = 400
+            throw err
+        }
+        res.status(200).json({
+            status: "Success",
+            data: splitCalculator(group.split[0])
+        })
+    } catch (err) {
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
 }

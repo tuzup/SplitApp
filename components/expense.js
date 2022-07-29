@@ -28,7 +28,8 @@ exports.addExpense = async (req, res) => {
         if (validator.notNull(expense.expenseName) &&
             validator.notNull(expense.expenseAmount) &&
             validator.notNull(expense.expenseOwner) &&
-            validator.notNull(expense.expenseMembers)) {
+            validator.notNull(expense.expenseMembers) &&
+            validator.notNull(expense.expenseDate)) {
             var ownerValidation = await validator.groupUserValidation(expense.expenseOwner, expense.groupId)
             if (!ownerValidation) {
                 var err = new Error("Please provide a valid group owner")
@@ -44,7 +45,7 @@ exports.addExpense = async (req, res) => {
                 }
             }
             expense.expensePerMember = expense.expenseAmount / expense.expenseMembers.length
-            expense.expenseCurrency = group.currencyType
+            expense.expenseCurrency = group.groupCurrency
             var newExp = new model.Expense(expense)
             var newExpense = await model.Expense.create(newExp)
 
@@ -93,7 +94,8 @@ exports.editExpense = async (req, res) => {
         if (validator.notNull(expense.expenseName) &&
             validator.notNull(expense.expenseAmount) &&
             validator.notNull(expense.expenseOwner) &&
-            validator.notNull(expense.expenseMembers)) {
+            validator.notNull(expense.expenseMembers)&& 
+            validator.notNull(expense.expenseDate)) {
             var ownerValidation = await validator.groupUserValidation(expense.expenseOwner, expense.groupId)
             if (!ownerValidation) {
                 var err = new Error("Please provide a valid group owner")
@@ -120,7 +122,9 @@ exports.editExpense = async (req, res) => {
                     expenseAmount: expense.expenseAmount,
                     expenseOwner: expense.expenseOwner,
                     expenseMembers: expense.expenseMembers,
-                    expensePerMember: expense.expenseAmount / expense.expenseMembers.length
+                    expensePerMember: expense.expenseAmount / expense.expenseMembers.length,
+                    expenseType: expense.expenseType,
+                    expenseDate: expense.expenseDate,
                 }
             })
 

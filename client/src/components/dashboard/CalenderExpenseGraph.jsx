@@ -6,6 +6,8 @@ import Loading from "../loading";
 import { getUserDailyExpService, getUserMonthlyExpService } from "../../services/expenseServices";
 import { monthNamesMMM } from "../../utils/helper";
 import useResponsive from "../../theme/hooks/useResponsive";
+import { set } from "mongoose";
+import AlertBanner from "../AlertBanner";
 
 export const CalenderExpenseGraph = () => {
     const mdUp = useResponsive('up', 'md');
@@ -63,9 +65,9 @@ export const CalenderExpenseGraph = () => {
         const userIdJson = {
             user: profile.emailId
         }
-        const response_group_monthly = await getUserMonthlyExpService(userIdJson)
+        const response_group_monthly = await getUserMonthlyExpService(userIdJson, setAlert, setAlertMessage)
         setUserMonthlyExp(response_group_monthly.data.data)
-        const response_group_daily = await getUserDailyExpService(userIdJson)
+        const response_group_daily = await getUserDailyExpService(userIdJson, setAlert, setAlertMessage)
         setUserDailyExp(response_group_daily.data.data)
         setLoading(false)
 
@@ -84,6 +86,7 @@ export const CalenderExpenseGraph = () => {
             ...(!mdUp && {p:1})
         }}
         >
+            <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
             <Typography variant="h6">
                 Expense Graph - {montlyView? "Daily View" : "Monthly View"}
             </Typography>

@@ -9,42 +9,24 @@ import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import useResponsive from '../../theme/hooks/useResponsive';
 import { currencyFind } from '../../utils/helper';
-import Iconify from '../Iconify';
 import { editExpenseService, getExpDetailsService } from '../../services/expenseServices';
-import configData from '../../config.json'
 import { useParams } from 'react-router-dom'
 import { getGroupDetailsService } from '../../services/groupServices';
 import Loading from '../loading';
-import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import AlertBanner from '../AlertBanner';
 
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 390,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
 
 
 export default function EditExpense() {
-    const navigate = useNavigate();  
+  const navigate = useNavigate();  
   const params = useParams();
   const mdUp = useResponsive('up', 'md');
-  const profile = JSON.parse(localStorage.getItem('profile'))
-  const currentUser = profile?.emailId
-  const groupId = params.groupId
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   var [groupMembers,setGroupMembers] = useState()
-  var [groupCurrency,setGroupCurrency] = useState()
   const [expenseDetails, setExpenseDetails] = useState()
-  var name ;
  
   //Formink schema 
   const editExpenseSchema = Yup.object().shape({
@@ -52,6 +34,7 @@ export default function EditExpense() {
     expenseDescription: Yup.string(),
     expenseAmount: Yup.string().required('Amount is required'),
     expenseCategory: Yup.string().required('Category is required'),
+    expenseType: Yup.string().required('Payment Method is required'),
   });
 
   const formik = useFormik({
@@ -64,6 +47,7 @@ export default function EditExpense() {
       expenseMembers: null,
       expenseOwner: null,
       groupId: null,
+      expenseType: null,
       id: null
     },
     validationSchema: editExpenseSchema,
@@ -95,6 +79,7 @@ export default function EditExpense() {
         const response_exp = await getExpDetailsService(expenseIdJson, setAlert, setAlertMessage)
         setExpenseDetails(response_exp?.data?.expense)
         const exp = response_exp?.data?.expense
+        console.log(exp)
         const groupIdJson = {
             id: response_exp?.data?.expense?.groupId
         }
@@ -107,8 +92,8 @@ export default function EditExpense() {
         formik.values.expenseCategory = exp?.expenseCategory
         formik.values.expenseDate = exp?.expenseDate
         formik.values.groupId = exp?.groupId
+        formik.values.expenseType = exp?.expenseType
         formik.values.id = exp?._id
-        setGroupCurrency(response_group?.data?.group?.groupCurrency)
         setGroupMembers(response_group?.data?.group?.groupMembers)
         setLoading(false)
     }
@@ -129,6 +114,7 @@ export default function EditExpense() {
         ...(mdUp && { width: 700 })
       }}
       >
+        <AlertBanner showAlert={alert} alertMessage={alertMessage} severity='error' />
         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
           Edit Expense
         </Typography>
@@ -265,6 +251,26 @@ export default function EditExpense() {
 
                 </FormControl>
               </Grid>
+              <Grid item xs={12} >
+                <FormControl fullWidth
+                  error={Boolean(touched.expenseCategory && errors.expenseCategory)}
+                >
+                  <InputLabel id="expense-type">Payment Method</InputLabel>
+                  <Select
+                    name='expenseType'
+                    labelId="expense-type"
+                    id="demo-simple-select"
+                    label="Payment Method"
+                    {...getFieldProps('expenseType')}
+                  >
+                    <MenuItem value={'Cash'}>Cash</MenuItem>
+                    <MenuItem value={'UPI Payment'}>UPI Payment</MenuItem>
+                    <MenuItem value={'Card'}>Card</MenuItem>
+                  </Select>
+                  <FormHelperText>{touched.expenseType && errors.expenseType}</FormHelperText>
+
+                </FormControl>
+              </Grid>
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   {mdUp ? 
@@ -303,7 +309,7 @@ export default function EditExpense() {
               </Grid>
               <Grid item xs={6} md={3}>
                 <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-                  Edit Expense
+                  Edit
                 </LoadingButton>
               </Grid>
              

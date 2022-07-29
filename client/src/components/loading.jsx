@@ -13,7 +13,7 @@ export default function Loading() {
       justifyContent: 'center',
       alignItems: 'center',
       textAlign: 'center',
-      minHeight: 'calc(100vh - 200px )' }}
+      minHeight: '200px' }}
   >
     <CircularProgress size={60} />
     <Typography variant="h3" textAlign={'center'}>

@@ -7,6 +7,7 @@ import { convertToCurrency, currencyFind, categoryIcon } from '../../utils/helpe
 // components
 import Iconify from '../Iconify';
 import gravatarUrl from 'gravatar-url';
+import configData from '../../config.json'
 
 
 // ----------------------------------------------------------------------
@@ -137,7 +138,7 @@ export default function GroupCards({ title, description, groupMembers, share, cu
           <Grid item md={6} xs={12}>
             <AvatarGroup max={3} sx={{ width: '100%' }}>
               {groupMembers.map(member => (
-                <Avatar alt={member.toUpperCase()} src={gravatarUrl(member, { size: 350 })} />
+                <Avatar key={member} alt={member.toUpperCase()} src={gravatarUrl(member, { size: 350 ,default: configData.USER_DEFAULT_LOGO_URL})} />
               ))}
             </AvatarGroup>
           </Grid>

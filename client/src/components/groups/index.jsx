@@ -28,7 +28,7 @@ export default function Group() {
   const checkActive = (split) => {
     for (var key in split) {
       if (split.hasOwnProperty(key)) {
-        if (split[key] != 0)
+        if (Math.round(split[key]) != 0)
           return true
       }
     }
@@ -58,7 +58,7 @@ export default function Group() {
           <Grid container spacing={4} >
 
             {group?.map(myGroup => (
-              <Grid item xs={12} md={6} lg={6}>
+              <Grid item xs={12} md={6} lg={6} key={myGroup?._id}>
                 <Link component={RouterLink}
                 to={dataConfig.VIEW_GROUP_URL+myGroup?._id}
                 sx={{ textDecoration: 'none' }}
@@ -68,7 +68,7 @@ export default function Group() {
                   description={myGroup?.groupDescription}
                   groupMembers={myGroup?.groupMembers}
                   share={myGroup?.split[0][emailId]}
-                  currencyType={myGroup?.currencyType}
+                  currencyType={myGroup?.groupCurrency}
                   groupCategory={myGroup?.groupCategory}
                   isGroupActive={checkActive(myGroup?.split[0])}
                   color={color[Math.floor(Math.random() * 5)]}

@@ -22,7 +22,6 @@ const User = new mongoose.Schema({
     },
     lastName: {
         type: String,
-        required: true
     },
     emailId: {
         type: String,
@@ -43,7 +42,7 @@ const Group = new mongoose.Schema({
     groupDescription: {
         type: String
     },
-    currencyType: {
+    groupCurrency: {
         type: String,
         default: "INR"
     },
@@ -106,9 +105,37 @@ const Expense = new mongoose.Schema({
     expensePerMember: {
         type: Number,
         required: true
+    },
+    expenseType: {
+        type: String, 
+        default: "Cash"
+    }
+})
+
+const Settlement = new mongoose.Schema({
+    groupId:{
+        type: String,
+        required: true
+    },
+    settleTo:{
+        type:String,
+        required: true
+    },
+    settleFrom:{
+        type:String,
+        required: true
+    }, 
+    settleDate:{
+        type:String,
+        required: true
+    },
+    settleAmount:{
+        type:Number, 
+        required: true
     }
 })
 
 module.exports.Expense = mongoose.model('expense', Expense)
 module.exports.User = mongoose.model('user', User)
 module.exports.Group = mongoose.model('group', Group)
+module.exports.Settlement = mongoose.model('settlement', Settlement)
