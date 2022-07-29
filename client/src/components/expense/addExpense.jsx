@@ -37,6 +37,7 @@ export default function AddExpense() {
     expenseAmount: Yup.string().required('Amount is required'),
     expenseCategory: Yup.string().required('Category is required'),
     expenseType: Yup.string().required('Payment Method is required'),
+    expenseMembers: Yup.array().min(1, 'Atleast one expense members is required')
   });
 
   const formik = useFormik({
@@ -46,7 +47,7 @@ export default function AddExpense() {
       expenseAmount: '',
       expenseCategory: '',
       expenseDate: Date(),
-      expenseMembers: [currentUser],
+      expenseMembers: [],
       expenseOwner: currentUser,
       groupId: groupId, 
       expenseType: "Cash"
@@ -83,6 +84,7 @@ export default function AddExpense() {
         const response_group = await getGroupDetailsService(groupIdJson, setAlert, setAlertMessage)
         setGroupCurrency(response_group?.data?.group?.groupCurrency)
         setGroupMembers(response_group?.data?.group?.groupMembers)
+        formik.values.expenseMembers = response_group?.data?.group?.groupMembers
         setLoading(false)
     }
     getGroupDetails()
@@ -164,7 +166,7 @@ export default function AddExpense() {
               </Grid>
 
               <Grid item xs={12}>
-                <FormControl sx={{ width: '100%' }}>
+                <FormControl sx={{ width: '100%' }} error={Boolean(touched.expenseMembers && errors.expenseMembers)}>
                   <InputLabel id="expense-members-label">Expense Members</InputLabel>
                   <Select
                     labelId="expense-members-label"
@@ -179,8 +181,7 @@ export default function AddExpense() {
                         ))}
                       </Box>
                     )}
-                    MenuProps={MenuProps}
-                  >
+                    MenuProps={MenuProps}>
                     {groupMembers?.map((member) => (
                       <MenuItem
                         key={member}
@@ -190,6 +191,7 @@ export default function AddExpense() {
                       </MenuItem>
                     ))}
                   </Select>
+                  <FormHelperText>{touched.expenseMembers&& errors.expenseMembers}</FormHelperText>
                 </FormControl>
               </Grid>
 
