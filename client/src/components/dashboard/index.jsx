@@ -1,7 +1,7 @@
-import {  Container, Grid, Typography } from "@mui/material"
+import { Container, Grid, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { getUserExpenseService} from "../../services/expenseServices"
+import { getUserExpenseService } from "../../services/expenseServices"
 import { getUserGroupsService } from "../../services/groupServices"
 import Loading from "../loading"
 import { CalenderExpenseGraph } from "./CalenderExpenseGraph"
@@ -85,7 +85,7 @@ export default function Dashboard() {
                                         <CalenderExpenseGraph />
                                     </Grid>
                                     <Grid item xs={12} md={12}>
-                                        <GroupExpenseChart />
+                                        <CategoryExpenseChart />
                                     </Grid>
                                     {/* <Grid item xs={12} md={6}>
                                 <CategoryExpenseChart />
@@ -102,7 +102,7 @@ export default function Dashboard() {
                                     <RecentTransactions />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <CategoryExpenseChart />
+                                    <GroupExpenseChart />
                                 </Grid>
                                 <Grid item md={12} xs={0}>
                                     <EndMessage />

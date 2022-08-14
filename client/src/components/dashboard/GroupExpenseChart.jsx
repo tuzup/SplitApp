@@ -49,7 +49,7 @@ export const GroupExpenseChart = () => {
               },
             legend: {
                 display: true,
-                position: mdUp? 'right' : 'bottom',
+                position:  'bottom',
                 labels: {
                     padding: 10
                 },
