@@ -555,7 +555,7 @@ exports.userDailyExpense = async (req, res) => {
                         }
                     },
                     amount: {
-                        $sum: "$expenseAmount"
+                        $sum: "$expensePerMember"
                     }
                 }
             },

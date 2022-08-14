@@ -31,6 +31,9 @@ const User = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    favGroup: {
+        type: Array
     }
 })
 
@@ -63,7 +66,7 @@ const Group = new mongoose.Schema({
     },
     split: {
         type: Array
-    }
+    },
 })
 
 const Expense = new mongoose.Schema({
