@@ -77,15 +77,16 @@ In order to run this project locally, simply fork and clone the repository or do
 - Go to terminal -> New terminal (If you are using VS code)
 - Split your terminal into two (run the client on one terminal and the server on the other terminal)
 
-In the first terminal
+In the first terminal - Setup Clinet 
+
 ```
 $ cd client
 $ npm install (to install client-side dependencies)
 $ npm start (to start the client)
 ```
 
-For setting up backend
-- cd create a .env file in the root of your directory.
+For setting up backend (root directory) 
+- create a .env file in the root of your directory.
 - Supply the following credentials
 
 ```
