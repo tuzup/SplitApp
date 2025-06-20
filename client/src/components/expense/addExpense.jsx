@@ -46,7 +46,7 @@ export default function AddExpense() {
       expenseDescription: '',
       expenseAmount: '',
       expenseCategory: '',
-      expenseDate: Date(),
+      expenseDate: new Date().toISOString(),
       expenseMembers: [],
       expenseOwner: currentUser,
       groupId: groupId, 
@@ -272,7 +272,7 @@ export default function AddExpense() {
                   />}
                   value={formik.values.expenseDate}
                   onChange={(value) => {
-                  formik.setFieldValue('expenseDate', Date.parse(value));
+                    formik.setFieldValue('expenseDate', value ? new Date(value).toISOString() : null);
                       }}
                 />
                   :
