@@ -74,11 +74,11 @@ const WARNING = {
 };
 
 const ERROR = {
-  lighter: '#FFE7D9',
+  lighter: '#ffe2e2',
   light: '#FFA48D',
   main: '#FF4842',
   dark: '#B72136',
-  darker: '#7A0C2E',
+  darker: '#cc1219',
   contrastText: '#fff',
 };
 

@@ -15,6 +15,7 @@ import { getGroupDetailsService } from '../../services/groupServices';
 import Loading from '../loading';
 import { useNavigate } from "react-router-dom";
 import AlertBanner from '../AlertBanner';
+import { parseISO } from 'date-fns';
 
 
 
@@ -280,7 +281,7 @@ export default function EditExpense() {
                   inputFormat="dd/MM/yyyy"
                   renderInput={(params) => <TextField {...params} sx={{width: '100%'}}
                   />}
-                  value={formik.values.expenseDate}
+                  value={formik.values.expenseDate ? (typeof formik.values.expenseDate === 'string' ? parseISO(formik.values.expenseDate) : formik.values.expenseDate) : null}
                   onChange={(value) => {
                   formik.setFieldValue('expenseDate', Date.parse(value));
                       }}
@@ -292,7 +293,7 @@ export default function EditExpense() {
                     inputFormat="dd/MM/yyyy"
                     renderInput={(params) => <TextField {...params} sx={{width: '100%'}}
                     />}
-                    value={formik.values.expenseDate}
+                        value={formik.values.expenseDate ? (typeof formik.values.expenseDate === 'string' ? parseISO(formik.values.expenseDate) : formik.values.expenseDate) : null}
                     onChange={(value) => {
         		        formik.setFieldValue('expenseDate', Date.parse(value));
         		            }}

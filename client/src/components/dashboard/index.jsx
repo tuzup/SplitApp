@@ -14,6 +14,7 @@ import { WelcomeMessage } from "./welcomeMessage"
 import { Link as RouterLink } from 'react-router-dom';
 import configData from '../../config.json'
 import AlertBanner from "../AlertBanner"
+import FavouriteGroups from "./FavouriteGroups"
 
 
 export default function Dashboard() {
@@ -23,6 +24,7 @@ export default function Dashboard() {
     const [alertMessage, setAlertMessage] = useState('');
     const [userExp, setUserExp] = useState()
     const [newUser, setNewUser] = useState(false)
+    
 
     useEffect(() => {
         const getUserDetails = async () => {
@@ -78,8 +80,11 @@ export default function Dashboard() {
 
                                 :
                                 <>
-                                    <Grid item xs={12}>
+                                    {/* <Grid item xs={12}>
                                         <SummaryCards userTotalExp={userExp?.total} />
+                                    </Grid> */}
+                                    <Grid item xs={12}>
+                                        <FavouriteGroups />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <CalenderExpenseGraph />

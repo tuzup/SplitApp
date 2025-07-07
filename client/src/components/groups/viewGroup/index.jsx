@@ -105,7 +105,7 @@ export default function ViewGroup() {
             {loading ? <Loading /> :
                 <>
                     <Box sx={{
-                        bgcolor: (theme) => theme.palette['info'].lighter,
+                        bgcolor: (theme) => theme.palette['primary'].lighter,
                         borderRadius: 2,
                         p: 2,
                         color: (theme) => theme.palette['primary'].darker,
@@ -131,6 +131,10 @@ export default function ViewGroup() {
                                 {group?.groupOwner}
                             </Box>
                         </Typography>
+                        {/* <Button sx={{mt: 2}} variant="outlined" color='warning'>
+                        <Iconify icon='akar-icons:star' color={(theme) => theme.palette['warning'].main} fontSize={22} />
+                        &nbsp; Add to Favourites
+                        </Button> */}
                         <Stack direction="row" justifyContent="space-between" alignItems="center" mt={1}>
                             <Typography
                                 variant="subtitle2"
@@ -143,7 +147,6 @@ export default function ViewGroup() {
                                 Category : &nbsp;
                                 {group?.groupCategory}
                             </Typography>
-
                             <Fab component={RouterLink}
                                 to={dataConfig.ADD_EXPENSE_URL + group?._id}
                                 color="primary" aria-label="add"
