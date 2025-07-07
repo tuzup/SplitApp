@@ -11,7 +11,7 @@ import AlertBanner from "../AlertBanner";
 
 export const CalenderExpenseGraph = () => {
     const mdUp = useResponsive('up', 'md');
-    const [montlyView, setMonthlyView] = useState(false)
+    const [montlyView, setMonthlyView] = useState(true)
     const [loading, setLoading] = useState(true)
     const profile = JSON.parse(localStorage.getItem("profile"))
     const [alert, setAlert] = useState(false);
@@ -95,7 +95,7 @@ export const CalenderExpenseGraph = () => {
                 <Line data={data} options={options} />
             </Box>
             <FormGroup>
-                <FormControlLabel control={<Switch defaultChecked onClick={toggleMonthlyView} />} label="Monthly expense view" />
+                <FormControlLabel control={<Switch onClick={toggleMonthlyView} />} label="Monthly expense view" />
             </FormGroup>
 
         </Box>}

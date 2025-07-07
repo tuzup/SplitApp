@@ -46,14 +46,18 @@ export default function LoginForm() {
   };
 
   return (
-    <><Snackbar
+    <>
+    {!smUp && 
+    <Snackbar
       open={showAlert}
       autoHideDuration={6000}
        >
+        
          <Alert severity="error" sx={{ width: '100%' }}>
          {alertMessage}
         </Alert>
       </Snackbar>
+}
         <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Stack spacing={3}>
@@ -95,18 +99,6 @@ export default function LoginForm() {
             Login
           </LoadingButton>
           </Stack>
-
-          {/* <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-            <FormControlLabel
-              control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-              label="Remember me" />
-
-            <Link component={RouterLink} variant="subtitle2" to="#" underline="hover">
-              Forgot password?
-            </Link>
-          </Stack> */}
-
-          
         </Form>
       </FormikProvider></>
   );

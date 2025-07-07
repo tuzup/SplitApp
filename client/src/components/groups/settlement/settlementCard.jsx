@@ -22,19 +22,11 @@ const style = {
     borderRadius: 1
 };
 
-const SettlementCard = ({ mySettle, currencyType }) => {
+const SettlementCard = ({ mySettle, currencyType, setReload}) => {
     const xsUp = useResponsive('up', 'sm');
-    const [reload, setReload] = useState(false)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => {
-        if (reload)
-            window.location.reload()
-        else {
-            setOpen(false)
-        }
-
-    };
+    const handleClose = () =>  setOpen(false)
 
     return (
         <Stack direction="row" spacing={1} justifyContent="space-evenly"

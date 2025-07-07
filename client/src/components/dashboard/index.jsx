@@ -1,7 +1,7 @@
-import {  Container, Grid, Typography } from "@mui/material"
+import { Container, Grid, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { getUserExpenseService} from "../../services/expenseServices"
+import { getUserExpenseService } from "../../services/expenseServices"
 import { getUserGroupsService } from "../../services/groupServices"
 import Loading from "../loading"
 import { CalenderExpenseGraph } from "./CalenderExpenseGraph"
@@ -14,6 +14,7 @@ import { WelcomeMessage } from "./welcomeMessage"
 import { Link as RouterLink } from 'react-router-dom';
 import configData from '../../config.json'
 import AlertBanner from "../AlertBanner"
+import FavouriteGroups from "./FavouriteGroups"
 
 
 export default function Dashboard() {
@@ -23,6 +24,7 @@ export default function Dashboard() {
     const [alertMessage, setAlertMessage] = useState('');
     const [userExp, setUserExp] = useState()
     const [newUser, setNewUser] = useState(false)
+    
 
     useEffect(() => {
         const getUserDetails = async () => {
@@ -78,14 +80,17 @@ export default function Dashboard() {
 
                                 :
                                 <>
-                                    <Grid item xs={12}>
+                                    {/* <Grid item xs={12}>
                                         <SummaryCards userTotalExp={userExp?.total} />
+                                    </Grid> */}
+                                    <Grid item xs={12}>
+                                        <FavouriteGroups />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <CalenderExpenseGraph />
                                     </Grid>
                                     <Grid item xs={12} md={12}>
-                                        <GroupExpenseChart />
+                                        <CategoryExpenseChart />
                                     </Grid>
                                     {/* <Grid item xs={12} md={6}>
                                 <CategoryExpenseChart />
@@ -102,7 +107,7 @@ export default function Dashboard() {
                                     <RecentTransactions />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <CategoryExpenseChart />
+                                    <GroupExpenseChart />
                                 </Grid>
                                 <Grid item md={12} xs={0}>
                                     <EndMessage />

@@ -34,7 +34,7 @@ const modelStyle = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    borderRadius: 1
+    borderRadius: 3
 };
 
 
@@ -174,7 +174,7 @@ export default function ExpenseCard({ expenseId, expenseName, expenseAmount, exp
                             </MenuItem>
                         </MenuList>
                     </Popover>
-                    <Modal
+                    `<Modal
                         open={deleteConfirm}
                         onClose={deleteConfirmClose}
                         aria-labelledby="modal-modal-title"

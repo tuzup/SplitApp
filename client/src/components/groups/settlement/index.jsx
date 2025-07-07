@@ -19,10 +19,13 @@ export const GroupSettlements = ({ currencyType }) => {
     const [alertMessage, setAlertMessage] = useState()
     const [loading, setLoading] = useState(true)
     const [groupSettlement, setGroupSettlemet] = useState()
+    const [reload, setReload] = useState(false)
+
 
     const mdUp = useResponsive('up', 'md');
     useEffect(() => {
         const getGroupSettlement = async () => {
+            setReload(false)
             setLoading(true)
             const groupIdJson = {
                 id: params.groupId
@@ -32,7 +35,7 @@ export const GroupSettlements = ({ currencyType }) => {
             setLoading(false)
         }
         getGroupSettlement()
-    }, [])
+    }, [reload])
 
     return (
         <>
@@ -45,7 +48,7 @@ export const GroupSettlements = ({ currencyType }) => {
                             {mySettle[2] > 0 &&
                                 <Grid item xs={12} md={6} key={index}>
                                     {noSettle && setNoSettle(false)}
-                                    <SettlementCard  mySettle={mySettle} currencyType={currencyType} /> 
+                                    <SettlementCard  mySettle={mySettle} currencyType={currencyType} setReload={setReload}/> 
                                 </Grid>
                             }
                             </>

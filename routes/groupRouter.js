@@ -20,6 +20,12 @@ router.post('/v1/user', controller.findUserGroup)
 //Edit group router
 router.post('/v1/edit', controller.editGroup)
 
+//Make Favourite group router 
+router.post('/v1/makeFavourite', controller.makeFavourite)
+
+//Remove Favourite group router 
+router.post('/v1/removeFavourite', controller.removeFavourite)
+
 //Settlement Calculator router 
 router.post('/v1/settlement', controller.groupBalanceSheet)
 

@@ -2,6 +2,7 @@ const model = require('../model/schema')
 const validator = require('../helper/validation')
 const logger = require('../helper/logger')
 const splitCalculator = require('../helper/split')
+const { error } = require('../helper/logger')
 
 /*
 Create Group Function This function basically create new groups
@@ -381,4 +382,95 @@ exports.groupBalanceSheet = async(req, res) =>{
             message: err.message
         })
     }
+}
+
+/*
+Make Favourite 
+This function if used to make a group favourite 
+*/
+exports.makeFavourite = async(req, res) => {
+    try{
+        validator.notNull(req.body.user)
+        validator.notNull(req.body.groupId)
+        const user = await model.User.findOne({
+            emailId: req.body.user
+        })
+        console.log(user)
+        if(!user){
+            var err = new Error("User not presnt in the database")
+            err.status = 400
+            throw err
+        }
+        if(user.favGroup.includes(req.body.groupId)){
+            var err = new Error("Group already present in favourite")
+            err.status = 400
+            throw err
+        }else{
+            const user_update = await model.User.updateOne({
+            emailId: req.body.user
+            },{$push :{favGroup: req.body.groupId}})
+        
+        if(user_update.modifiedCount === 0){
+            var err = new Error("Oops someting went wrong! Ensure the input is valid data")
+            err.status = 400
+            throw err
+        }
+        res.status(200).json({
+            status: "Success",
+            data: user_update
+        })}
+
+    }catch(err){
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+
+}
+
+
+/*
+Remove Favourite 
+This function if used to remove a group favourite 
+*/
+exports.removeFavourite = async(req, res) => {
+    try{
+        validator.notNull(req.body.user)
+        validator.notNull(req.body.groupId)
+        const user = await model.User.findOne({
+            emailId: req.body.user
+        })
+        console.log(user)
+        if(!user){
+            var err = new Error("User not presnt in the database")
+            err.status = 400
+            throw err
+        }
+        if(!user.favGroup.includes(req.body.groupId)){
+            var err = new Error("Group not present in favourite")
+            err.status = 400
+            throw err
+        }else{
+            const user_update = await model.User.updateOne({
+            emailId: req.body.user
+            },{$pull :{favGroup: req.body.groupId}})
+        
+        if(user_update.modifiedCount === 0){
+            var err = new Error("Oops someting went wrong! Ensure the input is valid data")
+            err.status = 400
+            throw err
+        }
+        res.status(200).json({
+            status: "Success",
+            data: user_update
+        })}
+
+    }catch(err){
+        logger.error(`URL : ${req.originalUrl} | staus : ${err.status} | message: ${err.message}`)
+        res.status(err.status || 500).json({
+            message: err.message
+        })
+    }
+
 }

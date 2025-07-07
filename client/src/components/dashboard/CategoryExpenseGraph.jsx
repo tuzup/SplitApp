@@ -10,8 +10,10 @@ import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'chart.js/auto'
 import { convertToCurrency, currencyFind } from '../../utils/helper';
+import useResponsive from "../../theme/hooks/useResponsive";
 export const CategoryExpenseChart = () => {
-
+    
+    const mdUp = useResponsive('up', 'md');
     const params = useParams();
     const [alert, setAlert] = useState(false)
     const [alertMessage, setAlertMessage] = useState()
@@ -51,7 +53,7 @@ export const CategoryExpenseChart = () => {
               },
             legend: {
                 display: true,
-                position: 'bottom',
+                position: mdUp? 'right' : 'bottom',
                 labels: {
                     padding: 10
                 },
