@@ -80,7 +80,7 @@ export default function ViewGroup() {
             setLoading(false)
         }
         getGroupDetails()
-    }, []);
+    }, [params.groupId]);
 
     const CategoryStyle = styled('span')(({ theme }) => ({
         top: 22,

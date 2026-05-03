@@ -66,12 +66,12 @@ const GroupCategoryGraph = ({currencyType}) => {
             }
             const category_exp =
                 await getGroupCategoryExpService(groupIdJson, setAlert, setAlertMessage)
-            setCategoryExp(category_exp.data.data)
+            setCategoryExp(category_exp?.data?.data)
             setLoading(false)
         }
         getGroupCategoryExpense()
 
-    }, [])
+    }, [params.groupId])
     return (
         <>
             {loading ? <Loading /> :
