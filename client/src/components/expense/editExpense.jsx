@@ -55,7 +55,7 @@ export default function EditExpense() {
     onSubmit: async () => {
       setLoading(true)
       if(await editExpenseService(values, setAlert, setAlertMessage))
-        window.location = configData.VIEW_GROUP_URL + values.groupId
+        navigate(configData.VIEW_GROUP_URL + values.groupId, { state: { refresh: true } })
     },
   });
 

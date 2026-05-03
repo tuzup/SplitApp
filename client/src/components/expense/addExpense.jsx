@@ -11,7 +11,7 @@ import useResponsive from '../../theme/hooks/useResponsive';
 import { currencyFind } from '../../utils/helper';
 import { addExpenseService } from '../../services/expenseServices';
 import configData from '../../config.json'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { getGroupDetailsService } from '../../services/groupServices';
 import Loading from '../loading';
 import { Link as RouterLink } from 'react-router-dom';
@@ -20,6 +20,7 @@ import { parseISO } from 'date-fns';
 
 
 export default function AddExpense() {  
+  const navigate = useNavigate();
   const params = useParams();
   const mdUp = useResponsive('up', 'md');
   const profile = JSON.parse(localStorage.getItem('profile'))
@@ -58,7 +59,7 @@ export default function AddExpense() {
     onSubmit: async () => {
       setLoading(true)
       if(await addExpenseService(values, setAlert, setAlertMessage))
-       window.location = configData.VIEW_GROUP_URL+groupId
+        navigate(configData.VIEW_GROUP_URL + groupId, { state: { refresh: true } })
     },
   });
 

@@ -9,7 +9,7 @@ import { Line } from "react-chartjs-2";
 import 'chart.js/auto'
 import { monthNamesMMM } from '../../../utils/helper';
 
-const GroupMonthlyGraph = () => {
+const GroupMonthlyGraph = ({ refreshKey = 0 }) => {
     const params = useParams();
     const [alert, setAlert] = useState(false)
     const [alertMessage, setAlertMessage] = useState()
@@ -77,7 +77,7 @@ const GroupMonthlyGraph = () => {
         }
         getGroupMonthlyExpense()
 
-    }, [params.groupId])
+    }, [params.groupId, refreshKey])
     return (
         <>
             {loading ? <Loading /> :
