@@ -9,7 +9,7 @@ import { Line } from "react-chartjs-2";
 import 'chart.js/auto'
 import { monthNamesMMM } from '../../../utils/helper';
 
-const GroupMonthlyGraph = () => {
+const GroupMonthlyGraph = ({ refreshKey = 0 }) => {
     const params = useParams();
     const [alert, setAlert] = useState(false)
     const [alertMessage, setAlertMessage] = useState()
@@ -71,13 +71,13 @@ const GroupMonthlyGraph = () => {
             const monthly_exp =
                 await getGroupMonthlyExpService(groupIdJson, setAlert, setAlertMessage)
             const daily_exp = await getGroupDailyExpService(groupIdJson, setAlert, setAlertMessage)
-            setMonthlyExp(monthly_exp.data.data)
-            setDailyExp(daily_exp.data.data)
+            setMonthlyExp(monthly_exp?.data?.data)
+            setDailyExp(daily_exp?.data?.data)
             setLoading(false)
         }
         getGroupMonthlyExpense()
 
-    }, [])
+    }, [params.groupId, refreshKey])
     return (
         <>
             {loading ? <Loading /> :

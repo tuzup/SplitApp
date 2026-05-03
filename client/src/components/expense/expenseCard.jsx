@@ -38,7 +38,7 @@ const modelStyle = {
 };
 
 
-export default function ExpenseCard({ expenseId, expenseName, expenseAmount, expensePerMember, expenseOwner, expenseDate, currencyType }) {
+export default function ExpenseCard({ expenseId, expenseName, expenseAmount, expensePerMember, expenseOwner, expenseDate, currencyType, onExpenseDeleted }) {
     const mdUp = useResponsive('up', 'md');
     const [anchorEl, setAnchorEl] = useState(null);
     const [deleteConfirm, setDeleteConfirm] = useState(false)
@@ -60,8 +60,12 @@ export default function ExpenseCard({ expenseId, expenseName, expenseAmount, exp
 
       const apiDeleteCall = async() => {
         await deleteExpenseService({id: expenseId})
-        window.location.reload()
         deleteConfirmClose()
+        if (onExpenseDeleted) {
+            onExpenseDeleted()
+        } else {
+            window.location.reload()
+        }
       }
 
     const open = Boolean(anchorEl);
@@ -174,7 +178,7 @@ export default function ExpenseCard({ expenseId, expenseName, expenseAmount, exp
                             </MenuItem>
                         </MenuList>
                     </Popover>
-                    `<Modal
+                    <Modal
                         open={deleteConfirm}
                         onClose={deleteConfirmClose}
                         aria-labelledby="modal-modal-title"

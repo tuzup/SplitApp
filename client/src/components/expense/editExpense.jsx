@@ -16,7 +16,7 @@ import Loading from '../loading';
 import { useNavigate } from "react-router-dom";
 import AlertBanner from '../AlertBanner';
 import { parseISO } from 'date-fns';
-
+import configData from '../../config.json';
 
 
 export default function EditExpense() {
@@ -52,10 +52,10 @@ export default function EditExpense() {
       id: null
     },
     validationSchema: editExpenseSchema,
-    onSubmit: async () => {
+    onSubmit: async (values) => {
       setLoading(true)
       if(await editExpenseService(values, setAlert, setAlertMessage))
-      navigate(-1)
+        navigate(configData.VIEW_GROUP_URL + values.groupId, { state: { refresh: true } })
     },
   });
 
@@ -85,16 +85,18 @@ export default function EditExpense() {
             id: response_exp?.data?.expense?.groupId
         }
         const response_group = await getGroupDetailsService(groupIdJson, setAlert, setAlertMessage)
-        formik.values.expenseName = exp?.expenseName
-        formik.values.expenseDescription = exp?.expenseDescription
-        formik.values.expenseOwner = exp?.expenseOwner
-        formik.values.expenseMembers = exp?.expenseMembers
-        formik.values.expenseAmount = exp?.expenseAmount
-        formik.values.expenseCategory = exp?.expenseCategory
-        formik.values.expenseDate = exp?.expenseDate
-        formik.values.groupId = exp?.groupId
-        formik.values.expenseType = exp?.expenseType
-        formik.values.id = exp?._id
+        formik.setValues({
+          expenseName: exp?.expenseName,
+          expenseDescription: exp?.expenseDescription,
+          expenseOwner: exp?.expenseOwner,
+          expenseMembers: exp?.expenseMembers,
+          expenseAmount: exp?.expenseAmount,
+          expenseCategory: exp?.expenseCategory,
+          expenseDate: exp?.expenseDate,
+          groupId: exp?.groupId,
+          expenseType: exp?.expenseType,
+          id: exp?._id
+        })
         setGroupMembers(response_group?.data?.group?.groupMembers)
         setLoading(false)
     }

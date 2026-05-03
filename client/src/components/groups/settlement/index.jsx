@@ -12,7 +12,7 @@ import SettlementCard from './settlementCard';
 import UserBalanceChart from './userBalanceChart';
 
 
-export const GroupSettlements = ({ currencyType }) => {
+export const GroupSettlements = ({ currencyType, refreshKey = 0 }) => {
     const params = useParams();
     const [noSettle, setNoSettle] = useState(true)
     const [alert, setAlert] = useState(false)
@@ -27,6 +27,7 @@ export const GroupSettlements = ({ currencyType }) => {
         const getGroupSettlement = async () => {
             setReload(false)
             setLoading(true)
+            setNoSettle(true)
             const groupIdJson = {
                 id: params.groupId
             }
@@ -35,7 +36,7 @@ export const GroupSettlements = ({ currencyType }) => {
             setLoading(false)
         }
         getGroupSettlement()
-    }, [reload])
+    }, [reload, params.groupId, refreshKey])
 
     return (
         <>
@@ -71,7 +72,7 @@ export const GroupSettlements = ({ currencyType }) => {
                         No Settlement requiered !
                         </Typography>
                         </Grid>
-                         : <UserBalanceChart/>}
+                         : <UserBalanceChart refreshKey={refreshKey}/>}
 
 
                         
