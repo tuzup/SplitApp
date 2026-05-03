@@ -1,6 +1,6 @@
 import { Box, Button, Container, Divider, Fab, Grid, Link, Stack, styled, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { getGroupDetailsService, getGroupExpenseService } from '../../../services/groupServices';
 import AlertBanner from '../../AlertBanner';
 import Iconify from '../../Iconify';
@@ -19,6 +19,7 @@ const emailId = profile?.emailId
 var showCount = 10
 export default function ViewGroup() {
     const params = useParams();
+    const location = useLocation();
     const [loading, setLoading] = useState(true);
     const [group, setGroup] = useState({});
     const [groupExpense, setGroupExpense] = useState([]);
@@ -30,6 +31,11 @@ export default function ViewGroup() {
     const [expFocus, setExpFocus] = useState(false);
     const [expenses, setExpenses] = useState()
     const [viewSettlement, setViewSettlement] = useState(0)
+    const [expenseRefreshKey, setExpenseRefreshKey] = useState(0)
+
+    const triggerExpenseRefresh = () => {
+        setExpenseRefreshKey(prev => prev + 1)
+    }
 
 
     const toggleAllExp = () => {
@@ -64,8 +70,17 @@ export default function ViewGroup() {
     }
 
     useEffect(() => {
+        if (location.state?.refresh) {
+            triggerExpenseRefresh()
+        }
+    }, [location.state])
+
+    useEffect(() => {
         const getGroupDetails = async () => {
             setLoading(true)
+            showCount = 10
+            setShowAllExp(false)
+            setExpFocus(false)
             const groupIdJson = {
                 id: params.groupId
             }
@@ -80,7 +95,7 @@ export default function ViewGroup() {
             setLoading(false)
         }
         getGroupDetails()
-    }, []);
+    }, [params.groupId, expenseRefreshKey]);
 
     const CategoryStyle = styled('span')(({ theme }) => ({
         top: 22,
@@ -367,7 +382,7 @@ export default function ViewGroup() {
                             }
                             {viewSettlement === 1 &&
                                 <Grid item md={12} xs={12}>
-                                    <GroupSettlements currencyType={group?.groupCurrency} />
+                                    <GroupSettlements currencyType={group?.groupCurrency} refreshKey={expenseRefreshKey} />
                                 </Grid>
                             }
                             {viewSettlement === 0 &&
@@ -405,6 +420,7 @@ export default function ViewGroup() {
                                                                 expenseOwner={myExpense?.expenseOwner}
                                                                 expenseDate={myExpense?.expenseDate}
                                                                 currencyType={group?.groupCurrency}
+                                                                onExpenseDeleted={triggerExpenseRefresh}
                                                             />
                                                         </Grid>))}
 
@@ -414,10 +430,10 @@ export default function ViewGroup() {
                                                 </Grid>
                                             </Grid>
                                             <Grid item xs={12} md={6} >
-                                                <GroupCategoryGraph currencyType={group?.groupCurrency} />
+                                                <GroupCategoryGraph currencyType={group?.groupCurrency} refreshKey={expenseRefreshKey} />
                                             </Grid>
                                             <Grid item xs={12} md={expFocus || viewSettlement ? 6 : 12}>
-                                                <GroupMonthlyGraph />
+                                                <GroupMonthlyGraph refreshKey={expenseRefreshKey} />
                                             </Grid>
                                         </>
                                     }

@@ -16,7 +16,7 @@ import Loading from '../loading';
 import { useNavigate } from "react-router-dom";
 import AlertBanner from '../AlertBanner';
 import { parseISO } from 'date-fns';
-
+import configData from '../../config.json';
 
 
 export default function EditExpense() {
@@ -55,7 +55,7 @@ export default function EditExpense() {
     onSubmit: async () => {
       setLoading(true)
       if(await editExpenseService(values, setAlert, setAlertMessage))
-      navigate(-1)
+        navigate(configData.VIEW_GROUP_URL + values.groupId, { state: { refresh: true } })
     },
   });
 

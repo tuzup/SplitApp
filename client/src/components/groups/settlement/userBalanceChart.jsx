@@ -10,7 +10,7 @@ import { Bar } from "react-chartjs-2"
 import useResponsive from "../../../theme/hooks/useResponsive"
 
 
-const UserBalanceChart = () => {
+const UserBalanceChart = ({ refreshKey = 0 }) => {
     const params = useParams();
     const mdUp = useResponsive('up', 'md');
     const [loading, setLoading] = useState(false)
@@ -51,6 +51,8 @@ const UserBalanceChart = () => {
     useEffect(() => {
         const getGroupDetails = async () => {
             setLoading(true)
+            setGraphData([])
+            setGraphLabel([])
             const groupIdJson = {
                 id: params.groupId
             }
@@ -71,7 +73,7 @@ const UserBalanceChart = () => {
             setLoading(false)
         }
         getGroupDetails()
-    }, [])
+    }, [params.groupId, refreshKey])
 
     return (
         <>

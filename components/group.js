@@ -301,7 +301,7 @@ exports.addSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers) 
     })
     group.groupTotal += expenseAmount
     group.split[0][expenseOwner] += expenseAmount
-    expensePerPerson = expenseAmount / expenseMembers.length
+    let expensePerPerson = expenseAmount / expenseMembers.length
     expensePerPerson = Math.round((expensePerPerson  + Number.EPSILON) * 100) / 100;
     //Updating the split values per user 
     for (var user of expenseMembers) {
@@ -310,7 +310,7 @@ exports.addSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers) 
     
     //Nullifying split - check if the group balance is zero else added the diff to owner 
     let bal=0
-    for(val of Object.entries(group.split[0]))
+    for(let val of Object.entries(group.split[0]))
     {
         bal += val[1]
     }
@@ -334,7 +334,7 @@ exports.clearSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers
     })
     group.groupTotal -= expenseAmount
     group.split[0][expenseOwner] -= expenseAmount
-    expensePerPerson = expenseAmount / expenseMembers.length
+    let expensePerPerson = expenseAmount / expenseMembers.length
     expensePerPerson = Math.round((expensePerPerson  + Number.EPSILON) * 100) / 100;
     //Updating the split values per user 
     for (var user of expenseMembers) {
@@ -343,7 +343,7 @@ exports.clearSplit = async (groupId, expenseAmount, expenseOwner, expenseMembers
 
     //Nullifying split - check if the group balance is zero else added the diff to owner 
     let bal=0
-    for(val of Object.entries(group.split[0]))
+    for(let val of Object.entries(group.split[0]))
     {
         bal += val[1]
     }
