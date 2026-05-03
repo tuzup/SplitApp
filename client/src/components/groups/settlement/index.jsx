@@ -35,7 +35,7 @@ export const GroupSettlements = ({ currencyType }) => {
             setLoading(false)
         }
         getGroupSettlement()
-    }, [reload])
+    }, [reload, params.groupId])
 
     return (
         <>

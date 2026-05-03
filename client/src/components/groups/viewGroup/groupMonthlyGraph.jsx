@@ -71,13 +71,13 @@ const GroupMonthlyGraph = () => {
             const monthly_exp =
                 await getGroupMonthlyExpService(groupIdJson, setAlert, setAlertMessage)
             const daily_exp = await getGroupDailyExpService(groupIdJson, setAlert, setAlertMessage)
-            setMonthlyExp(monthly_exp.data.data)
-            setDailyExp(daily_exp.data.data)
+            setMonthlyExp(monthly_exp?.data?.data)
+            setDailyExp(daily_exp?.data?.data)
             setLoading(false)
         }
         getGroupMonthlyExpense()
 
-    }, [])
+    }, [params.groupId])
     return (
         <>
             {loading ? <Loading /> :
