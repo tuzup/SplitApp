@@ -178,7 +178,7 @@ export default function ExpenseCard({ expenseId, expenseName, expenseAmount, exp
                             </MenuItem>
                         </MenuList>
                     </Popover>
-                    `<Modal
+                    <Modal
                         open={deleteConfirm}
                         onClose={deleteConfirmClose}
                         aria-labelledby="modal-modal-title"
